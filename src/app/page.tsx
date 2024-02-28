@@ -4,11 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Sidebar } from "@/components/sidebar";
 import { Textarea } from "@/components/ui/textarea";
 import { YoutubePlayer } from "@/components/youtube_player";
-import { ReactEventHandler, useState } from "react";
+import { useState } from "react";
 import { extractYouTubeVideoId } from "@/lib/youtube";
+
 export default function Home() {
   const [videoId, setVideoId] = useState("");
   const [youtubeURL, setYoutubeURL] = useState("");
+
   const handlePlay = () => {
     const url = youtubeURL;
     const extractedId = extractYouTubeVideoId(url);
@@ -16,6 +18,7 @@ export default function Home() {
       setVideoId(extractedId);
     }
   };
+
   return (
     <>
       <div className="block">
