@@ -55,80 +55,97 @@ export default function Home() {
           <Sidebar className="hidden lg:block" />
           <div className="col-span-3 lg:col-span-4 lg:border-l">
             <div className="h-full px-4 py-6 lg:px-8 space-y-7">
-              <div className="space-y-5">
-                <div className="flex flex-col">
-                  <h2 className="text-2xl font-semibold tracking-tight">
-                    Step 1
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Enter a YouTube URL
-                  </p>
-                </div>
-                <div className="flex space-x-2 max-w-[640px]">
-                  <Input
-                    name="youtube-url"
-                    onChange={(e) => setYoutubeURL(e.target.value)}
-                  />
-                  <Button variant="outline" type="submit" onClick={handlePlay}>
-                    Play
-                  </Button>
-                </div>
-              </div>
-
-              <div className="space-y-5 max-w-[640px]">
-                <div className="flex justify-between items-end">
+              <div className="grid grid-cols-4 gap-5">
+                {/* Step 1 */}
+                <div className="col-span-2 space-y-5">
                   <div className="flex flex-col">
                     <h2 className="text-2xl font-semibold tracking-tight">
-                      Step 2
+                      Step 1
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      Watch the YouTube Video
+                      Enter a YouTube URL
                     </p>
                   </div>
-                  <Button variant="outline" type="button">
-                    <FaRegClosedCaptioning className="mr-2 h-4 w-4" />
-                    Show subtitles
-                  </Button>
-                </div>
-                <div className="object-contain">
-                  <YoutubePlayer
-                    videoId={videoId}
-                    autoPlay={true}
-                    title="My Video"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-5">
-                <div className="flex flex-col">
-                  <h2 className="text-2xl font-semibold tracking-tight">
-                    Step 3
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Write a summary of the video
-                  </p>
-                </div>
-                <div className="flex flex-col space-y-2 max-w-[640px]">
-                  <Textarea
-                    name="summary"
-                    className="min-h-[200px]"
-                    value={textArea}
-                    onChange={(e) => setTextArea(e.target.value)}
-                  />
-                  <div className="flex justify-end">
+                  <div className="flex space-x-2">
+                    <Input
+                      name="youtube-url"
+                      onChange={(e) => setYoutubeURL(e.target.value)}
+                    />
                     <Button
                       variant="outline"
-                      type="button"
-                      onClick={handleSubmitSummary}
+                      type="submit"
+                      onClick={handlePlay}
                     >
-                      Submit
-                      {isLoading && (
-                        <Icons.spinner className="h-4 w-4 animate-spin ml-2" />
-                      )}
+                      Play
                     </Button>
                   </div>
                 </div>
+
+                {/* Step 2 */}
+                <div className="col-span-4 space-y-5">
+                  <div className="grid grid-cols-2">
+                    <div className="block">
+                      <div className="flex justify-between items-end">
+                        <div className="flex flex-col">
+                          <h2 className="text-2xl font-semibold tracking-tight">
+                            Step 2
+                          </h2>
+                          <p className="text-sm text-muted-foreground">
+                            Watch the YouTube Video
+                          </p>
+                        </div>
+                        <Button variant="outline" type="button">
+                          <FaRegClosedCaptioning className="mr-2 h-4 w-4" />
+                          Show subtitles
+                        </Button>
+                      </div>
+                      <div className="object-contain">
+                        <YoutubePlayer
+                          videoId={videoId}
+                          autoPlay={true}
+                          title="My Video"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-span-1">
+                    <p>This is subtitles</p>
+                  </div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="col-span-2 space-y-5">
+                  <div className="flex flex-col">
+                    <h2 className="text-2xl font-semibold tracking-tight">
+                      Step 3
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                      Write a summary of the video
+                    </p>
+                  </div>
+                  <div className="flex flex-col space-y-2">
+                    <Textarea
+                      name="summary"
+                      className="min-h-[200px]"
+                      value={textArea}
+                      onChange={(e) => setTextArea(e.target.value)}
+                    />
+                    <div className="flex justify-end">
+                      <Button
+                        variant="outline"
+                        type="button"
+                        onClick={handleSubmitSummary}
+                      >
+                        Submit
+                        {isLoading && (
+                          <Icons.spinner className="h-4 w-4 animate-spin ml-2" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               {response && !isLoading && (
                 <div className="space-y-5">
                   <div className="flex flex-col">
