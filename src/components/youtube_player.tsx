@@ -1,24 +1,65 @@
-import React from "react";
-import YouTube, { YouTubeProps } from "react-youtube";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
-interface YoutubePlayerProps {
+interface IProps {
   videoId: string;
+  autoPlay?: boolean;
+  title: string;
 }
 
-export const YoutubePlayer = ({ videoId }: YoutubePlayerProps) => {
-  const onPlayerReady: YouTubeProps["onReady"] = (event) => {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  };
+export const YoutubePlayer: React.FC<IProps> = (props) => {
+  const { videoId, autoPlay, title } = props;
+  const videoURL = `https://www.youtube.com/embed/${videoId}${
+    autoPlay ? "?autoplay=1" : ""
+  }&controls=0`;
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const defaultHeight = 495;
+  const [videoHeight, setVideoHeight] = useState<number>(
+    iframeRef.current ? iframeRef.current.offsetWidth * 0.5625 : defaultHeight
+  );
 
-  const opts: YouTubeProps["opts"] = {
-    height: "390",
-    width: "640",
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-    },
-  };
+  const handleChangeVideoWidth = useCallback(() => {
+    const ratio =
+      window.innerWidth > 990
+        ? 1.0
+        : window.innerWidth > 522
+        ? 1.2
+        : window.innerWidth > 400
+        ? 1.45
+        : 1.85;
+    const height = iframeRef.current
+      ? iframeRef.current.offsetWidth * 0.5625
+      : defaultHeight;
+    return setVideoHeight(Math.floor(height * ratio));
+  }, []);
 
-  return <YouTube videoId={videoId} opts={opts} onReady={onPlayerReady} />;
+  useEffect(() => {
+    window.addEventListener("resize", handleChangeVideoWidth);
+    const ratio =
+      window.innerWidth > 990
+        ? 1.0
+        : window.innerWidth > 522
+        ? 1.2
+        : window.innerWidth > 400
+        ? 1.45
+        : 1.85;
+    const height = iframeRef.current
+      ? iframeRef.current.offsetWidth * 0.5625
+      : defaultHeight;
+    setVideoHeight(Math.floor(height * ratio));
+    return function cleanup() {
+      window.removeEventListener("resize", handleChangeVideoWidth);
+    };
+  }, [videoHeight, handleChangeVideoWidth]);
+
+  return (
+    <iframe
+      ref={iframeRef}
+      title={title}
+      width="100%"
+      height={`${videoHeight}px`}
+      src={videoURL}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    />
+  );
 };
