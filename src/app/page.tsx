@@ -4,11 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Sidebar } from "@/components/sidebar";
 import { Textarea } from "@/components/ui/textarea";
 import { YoutubePlayer } from "@/components/youtube_player";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { extractYouTubeVideoId } from "@/lib/youtube";
 import { ResponseCard } from "@/components/response_card";
 import { Icons } from "@/components/icons";
 import { toast } from "react-hot-toast";
+import { FaRegClosedCaptioning } from "react-icons/fa";
 
 export default function Home() {
   const [videoId, setVideoId] = useState("");
@@ -74,16 +75,22 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="space-y-5">
-                <div className="flex flex-col">
-                  <h2 className="text-2xl font-semibold tracking-tight">
-                    Step 2
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Watch the YouTube Video
-                  </p>
+              <div className="space-y-5 max-w-[640px]">
+                <div className="flex justify-between items-end">
+                  <div className="flex flex-col">
+                    <h2 className="text-2xl font-semibold tracking-tight">
+                      Step 2
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                      Watch the YouTube Video
+                    </p>
+                  </div>
+                  <Button variant="outline" type="button">
+                    <FaRegClosedCaptioning className="mr-2 h-4 w-4" />
+                    Show subtitles
+                  </Button>
                 </div>
-                <div className="max-w-[640px] object-contain">
+                <div className="object-contain">
                   <YoutubePlayer
                     videoId={videoId}
                     autoPlay={true}
