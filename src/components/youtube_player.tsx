@@ -5,13 +5,15 @@ interface IProps {
   autoPlay?: boolean;
   title: string;
   setCaptionHeight: React.Dispatch<React.SetStateAction<number>>;
+  time: number;
 }
 
 export const YoutubePlayer: React.FC<IProps> = (props) => {
-  const { videoId, autoPlay, title, setCaptionHeight } = props;
+  const { videoId, autoPlay, title, setCaptionHeight, time } = props;
+
   const videoURL = `https://www.youtube.com/embed/${videoId}${
     autoPlay ? "?autoplay=1" : ""
-  }&controls=0`;
+  }&amp;controls=0${time ? `&amp;start=${time}` : ""}`;
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const defaultHeight = 495;
   const [videoHeight, setVideoHeight] = useState<number>(

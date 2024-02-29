@@ -20,6 +20,7 @@ export default function Home() {
   const [showSubtitles, setShowSubtitles] = useState(false);
   const [textArea, setTextArea] = useState("");
   const [captionHeight, setCaptionHeight] = useState(0);
+  const [time, setTime] = useState(0);
 
   const handlePlay = () => {
     const url = youtubeURL;
@@ -115,6 +116,7 @@ export default function Home() {
                         autoPlay={true}
                         title="My Video"
                         setCaptionHeight={setCaptionHeight}
+                        time={time}
                       />
                     </div>
                   </div>
@@ -124,6 +126,7 @@ export default function Home() {
                     <TimeStampCard
                       timestamps={response.subtitleTimestamps}
                       height={captionHeight}
+                      setTime={setTime}
                     />
                   )}
                 </div>
