@@ -18,13 +18,25 @@ export async function POST(req: NextRequest) {
 
   try {
     const subtitles = await fetchSubtitlesFromVideoID(body.videoId);
-    const payload = buildGptPayload(subtitles, body.summary);
-    const completion = await sendToGpt(payload);
 
-    const { missingIdeas, wrongIdeas, correctIdeas } = JSON.parse(completion!);
+    // uncomment to use OpenAI
+    // const payload = buildGptPayload(subtitles, body.summary);
+    // const completion = await sendToGpt(payload);
+
+    // const { missingIdeas, wrongIdeas, correctIdeas } = JSON.parse(completion!);
+
+    const missingIdeas = [
+      "Sylvia is going to have a younger sibling",
+      "The younger sibling will be born in October",
+    ];
+    const correctIdeas: string[] = [];
+    const wrongIdeas = [
+      "The name of the character is Sylvia and not Sohee",
+      "Sylvia is an only child",
+    ];
 
     return NextResponse.json(
-      { missingIdeas, wrongIdeas, correctIdeas },
+      { missingIdeas, wrongIdeas, correctIdeas, subtitles },
       { status: 200 }
     );
   } catch (error: any) {
