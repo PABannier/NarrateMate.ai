@@ -4,10 +4,11 @@ interface IProps {
   videoId: string;
   autoPlay?: boolean;
   title: string;
+  setCaptionHeight: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const YoutubePlayer: React.FC<IProps> = (props) => {
-  const { videoId, autoPlay, title } = props;
+  const { videoId, autoPlay, title, setCaptionHeight } = props;
   const videoURL = `https://www.youtube.com/embed/${videoId}${
     autoPlay ? "?autoplay=1" : ""
   }&controls=0`;
@@ -46,6 +47,7 @@ export const YoutubePlayer: React.FC<IProps> = (props) => {
       ? iframeRef.current.offsetWidth * 0.5625
       : defaultHeight;
     setVideoHeight(Math.floor(height * ratio));
+    setCaptionHeight(Math.floor(height * ratio));
     return function cleanup() {
       window.removeEventListener("resize", handleChangeVideoWidth);
     };

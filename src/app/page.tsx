@@ -10,6 +10,7 @@ import { ResponseCard } from "@/components/response_card";
 import { Icons } from "@/components/icons";
 import { toast } from "react-hot-toast";
 import { FaRegClosedCaptioning } from "react-icons/fa";
+import { TimeStampCard } from "@/components/timestamp_card";
 
 export default function Home() {
   const [videoId, setVideoId] = useState("");
@@ -17,6 +18,7 @@ export default function Home() {
   const [response, setResponse] = useState<null | any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [textArea, setTextArea] = useState("");
+  const [captionHeight, setCaptionHeight] = useState(0);
 
   const handlePlay = () => {
     const url = youtubeURL;
@@ -100,12 +102,18 @@ export default function Home() {
                         videoId={videoId}
                         autoPlay={true}
                         title="My Video"
+                        setCaptionHeight={setCaptionHeight}
                       />
                     </div>
                   </div>
                 </div>
-                <div className="lg:col-span-2 p-5">
-                  {response.subtitles && <p>{response.subtitles}</p>}
+                <div className="lg:col-span-2 lg:ml-5 self-end">
+                  {response && response.subtitleTimestamps && (
+                    <TimeStampCard
+                      timestamps={response.subtitleTimestamps}
+                      height={captionHeight}
+                    />
+                  )}
                 </div>
               </div>
 

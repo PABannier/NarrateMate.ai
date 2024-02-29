@@ -17,9 +17,10 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const subtitles = await fetchSubtitlesFromVideoID(body.videoId);
+    const subtitleTimestamps = await fetchSubtitlesFromVideoID(body.videoId);
 
     // uncomment to use OpenAI
+    // const subtitles = subtitleTimestamps.map((line) => line.text).join(" ");
     // const payload = buildGptPayload(subtitles, body.summary);
     // const completion = await sendToGpt(payload);
 
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest) {
     ];
 
     return NextResponse.json(
-      { missingIdeas, wrongIdeas, correctIdeas, subtitles },
+      { missingIdeas, wrongIdeas, correctIdeas, subtitleTimestamps },
       { status: 200 }
     );
   } catch (error: any) {
