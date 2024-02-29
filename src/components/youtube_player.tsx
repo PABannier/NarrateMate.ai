@@ -53,7 +53,7 @@ export const YoutubePlayer: React.FC<IProps> = (props) => {
     return function cleanup() {
       window.removeEventListener("resize", handleChangeVideoWidth);
     };
-  }, [videoHeight, handleChangeVideoWidth]);
+  }, [videoHeight, handleChangeVideoWidth, setCaptionHeight]);
 
   return (
     <iframe

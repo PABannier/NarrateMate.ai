@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Ref } from "react";
 import {
   Card,
   CardContent,
@@ -7,18 +7,30 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
+import { parseFormattedTimeStampToSeconds } from "@/lib/subtitles";
 interface ResponseCardProps {
   title: string;
   description: string;
-  feedback: string[];
+  feedback: { idea: string; timestamp: string | null }[];
   className: string;
+  onTimeStampClick: (
+    timestamp: number
+  ) => React.MouseEventHandler<HTMLButtonElement>;
+  scrollFunction: () => void;
 }
 export const ResponseCard = ({
   title,
   description,
   feedback,
   className,
+  onTimeStampClick,
+  scrollFunction,
 }: ResponseCardProps) => {
+  // const handleTimeStampClick = (timestamp: string) => () => {
+  //   // scrollFunction();
+  //   onTimeStampClick(parseFormattedTimeStampToSeconds(timestamp));
+  // };
   return (
     <>
       {feedback.length > 0 ? (
@@ -34,7 +46,7 @@ export const ResponseCard = ({
                 return (
                   <div
                     key={idx}
-                    className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
+                    className="grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
                   >
                     <span
                       className={cn(
@@ -42,8 +54,23 @@ export const ResponseCard = ({
                         className
                       )}
                     />
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium leading-none">{f}</p>
+                    <div>
+                      <p className="text-sm font-normal">{f.idea}</p>
+                      {/* <p className="text-sm text-muted-foreground">
+                        {f.timestamp && `${f.timestamp}`}
+                      </p> */}
+
+                      {f.timestamp && (
+                        <Button
+                          variant="link"
+                          className="p-0 h-auto text-muted-foreground font-normal font-robotoMono text-blue-500"
+                          onClick={onTimeStampClick(
+                            parseFormattedTimeStampToSeconds(f.timestamp)
+                          )}
+                        >
+                          {f.timestamp}
+                        </Button>
+                      )}
                     </div>
                   </div>
                 );

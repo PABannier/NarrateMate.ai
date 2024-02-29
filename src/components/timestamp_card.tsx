@@ -1,62 +1,35 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "./ui/button";
-
-interface TimeStamp {
-  text: string;
-  start: string;
-  dur: string;
-}
+import { FormattedTimeStamp } from "@/types";
 
 interface TimeStampCardProps {
-  timestamps: TimeStamp[];
+  timestamps: FormattedTimeStamp[];
   height: number;
-  setTime: React.Dispatch<React.SetStateAction<number>>;
+  onTimeStampClick: (
+    timestamp: number
+  ) => React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export function TimeStampCard({
   timestamps,
   height,
-  setTime,
+  onTimeStampClick,
 }: TimeStampCardProps) {
-  function parseTimeStamps(timestamp: TimeStamp) {
-    const start = Number(timestamp.start);
-    const duration = Number(timestamp.dur);
-    const end = start + duration;
-    const formatTime = (time: number) => {
-      return time < 10 ? `0${time}` : `${time}`;
-    };
-
-    return {
-      start: `${formatTime(Math.floor(start / 60))}:${formatTime(
-        Math.floor(start % 60)
-      )}`,
-      end: `${formatTime(Math.floor(end / 60))}:${formatTime(
-        Math.floor(end % 60)
-      )}`,
-    };
-  }
-
-  const handleTimeStampClick = (timestamp: number) => () => {
-    const startTimeInSeconds = Math.floor(timestamp);
-    setTime(startTimeInSeconds);
-  };
-
   return (
     <ScrollArea className="rounded-md border" style={{ height }}>
       <div className="p-4">
         <h4 className="mb-4 text-sm font-medium leading-none">Captions</h4>
         {timestamps.map((timestamp, index) => {
-          const formattedTimestamp = parseTimeStamps(timestamp);
           return (
-            <div key={index} className="text-sm">
+            <div key={index} className="text-sm flex gap-2 mb-1">
               <Button
                 variant="link"
-                className="p-0 h-auto"
-                onClick={handleTimeStampClick(Number(timestamp.start))}
+                className={`items-start p-0 h-auto text-muted-foreground text-blue-500 font-robotoMono`}
+                onClick={onTimeStampClick(Number(timestamp.start))}
               >
-                {formattedTimestamp.start}
-              </Button>{" "}
-              : {timestamp.text}
+                {timestamp.formattedStart}
+              </Button>
+              {timestamp.text}
             </div>
           );
         })}

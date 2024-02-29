@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Sidebar } from "@/components/sidebar";
 import { Textarea } from "@/components/ui/textarea";
 import { YoutubePlayer } from "@/components/youtube_player";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { extractYouTubeVideoId } from "@/lib/youtube";
 import { ResponseCard } from "@/components/response_card";
 import { Icons } from "@/components/icons";
@@ -22,6 +22,7 @@ export default function Home() {
   const [captionHeight, setCaptionHeight] = useState(0);
   const [time, setTime] = useState(0);
 
+  const ref = useRef<HTMLDivElement | null>(null);
   const handlePlay = () => {
     const url = youtubeURL;
     const extractedId = extractYouTubeVideoId(url);
@@ -59,9 +60,17 @@ export default function Home() {
     }
   };
 
+  const handleTimeStampClick = (timestamp: number) => () => {
+    const startTimeInSeconds = Math.floor(timestamp);
+    setTime(startTimeInSeconds);
+  };
+
+  const executeScroll = () => {
+    if (ref && ref.current) ref.current.scrollIntoView();
+  };
   return (
     <>
-      <div className="block">
+      <div className="block font-inter">
         <div className="grid lg:grid-cols-5">
           <Sidebar className="hidden lg:block" />
           <div className="lg:col-span-4 lg:border-l">
@@ -92,7 +101,7 @@ export default function Home() {
                 <div className="lg:col-span-2">
                   <div className="block space-y-5">
                     <div className="flex justify-between items-end">
-                      <div className="flex flex-col">
+                      <div className="flex flex-col " ref={ref}>
                         <h2 className="text-2xl font-semibold tracking-tight">
                           Step 2
                         </h2>
@@ -126,7 +135,7 @@ export default function Home() {
                     <TimeStampCard
                       timestamps={response.subtitleTimestamps}
                       height={captionHeight}
-                      setTime={setTime}
+                      onTimeStampClick={handleTimeStampClick}
                     />
                   )}
                 </div>
@@ -180,18 +189,24 @@ export default function Home() {
                       description="Here are the ideas from the video that you got correct."
                       feedback={response.correctIdeas}
                       className="bg-green-500"
+                      onTimeStampClick={handleTimeStampClick}
+                      scrollFunction={executeScroll}
                     />
                     <ResponseCard
                       title="Missing Ideas"
                       description="Here are the ideas from the video that you missed."
                       feedback={response.missingIdeas}
                       className="bg-orange-500"
+                      onTimeStampClick={handleTimeStampClick}
+                      scrollFunction={executeScroll}
                     />
                     <ResponseCard
                       title="Wrong Ideas"
                       description="Here are the ideas from the video that you got wrong."
                       feedback={response.wrongIdeas}
                       className="bg-red-500"
+                      onTimeStampClick={handleTimeStampClick}
+                      scrollFunction={executeScroll}
                     />
                   </div>
                 </div>

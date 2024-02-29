@@ -1,10 +1,28 @@
 import he from "he";
 import striptags from "striptags";
+import { TimeStamp, FormattedTimeStamp } from "@/types";
 
-interface Acc {
-  start: string;
-  dur: string;
-  text: string;
+function parseTimeStamps(timestamp: TimeStamp) {
+  const start = Number(timestamp.start);
+  const duration = Number(timestamp.dur);
+  const end = start + duration;
+  const formatTime = (time: number) => {
+    return time < 10 ? `0${time}` : `${time}`;
+  };
+
+  return {
+    start: `${formatTime(Math.floor(start / 60))}:${formatTime(
+      Math.floor(start % 60)
+    )}`,
+    end: `${formatTime(Math.floor(end / 60))}:${formatTime(
+      Math.floor(end % 60)
+    )}`,
+  };
+}
+
+export function parseFormattedTimeStampToSeconds(formattedStart: string) {
+  const [minutes, seconds] = formattedStart.split(":");
+  return Number(minutes) * 60 + Number(seconds);
 }
 
 export const fetchSubtitlesFromVideoID = async (videoID: string) => {
@@ -66,7 +84,7 @@ export const fetchSubtitlesFromVideoID = async (videoID: string) => {
     .replace("</transcript>", "")
     .split("</text>")
     .filter((line) => line && line.trim())
-    .reduce<Acc[]>((acc, line) => {
+    .reduce<FormattedTimeStamp[]>((acc, line) => {
       // Extract start and duration times using regex patterns
       const startResult = startRegex.exec(line);
       const durResult = durRegex.exec(line);
@@ -86,10 +104,12 @@ export const fetchSubtitlesFromVideoID = async (videoID: string) => {
         .replace(/<\/?[^>]+(>|$)/g, "");
       const decodedText = he.decode(htmlText);
       const text = striptags(decodedText);
+      const formattedStart = parseTimeStamps({ start, dur, text }).start;
 
       // Create a subtitle object with start, duration, and text properties
       acc.push({
         start,
+        formattedStart,
         dur,
         text,
       });

@@ -3,15 +3,16 @@ import OpenAI from "openai";
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export const buildGptPayload = (subtitles: string, summary: string) => {
-  const systemPrompt = `You are given the subtitles of a video and a summary made by a student. Your task is to evaluate the summary.
+  const systemPrompt = `You are given the subtitles and the associated timestamps of a video and a summary made by a student. Your task is to evaluate the summary.
 
     Here are the instructions to evaluate my summary:
     1. Your output is in JSON format.
     2. The JSON object has 3 keys: "missingIdeas", "correctIdeas", "wrongIdeas".
-    3. The value of "missingIdeas" is a list of ideas that are in the subtitles but not articulated in the summary.
-    4. The value of "correctIdeas" is a list of ideas that are in both the subtitles and the summary.
-    5. The value of "wrongIdeas" is a list of ideas that are in the summary but not in the subtitles.
+    3. The value of "missingIdeas" is a list of objects with two keys: "idea" and "timestamp". The value of "idea" is the idea that is in the subtitles but not articulated in the summary. The value of "timestamp" is the timestamp where that idea is expressed.
+    4. The value of "correctIdeas" is a list of objects with two keys: "idea" and "timestamp". The value of "idea" is the idea that is in both the subtitles and in the summary. The value of "timestamp" is the timestamp where that idea is expressed.
+    5. The value of "wrongIdeas" is a list of objects with two keys: "idea" and "timestamp". The value of "idea" is the idea that is in the summary but not in the subtitles. The value of "timestamp" is null.
     6. The subtitles of the video may be in another language than the summary. You still reply in English.
+    7. Only return a single timestamp per "idea".
     `;
 
   const userPrompt = `
@@ -39,6 +40,7 @@ export const sendToGpt = async (payload: any) => {
     messages: payload,
     model: "gpt-3.5-turbo",
     response_format: { type: "json_object" },
+    temperature: 0.1,
   });
 
   return completion.choices[0].message.content;
