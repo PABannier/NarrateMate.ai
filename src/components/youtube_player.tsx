@@ -14,6 +14,7 @@ export const YoutubePlayer: React.FC<IProps> = (props) => {
   const videoURL = `https://www.youtube.com/embed/${videoId}${
     autoPlay ? "?autoplay=1" : ""
   }&amp;controls=0${time ? `&amp;start=${time}` : ""}`;
+
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const defaultHeight = 495;
   const [videoHeight, setVideoHeight] = useState<number>(

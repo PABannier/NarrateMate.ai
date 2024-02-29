@@ -27,10 +27,10 @@ export const ResponseCard = ({
   onTimeStampClick,
   scrollFunction,
 }: ResponseCardProps) => {
-  // const handleTimeStampClick = (timestamp: string) => () => {
-  //   // scrollFunction();
-  //   onTimeStampClick(parseFormattedTimeStampToSeconds(timestamp));
-  // };
+  const handleTimeStampClick = (timestamp: string) => {
+    scrollFunction();
+    return onTimeStampClick(parseFormattedTimeStampToSeconds(timestamp));
+  };
   return (
     <>
       {feedback.length > 0 ? (
@@ -64,9 +64,7 @@ export const ResponseCard = ({
                         <Button
                           variant="link"
                           className="p-0 h-auto text-muted-foreground font-normal font-robotoMono text-blue-500"
-                          onClick={onTimeStampClick(
-                            parseFormattedTimeStampToSeconds(f.timestamp)
-                          )}
+                          onClick={handleTimeStampClick(f.timestamp)}
                         >
                           {f.timestamp}
                         </Button>
