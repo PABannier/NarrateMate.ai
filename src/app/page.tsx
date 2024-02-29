@@ -17,6 +17,7 @@ export default function Home() {
   const [youtubeURL, setYoutubeURL] = useState("");
   const [response, setResponse] = useState<null | any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSubtitles, setShowSubtitles] = useState(false);
   const [textArea, setTextArea] = useState("");
   const [captionHeight, setCaptionHeight] = useState(0);
 
@@ -49,6 +50,12 @@ export default function Home() {
       setResponse(null);
     }
     setIsLoading(false);
+  };
+
+  const handleClickOnSubtitles = () => {
+    if (response) {
+      setShowSubtitles(!showSubtitles);
+    }
   };
 
   return (
@@ -92,9 +99,14 @@ export default function Home() {
                           Watch the YouTube Video
                         </p>
                       </div>
-                      <Button variant="outline" type="button">
+                      <Button
+                        variant="outline"
+                        type="button"
+                        onClick={handleClickOnSubtitles}
+                        disabled={response === null || isLoading}
+                      >
                         <FaRegClosedCaptioning className="mr-2 h-4 w-4" />
-                        Show subtitles
+                        {showSubtitles ? "Hide subtitles" : "Show subtitles"}
                       </Button>
                     </div>
                     <div className="object-contain">
@@ -108,7 +120,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="lg:col-span-2 lg:ml-5 self-end">
-                  {response && response.subtitleTimestamps && (
+                  {response && response.subtitleTimestamps && showSubtitles && (
                     <TimeStampCard
                       timestamps={response.subtitleTimestamps}
                       height={captionHeight}
