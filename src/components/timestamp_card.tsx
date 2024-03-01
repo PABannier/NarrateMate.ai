@@ -1,6 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "./ui/button";
 import { FormattedTimeStamp } from "@/types";
+import { TranslationHoverCard } from "./hover_card";
 
 interface TimeStampCardProps {
   timestamps: FormattedTimeStamp[];
@@ -8,6 +9,26 @@ interface TimeStampCardProps {
   onTimeStampClick: (
     timestamp: number
   ) => React.MouseEventHandler<HTMLButtonElement>;
+}
+
+function TokenSpan({ text }: { text: string }) {
+  const tokens = text.split(" ");
+
+  return (
+    <p>
+      {tokens.map((token, index) => {
+        return (
+          <TranslationHoverCard key={index}>
+            <span key={index}>
+              <Button variant="link" className="p-0 h-auto">
+                {token}
+              </Button>{" "}
+            </span>
+          </TranslationHoverCard>
+        );
+      })}
+    </p>
+  );
 }
 
 export function TimeStampCard({
@@ -24,12 +45,12 @@ export function TimeStampCard({
             <div key={index} className="text-sm flex gap-2 mb-1">
               <Button
                 variant="link"
-                className={`items-start p-0 h-auto text-muted-foreground text-blue-500 font-robotoMono`}
+                className="items-start p-0 h-auto text-muted-foreground text-blue-500 font-robotoMono"
                 onClick={onTimeStampClick(Number(timestamp.start))}
               >
                 {timestamp.formattedStart}
               </Button>
-              {timestamp.text}
+              <TokenSpan text={timestamp.text} />
             </div>
           );
         })}
