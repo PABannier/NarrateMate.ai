@@ -25,7 +25,10 @@ export function parseFormattedTimeStampToSeconds(formattedStart: string) {
   return Number(minutes) * 60 + Number(seconds);
 }
 
-export const fetchSubtitlesFromVideoID = async (videoID: string) => {
+export const fetchSubtitlesFromVideoID = async (
+  videoID: string,
+  language: string
+) => {
   // Fetch YouTube video page data
   const response = await fetch(`https://youtube.com/watch?v=${videoID}`);
   const data = await response.text();
@@ -55,7 +58,7 @@ export const fetchSubtitlesFromVideoID = async (videoID: string) => {
   }
 
   // Select a caption track (by default English if it exists, otherwise the first track)
-  const lang = "en";
+  const lang = language;
   let subtitle =
     captionTracks.find((track: any) => track.vssId === `.${lang}`) ||
     captionTracks.find((track: any) => track.vssId === `a.${lang}`) ||

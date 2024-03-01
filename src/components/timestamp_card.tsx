@@ -2,6 +2,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "./ui/button";
 import { FormattedTimeStamp } from "@/types";
 import { TranslationHoverCard } from "./hover_card";
+import { useState } from "react";
 
 interface TimeStampCardProps {
   timestamps: FormattedTimeStamp[];
@@ -13,21 +14,38 @@ interface TimeStampCardProps {
 
 function TokenSpan({ text }: { text: string }) {
   const tokens = text.split(" ");
-
+  const [isHovered, setIsHovered] = useState(false);
+  const handleMouseOver = () => {
+    setIsHovered(true);
+  };
   return (
-    <p>
+    <>
       {tokens.map((token, index) => {
         return (
-          <TranslationHoverCard key={index} word={token}>
-            <span key={index}>
-              <Button variant="link" className="p-0 h-auto">
-                {token}
-              </Button>{" "}
-            </span>
-          </TranslationHoverCard>
+          <div key={index}>
+            {!isHovered ? (
+              <span key={index}>
+                <Button
+                  variant="link"
+                  className="p-0 h-auto"
+                  onMouseOver={handleMouseOver}
+                >
+                  {token}
+                </Button>{" "}
+              </span>
+            ) : (
+              <TranslationHoverCard key={index} word={token}>
+                <span key={index}>
+                  <Button variant="link" className="p-0 h-auto">
+                    {token}
+                  </Button>{" "}
+                </span>
+              </TranslationHoverCard>
+            )}
+          </div>
         );
       })}
-    </p>
+    </>
   );
 }
 

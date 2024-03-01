@@ -1,5 +1,6 @@
+"use client";
 import { Button } from "@/components/ui/button";
-import { use, useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   HoverCard,
   HoverCardContent,
@@ -16,23 +17,26 @@ export function TranslationHoverCard({
   children,
   word,
 }: TranslationHoverCardProps) {
-  const [loading, setLoading] = useState(false);
   const [translation, setTranslation] = useState("");
-
-  const fetchData = useCallback(() => {
-    setLoading(true);
-
-    fetch(``)
-      .then((response) => response.json())
-      .then((data) => {
-        setTranslation(data.translation);
-        setLoading(false);
-      });
-  }, [word]);
+  const [definition, setDefinition] = useState("");
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    fetch("/api/translate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ word }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTranslation(data.translation);
+        setDefinition(data.definition);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [word]);
 
   return (
     <HoverCard>
@@ -45,7 +49,7 @@ export function TranslationHoverCard({
               <PlusCircledIcon className="h-5 w-5" />
             </Button>
           </div>
-          <p className="text-sm">This is the token definition.</p>
+          <p className="text-sm">{definition}</p>
           <div className="flex items-center pt-2"></div>
         </div>
       </HoverCardContent>

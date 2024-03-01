@@ -39,7 +39,7 @@ export default function Home() {
       const res = await fetch("/api/submit_summary", {
         method: "post",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ videoId, summary: textArea }),
+        body: JSON.stringify({ videoId, summary: textArea, lang: "en" }),
       });
       const data = await res.json();
 

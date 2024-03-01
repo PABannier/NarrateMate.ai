@@ -35,6 +35,25 @@ export const buildGptPayload = (subtitles: string, summary: string) => {
   return messages;
 };
 
+export const buildGptTranslationPayload = (word: string) => {
+  //system prompt
+  const systemPrompt = `You are given a word in any language. Your task is to provide the translation and the definition in English. Provide the response as a JSON object with the keys "translation" and "definition".`;
+  //user prompt
+  const userPrompt = `Here is the word: ${word}.`;
+  const messages = [
+    {
+      role: "system",
+      content: systemPrompt,
+    },
+    {
+      role: "user",
+      content: userPrompt,
+    },
+  ];
+
+  return messages;
+};
+
 export const sendToGpt = async (payload: any) => {
   const completion = await openai.chat.completions.create({
     messages: payload,

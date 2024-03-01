@@ -17,7 +17,10 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const subtitleTimestamps = await fetchSubtitlesFromVideoID(body.videoId);
+    const subtitleTimestamps = await fetchSubtitlesFromVideoID(
+      body.videoId,
+      body.lang
+    );
 
     // uncomment to use OpenAI
     // const subtitles = subtitleTimestamps
