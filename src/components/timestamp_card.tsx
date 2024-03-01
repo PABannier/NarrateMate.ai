@@ -19,6 +19,22 @@ function TokenSpan({ text }: { text: string }) {
     setIsHovered(true);
   };
   return (
+    // <p>
+    //   {tokens.map((token, index) => {
+    //     return (
+    //       <span key={index}>
+    //         <Button
+    //           variant="link"
+    //           className="p-0 h-auto"
+    //           onMouseOver={handleMouseOver}
+    //         >
+    //           {token}
+    //         </Button>{" "}
+    //       </span>
+    //     );
+    //   })}
+    // </p>
+
     <>
       {tokens.map((token, index) => {
         return (
@@ -31,7 +47,7 @@ function TokenSpan({ text }: { text: string }) {
                   onMouseOver={handleMouseOver}
                 >
                   {token}
-                </Button>{" "}
+                </Button>
               </span>
             ) : (
               <TranslationHoverCard key={index} word={token}>

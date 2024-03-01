@@ -10,3 +10,5 @@ export interface FormattedTimeStamp {
   formattedStart: string;
   dur: string;
 }
+
+// export interface
