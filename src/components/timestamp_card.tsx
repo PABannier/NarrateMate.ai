@@ -18,7 +18,7 @@ function TokenSpan({ text }: { text: string }) {
     <p>
       {tokens.map((token, index) => {
         return (
-          <TranslationHoverCard key={index}>
+          <TranslationHoverCard key={index} word={token}>
             <span key={index}>
               <Button variant="link" className="p-0 h-auto">
                 {token}
