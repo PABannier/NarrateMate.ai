@@ -133,7 +133,7 @@ export default function Home() {
                 <div className="lg:col-span-2 lg:ml-5 self-end">
                   {response && response.subtitleTimestamps && showSubtitles && (
                     <TimeStampCard
-                      timestamps={response.subtitleTimestamps}
+                      multiLingualTimeStamps={response.subtitleTimestamps}
                       height={captionHeight}
                       onTimeStampClick={handleTimeStampClick}
                     />

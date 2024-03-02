@@ -1,26 +1,24 @@
 import { buildGptTranslationPayload, sendToGpt } from "@/lib/gpt";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
   // get the word from the request
-  const body = await req.json();
-  console.log(body);
-  if (!body.word) {
-    return NextResponse.json(
-      { error: "Missing word to translate" },
-      { status: 400 }
-    );
-  }
-  try {
-    // const payload = buildGptTranslationPayload(body.word);
+  if (req.nextUrl.searchParams.get("word")) {
+    const word = req.nextUrl.searchParams.get("word");
+    console.log(word);
+
+    // const payload = buildGptTranslationPayload(word!);
     // const completion = await sendToGpt(payload);
     // const { translation, definition } = JSON.parse(completion!);
 
-    const translation = `translation of ${body.word}`;
-    const definition = `definition of ${body.word}`;
+    const translation = `translation of ${word}`;
+    const definition = `definition of ${word}`;
+
     return NextResponse.json({ translation, definition }, { status: 200 });
-  } catch (error: any) {
-    console.log(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  return NextResponse.json(
+    { error: "Missing word to translate" },
+    { status: 400 }
+  );
 }

@@ -78,11 +78,8 @@ export const fetchSubtitlesFromVideoID = async (videoID: string) => {
 
   const subtitles = [];
   for (const track of captionTracks) {
-    const regex = /\.(a\.)?([a-z]+)/g;
-    const match = track.vssId.match(regex);
-
     // If a match is found, return the language code, otherwise return null
-    const lang = match ? match[1] : null;
+    const lang = track.vssId.split(".")[1];
 
     // Fetch subtitles XML from the subtitle track URL
     const subtitlesResponse = await fetch(track.baseUrl);

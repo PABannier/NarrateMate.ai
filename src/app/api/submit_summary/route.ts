@@ -32,19 +32,19 @@ export async function POST(req: NextRequest) {
       openAISubtitles = subtitleTimestamps[0];
     }
 
-    const subtitles = openAISubtitles.subtitles
-      .map((line) => `${line.formattedStart} : ${line.text}`)
-      .join("\n");
-    const payload = buildGptPayload(subtitles, body.summary);
-    const completion = await sendToGpt(payload);
+    // const subtitles = openAISubtitles.subtitles
+    //   .map((line) => `${line.formattedStart} : ${line.text}`)
+    //   .join("\n");
+    // const payload = buildGptPayload(subtitles, body.summary);
+    // const completion = await sendToGpt(payload);
 
-    const { missingIdeas, wrongIdeas, correctIdeas } = JSON.parse(completion!);
-    console.log("missing ideas: ", missingIdeas);
-    console.log("wrong ideas: ", wrongIdeas);
+    // const { missingIdeas, wrongIdeas, correctIdeas } = JSON.parse(completion!);
+    // console.log("missing ideas: ", missingIdeas);
+    // console.log("wrong ideas: ", wrongIdeas);
     // up to here for using OpenAI
 
-    // // uncomment for mock data
-    // const { missingIdeas, wrongIdeas, correctIdeas } = allIdeas;
+    // uncomment for mock data
+    const { missingIdeas, wrongIdeas, correctIdeas } = allIdeas;
 
     return NextResponse.json(
       { missingIdeas, wrongIdeas, correctIdeas, subtitleTimestamps },

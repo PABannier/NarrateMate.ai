@@ -8,24 +8,21 @@ import {
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 interface TranslationHoverCardProps {
-  children: React.ReactNode;
+  open: boolean;
   word: string;
 }
 
 export function TranslationHoverCard({
-  children,
+  open,
   word,
 }: TranslationHoverCardProps) {
   const [translation, setTranslation] = useState("");
   const [definition, setDefinition] = useState("");
 
   useEffect(() => {
-    fetch("/api/translate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ word }),
+    fetch(`/api/translate?word=${word}`, {
+      method: "GET",
+      cache: "force-cache",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -38,8 +35,8 @@ export function TranslationHoverCard({
   }, [word]);
 
   return (
-    <HoverCard>
-      <HoverCardTrigger asChild>{children}</HoverCardTrigger>
+    <HoverCard open={open}>
+      <HoverCardTrigger />
       <HoverCardContent className="w-80">
         <div className="space-y-1">
           <div className="flex justify-between">
