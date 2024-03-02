@@ -6,10 +6,11 @@ interface IProps {
   title: string;
   setCaptionHeight: React.Dispatch<React.SetStateAction<number>>;
   time: number;
+  playerKey: number;
 }
 
 export const YoutubePlayer: React.FC<IProps> = (props) => {
-  const { videoId, autoPlay, title, setCaptionHeight, time } = props;
+  const { videoId, autoPlay, title, setCaptionHeight, time, playerKey } = props;
 
   const videoURL = `https://www.youtube.com/embed/${videoId}${
     autoPlay ? "?autoplay=1" : ""
@@ -58,6 +59,7 @@ export const YoutubePlayer: React.FC<IProps> = (props) => {
 
   return (
     <iframe
+      key={playerKey}
       ref={iframeRef}
       title={title}
       width="100%"

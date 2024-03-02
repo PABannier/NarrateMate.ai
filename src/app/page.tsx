@@ -21,13 +21,17 @@ export default function Home() {
   const [textArea, setTextArea] = useState("");
   const [captionHeight, setCaptionHeight] = useState(0);
   const [time, setTime] = useState(0);
+  // trick to re-render the youtube player on play
+  const [playerKey, setPlayerKey] = useState(0);
 
   const ref = useRef<HTMLDivElement | null>(null);
+
   const handlePlay = () => {
     const url = youtubeURL;
     const extractedId = extractYouTubeVideoId(url);
     if (extractedId) {
       setVideoId(extractedId);
+      setPlayerKey(playerKey + 1);
     }
 
     // get video length to limit only to videos that are short
@@ -126,6 +130,7 @@ export default function Home() {
                         title="My Video"
                         setCaptionHeight={setCaptionHeight}
                         time={time}
+                        playerKey={playerKey}
                       />
                     </div>
                   </div>
