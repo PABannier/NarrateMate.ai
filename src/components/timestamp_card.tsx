@@ -68,11 +68,11 @@ function TokenSpan({ text }: { text: string }) {
   const tokens = text.split(" ");
 
   return (
-    <p>
+    <div>
       {tokens.map((token, index) => {
         return <TokenCard key={index} index={index} token={token} />;
       })}
-    </p>
+    </div>
   );
 }
 

@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
 import { Toaster } from "react-hot-toast";
-
+import { SessionProvider } from "next-auth/react";
 interface ClientLayoutProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const ClientLayout = ({ children }: ClientLayoutProps) => {
-    return (
-        <>
-        {children}
-        <Toaster toastOptions={{duration: 3000}} />
-        </>
-    )
-}
+  return (
+    <SessionProvider>
+      {children}
+      <Toaster toastOptions={{ duration: 3000 }} />
+    </SessionProvider>
+  );
+};
 
 export default ClientLayout;
