@@ -36,8 +36,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     }
 
     setIsLoading(true);
-
-    await supabase.auth.signUp({
+    console.log(location.origin);
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -46,7 +46,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     });
 
     router.refresh();
-
+    if (!error) {
+      toast.success("Sign up successful. Check your email for verification.");
+    } else {
+      toast.error(error.message);
+    }
     setIsLoading(false);
   }
 
