@@ -10,7 +10,10 @@ const ClientLayout = ({ children }: ClientLayoutProps) => {
   return (
     <SessionProvider>
       {children}
-      <Toaster toastOptions={{ duration: 3000 }} />
+      <Toaster
+        toastOptions={{ duration: 3000 }}
+        containerClassName="font-inter"
+      />
     </SessionProvider>
   );
 };

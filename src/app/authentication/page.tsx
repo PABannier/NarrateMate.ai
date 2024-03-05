@@ -1,6 +1,4 @@
 "use client";
-import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -10,13 +8,8 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { UserAuthForm } from "./components/user-auth-form";
 
-// export const metadata: Metadata = {
-//   title: "Authentication",
-//   description: "Authentication forms built using the components.",
-// };
-
-export default function AuthenticationPage() {
-  const { data: session, status } = useSession();
+export default function SignUpPage() {
+  const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -25,12 +18,8 @@ export default function AuthenticationPage() {
     }
   }, [status, router]);
 
-  //   const handleClickOnSignin = () => {
-  //     signIn();
-  //   };
-
   return (
-    <div className=" font-inter">
+    <div className="font-inter">
       <div className="container relative h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Link
           href="/examples/authentication"
