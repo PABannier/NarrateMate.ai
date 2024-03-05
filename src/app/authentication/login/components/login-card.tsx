@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export function LoginCard() {
@@ -24,19 +24,29 @@ export function LoginCard() {
     supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   });
 
+  const [isLoading, setLoading] = React.useState<boolean>(false);
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
 
   const handleSignIn = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    if (!email || !password) {
+      toast.error("Email and password are required");
+      return;
+    }
+
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    router.refresh();
+
+    setLoading(false);
+
     if (error) {
       toast.error(error.message);
     } else {
-      router.push(`${location.origin}/`);
+      router.push("/home");
     }
   };
 
@@ -85,6 +95,7 @@ export function LoginCard() {
       </CardContent>
       <CardFooter>
         <Button className="w-full" type="button" onClick={handleSignIn}>
+          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}{" "}
           Login
         </Button>
       </CardFooter>

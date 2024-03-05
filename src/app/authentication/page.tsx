@@ -1,17 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { UserAuthForm } from "./components/user-auth-form";
 
 export default function SignUpPage() {
-  const router = useRouter();
-
-  // TODO: redirect if signed up
-
   return (
     <div className="font-inter">
       <div className="container relative h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">

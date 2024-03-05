@@ -6,7 +6,18 @@ import type { NextRequest } from "next/server";
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req, res });
-  await supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (session && !req.nextUrl.pathname.startsWith("/home")) {
+    return Response.redirect(new URL("/home", req.url));
+  }
+
+  if (!session && !req.nextUrl.pathname.startsWith("/authentication")) {
+    return Response.redirect(new URL("/authentication", req.url));
+  }
+
   return res;
 }
 
