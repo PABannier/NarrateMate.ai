@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -9,14 +8,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { UserAuthForm } from "./components/user-auth-form";
 
 export default function SignUpPage() {
-  const { status } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.push("/");
-    }
-  }, [status, router]);
+  // TODO: redirect if signed up
 
   return (
     <div className="font-inter">

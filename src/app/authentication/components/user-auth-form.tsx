@@ -1,23 +1,30 @@
 "use client";
 
 import * as React from "react";
-import { signIn } from "next-auth/react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const supabase = createClientComponentClient({
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  });
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [confirmPassword, setConfirmPassword] = React.useState<string>("");
 
-  async function handleSignInWithEmail() {
+  async function handleSignUpWithEmail() {
     if (!email || !password || !confirmPassword) {
       toast.error("Please fill in all fields");
       return;
@@ -30,13 +37,26 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     setIsLoading(true);
 
-    const response = await signIn("email", {
+    await supabase.auth.signUp({
       email,
       password,
-      redirect: true, // TODO: redirect to confirm email page
+      options: {
+        emailRedirectTo: `${location.origin}/api/auth/callback`,
+      },
     });
 
+    router.refresh();
+
     setIsLoading(false);
+  }
+
+  async function handleSignInWithOAuth() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${location.origin}/`,
+      },
+    });
   }
 
   return (
@@ -89,7 +109,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         <Button
           disabled={isLoading}
           type="button"
-          onClick={() => handleSignInWithEmail()}
+          onClick={handleSignUpWithEmail}
         >
           {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
           Create account
@@ -109,7 +129,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         variant="outline"
         type="button"
         disabled={isLoading}
-        onClick={() => signIn("google")}
+        onClick={handleSignInWithOAuth}
       >
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
