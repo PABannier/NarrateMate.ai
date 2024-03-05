@@ -11,6 +11,7 @@ import { Icons } from "@/components/icons";
 import { toast } from "react-hot-toast";
 import { FaRegClosedCaptioning } from "react-icons/fa";
 import { TimeStampCard } from "@/components/timestamp_card";
+import { UserNav } from "@/components/user-nav";
 
 export default function Home() {
   const [videoId, setVideoId] = useState("");
@@ -78,6 +79,13 @@ export default function Home() {
         <div className="grid lg:grid-cols-5">
           <Sidebar className="hidden lg:block" />
           <div className="lg:col-span-4 lg:border-l">
+            <div className="border-b">
+              <div className="flex h-16 items-center px-4">
+                <div className="ml-auto flex items-center space-x-4">
+                  <UserNav />
+                </div>
+              </div>
+            </div>
             <div className="h-full px-4 py-6 lg:px-8 space-y-7">
               {/* Step 1 */}
               <div className="grid lg:grid-cols-4 space-y-5">
