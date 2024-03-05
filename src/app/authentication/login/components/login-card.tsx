@@ -14,7 +14,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export function LoginCard() {
   const router = useRouter();
@@ -27,11 +28,16 @@ export function LoginCard() {
   const [password, setPassword] = React.useState<string>("");
 
   const handleSignIn = async () => {
-    await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     router.refresh();
+    if (error) {
+      toast.error(error.message);
+    } else {
+      router.push(`${location.origin}/`);
+    }
   };
 
   return (
