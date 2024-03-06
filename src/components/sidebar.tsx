@@ -12,7 +12,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
             Practice
           </h2>
           <div className="space-y-1">
-            <Button variant="secondary" className="w-full justify-start">
+            <Button variant="ghost" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -28,7 +28,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
               </svg>
               New video
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button variant="secondary" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
