@@ -10,7 +10,11 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (session && !req.nextUrl.pathname.startsWith("/home")) {
+  if (
+    session &&
+    !req.nextUrl.pathname.startsWith("/home") &&
+    !req.nextUrl.pathname.startsWith("/history")
+  ) {
     return Response.redirect(new URL("/home", req.url));
   }
 
@@ -22,5 +26,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
 };

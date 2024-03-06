@@ -11,4 +11,10 @@ export interface FormattedTimeStamp {
   dur: string;
 }
 
-// export interface
+export interface SummaryData {
+  youtubeUrl: string;
+  summary: string;
+  missingIdeas: string;
+  correctIdeas: string;
+  wrongIdeas: string;
+}
