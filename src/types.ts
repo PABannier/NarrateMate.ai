@@ -12,7 +12,7 @@ export interface FormattedTimeStamp {
 }
 
 export interface SummaryData {
-  youtubeUrl: string;
+  youtubeVideoId: string;
   summary: string;
   missingIdeas: string;
   correctIdeas: string;

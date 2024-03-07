@@ -9,6 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { parseFormattedTimeStampToSeconds } from "@/lib/subtitles";
+
 interface ResponseCardProps {
   title: string;
   description: string;
@@ -19,6 +20,7 @@ interface ResponseCardProps {
   ) => React.MouseEventHandler<HTMLButtonElement>;
   scrollFunction: () => void;
 }
+
 export const ResponseCard = ({
   title,
   description,

@@ -17,7 +17,7 @@ async function createSummary(summaryData: SummaryData) {
   const result = await supabase
     .from("summary")
     .insert({
-      youtube_url: summaryData.youtubeUrl,
+      youtube_video_id: summaryData.youtubeVideoId,
       summary: summaryData.summary,
       missing_ideas: summaryData.missingIdeas,
       correct_ideas: summaryData.correctIdeas,
@@ -31,6 +31,7 @@ async function createSummary(summaryData: SummaryData) {
   revalidatePath("/home");
   return JSON.stringify(result);
 }
+
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
@@ -75,7 +76,7 @@ export async function POST(req: NextRequest) {
     const { missingIdeas, wrongIdeas, correctIdeas } = allIdeas;
 
     const summaryData: SummaryData = {
-      youtubeUrl: body.videoId,
+      youtubeVideoId: body.videoId,
       summary: body.summary,
       missingIdeas: JSON.stringify(missingIdeas),
       correctIdeas: JSON.stringify(correctIdeas),

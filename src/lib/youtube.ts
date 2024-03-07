@@ -11,6 +11,14 @@ export function extractYouTubeVideoId(youtubeUrl: string) {
   return null;
 }
 
+export function getYouTubeThumnailUrl(videoId: string) {
+  return "https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
+}
+
+export function getYouTubeVideoTitle(videoId: string) {
+  return "Video Title";
+}
+
 export const languageCodes = {
   am: "Amharic",
   ar: "Arabic",
