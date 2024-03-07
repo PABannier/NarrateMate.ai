@@ -1,4 +1,4 @@
-import { Separator } from "@radix-ui/react-menu";
+import { Separator } from "@/components/ui/separator";
 import React from "react";
 
 function PageHeader({

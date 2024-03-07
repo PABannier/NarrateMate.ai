@@ -74,7 +74,10 @@ export default function Home() {
   };
   return (
     <div className="h-full px-4 py-6 lg:px-8 space-y-7">
-      <PageHeader title="History" description="Your history of summaries" />
+      <PageHeader
+        title="New video"
+        description="Watch and summarize a YouTube video"
+      />
       {/* Step 1 */}
       <div className="grid lg:grid-cols-4 space-y-5">
         <div className="lg:col-span-4">

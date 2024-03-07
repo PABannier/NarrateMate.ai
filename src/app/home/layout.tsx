@@ -1,4 +1,3 @@
-"use client";
 import { Sidebar } from "@/components/sidebar";
 import { UserNav } from "@/components/user-nav";
 

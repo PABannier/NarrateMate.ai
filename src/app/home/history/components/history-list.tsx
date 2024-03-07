@@ -5,6 +5,9 @@ import { convertKeysToCamelCase } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
+
+export const revalidate = 60;
+
 const getSummaries = async () => {
   try {
     // await new Promise((resolve) => setTimeout(resolve, 10000));
