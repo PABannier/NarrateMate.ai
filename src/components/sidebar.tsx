@@ -93,7 +93,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
         {data.sections.map((section, sectionIndex) => (
-          <div className="px-3 py-2">
+          <div key={sectionIndex} className="px-3 py-2">
             <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
               {section.title}
             </h2>
@@ -109,6 +109,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
                 return (
                   <Button
                     className="w-full justify-start"
+                    key={currentIndex}
                     variant={
                       currentIndex === selectedIndex ? "secondary" : "ghost"
                     }

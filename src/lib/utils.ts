@@ -20,3 +20,24 @@ export function formatTimestamp(timestamp: string) {
 
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
+type AnyObject = {
+  [key: string]: any;
+};
+
+function toCamelCase(str: string): string {
+  return str.replace(/([-_][a-z])/gi, ($1) => {
+    return $1.toUpperCase().replace("-", "").replace("_", "");
+  });
+}
+
+export function convertKeysToCamelCase(obj: any): any {
+  if (Array.isArray(obj)) {
+    return obj.map((v) => convertKeysToCamelCase(v));
+  } else if (obj !== null && typeof obj === "object") {
+    return Object.keys(obj).reduce<AnyObject>((result, key) => {
+      result[toCamelCase(key)] = convertKeysToCamelCase(obj[key]);
+      return result;
+    }, {});
+  }
+  return obj;
+}

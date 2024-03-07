@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { formatTimestamp } from "@/lib/utils";
+import Image from "next/image";
 
 interface VideoCardProps {
   title: string;
@@ -21,7 +22,7 @@ export const VideoCard = ({
   return (
     <Card className="border-none p-2 shadow-none hover:cursor-pointer hover:bg-secondary rounded-none">
       <CardContent className="p-0">
-        <img src={thumbnailUrl} alt={title} />
+        <Image src={thumbnailUrl} alt={title} width={480} height={360} />
       </CardContent>
       <CardHeader className="px-0 py-0 mt-3">
         <CardTitle>{title}</CardTitle>

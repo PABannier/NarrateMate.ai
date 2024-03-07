@@ -1,3 +1,5 @@
+import { Ole } from "next/font/google";
+
 export function extractYouTubeVideoId(youtubeUrl: string) {
   const regex =
     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -15,8 +17,17 @@ export function getYouTubeThumnailUrl(videoId: string) {
   return "https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
 }
 
-export function getYouTubeVideoTitle(videoId: string) {
-  return "Video Title";
+export async function getYouTubeVideoTitle(videoId: string) {
+  const response = await fetch(`https://youtube.com/watch?v=${videoId}`);
+  const data = await response.text();
+
+  const regex = /<meta name="title" content="([^"]+)"/;
+  const match = data.match(regex);
+
+  if (!match) {
+    return "";
+  }
+  return match[1];
 }
 
 export const languageCodes = {

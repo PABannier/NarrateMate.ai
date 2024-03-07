@@ -18,3 +18,13 @@ export interface SummaryData {
   correctIdeas: string;
   wrongIdeas: string;
 }
+export interface FetchedSummaryData {
+  youtubeVideoId: string;
+  summary: string;
+  missingIdeas: string[];
+  correctIdeas: string[];
+  wrongIdeas: string[];
+  id: string;
+  userId: string;
+  createdAt: string;
+}

@@ -10,6 +10,7 @@ import { Icons } from "@/components/icons";
 import { toast } from "react-hot-toast";
 import { FaRegClosedCaptioning } from "react-icons/fa";
 import { TimeStampCard } from "@/components/timestamp_card";
+import PageHeader from "@/components/page-header";
 
 export default function Home() {
   const [videoId, setVideoId] = useState("");
@@ -73,6 +74,7 @@ export default function Home() {
   };
   return (
     <div className="h-full px-4 py-6 lg:px-8 space-y-7">
+      <PageHeader title="History" description="Your history of summaries" />
       {/* Step 1 */}
       <div className="grid lg:grid-cols-4 space-y-5">
         <div className="lg:col-span-4">
