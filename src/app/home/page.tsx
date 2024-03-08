@@ -72,6 +72,7 @@ export default function Home() {
   const executeScroll = () => {
     if (ref && ref.current) ref.current.scrollIntoView();
   };
+
   return (
     <div className="h-full px-4 py-6 lg:px-8 space-y-7">
       <PageHeader
@@ -183,7 +184,7 @@ export default function Home() {
             <ResponseCard
               title="Correct Ideas"
               description="Here are the ideas from the video that you got correct."
-              feedback={response.correctIdeas}
+              ideas={response.correctIdeas}
               className="bg-green-500"
               onTimeStampClick={handleTimeStampClick}
               scrollFunction={executeScroll}
@@ -191,7 +192,7 @@ export default function Home() {
             <ResponseCard
               title="Missing Ideas"
               description="Here are the ideas from the video that you missed."
-              feedback={response.missingIdeas}
+              ideas={response.missingIdeas}
               className="bg-orange-500"
               onTimeStampClick={handleTimeStampClick}
               scrollFunction={executeScroll}
@@ -199,7 +200,7 @@ export default function Home() {
             <ResponseCard
               title="Wrong Ideas"
               description="Here are the ideas from the video that you got wrong."
-              feedback={response.wrongIdeas}
+              ideas={response.wrongIdeas}
               className="bg-red-500"
               onTimeStampClick={handleTimeStampClick}
               scrollFunction={executeScroll}

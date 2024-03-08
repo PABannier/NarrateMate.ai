@@ -9,11 +9,12 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { parseFormattedTimeStampToSeconds } from "@/lib/subtitles";
+import { Idea } from "@/types";
 
 interface ResponseCardProps {
   title: string;
   description: string;
-  feedback: { idea: string; timestamp: string | null }[];
+  ideas: Idea[];
   className: string;
   onTimeStampClick: (
     timestamp: number
@@ -24,7 +25,7 @@ interface ResponseCardProps {
 export const ResponseCard = ({
   title,
   description,
-  feedback,
+  ideas,
   className,
   onTimeStampClick,
   scrollFunction,
@@ -35,16 +36,16 @@ export const ResponseCard = ({
   };
   return (
     <>
-      {feedback.length > 0 ? (
+      {ideas.length > 0 ? (
         <Card>
           <CardHeader>
             <CardTitle>{title}</CardTitle>
             <CardDescription>{description}</CardDescription>
           </CardHeader>
           <CardContent>
-            {feedback &&
-              feedback.length > 0 &&
-              feedback.map((f, idx) => {
+            {ideas &&
+              ideas.length > 0 &&
+              ideas.map((f, idx) => {
                 return (
                   <div
                     key={idx}

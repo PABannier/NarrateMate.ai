@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "./ui/button";
-import { FormattedTimeStamp } from "@/types";
+import { MultiLingualTimeStamps } from "@/types";
 import { TranslationHoverCard } from "./hover_card";
 import { useState } from "react";
 import { languageCodes } from "@/lib/youtube";
@@ -19,11 +19,6 @@ import { removePunctuation } from "@/lib/utils";
 interface SelectLanguageProps {
   languages: string[];
   onValueChange: (value: string) => void;
-}
-
-interface MultiLingualTimeStamps {
-  languageCode: string;
-  subtitles: FormattedTimeStamp[];
 }
 
 interface TimeStampCardProps {

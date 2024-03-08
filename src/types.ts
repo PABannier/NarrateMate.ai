@@ -4,6 +4,11 @@ export interface TimeStamp {
   dur: string;
 }
 
+export interface Idea {
+  idea: string;
+  timestamp: string | null;
+}
+
 export interface FormattedTimeStamp {
   text: string;
   start: string;
@@ -27,4 +32,9 @@ export interface FetchedSummaryData {
   id: string;
   userId: string;
   createdAt: string;
+}
+
+export interface MultiLingualTimeStamps {
+  languageCode: string;
+  subtitles: FormattedTimeStamp[];
 }

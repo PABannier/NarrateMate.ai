@@ -87,7 +87,11 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   let [selectedIndex, setSelectedIndex] = React.useState(0);
 
   useEffect(() => {
-    setSelectedIndex(sidebarPages.indexOf(pathname));
+    let tmpPathname = pathname;
+    if (pathname.startsWith("/home/history")) {
+      tmpPathname = "/home/history";
+    }
+    setSelectedIndex(sidebarPages.indexOf(tmpPathname));
   }, [pathname]);
 
   const handleClickOnSidebarItem = (index: number) => {
