@@ -5,6 +5,7 @@ import { TimeStampCard } from "@/components/timestamp_card";
 import { ResponseCard } from "@/components/response_card";
 import { useRef, useState } from "react";
 import { MultiLingualTimeStamps } from "@/types";
+import { DeleteButton } from "./components/delete-button";
 
 export default function DetailsPage({ params }: { params: { id: string } }) {
   const [videoId, setVideoId] = useState("");
@@ -44,6 +45,7 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
                   The YouTube video you watched
                 </p>
               </div>
+              <DeleteButton id={params.id} />
             </div>
             <div className="object-contain">
               <YoutubePlayer
@@ -87,7 +89,7 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
       <div className="grid lg:grid-cols-4 space-y-5">
         <div className="lg:col-span-4">
           <h2 className="text-2xl font-semibold tracking-tight">
-            ChatGPT's ideas
+            ChatGPT feedback
           </h2>
         </div>
         <div className="lg:col-span-3 grid lg:grid-cols-2 xl:grid-cols-3 gap-4">

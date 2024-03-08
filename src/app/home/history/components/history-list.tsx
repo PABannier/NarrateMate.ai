@@ -3,18 +3,14 @@ import { VideoCard } from "@/components/video-card";
 import Link from "next/link";
 import { getYouTubeThumnailUrl, getYouTubeVideoTitle } from "@/lib/youtube";
 import { convertKeysToCamelCase } from "@/lib/utils";
-import { cookies } from "next/headers";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
+import { createSupabaseServerClient } from "@/lib/supabase";
 
 export const revalidate = 60;
 
 const getSummaries = async () => {
   try {
-    const cookieStore = cookies();
-    const supabase = createServerComponentClient({
-      cookies: () => cookieStore,
-    });
+    const supabase = createSupabaseServerClient();
     const { data } = await supabase.from("summary").select();
 
     if (!data) {
