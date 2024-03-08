@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
+import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const data = {
   sections: [
@@ -82,12 +83,15 @@ const data = {
 const sidebarPages = ["/home", "/home/history", "/home/words"];
 
 export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+  let pathname = usePathname();
   let [selectedIndex, setSelectedIndex] = React.useState(0);
-  let router = useRouter();
+
+  useEffect(() => {
+    setSelectedIndex(sidebarPages.indexOf(pathname));
+  }, [pathname]);
 
   const handleClickOnSidebarItem = (index: number) => {
     setSelectedIndex(index);
-    router.push(sidebarPages[index]);
   };
 
   return (
@@ -108,17 +112,19 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
                       0
                     ) + index;
                 return (
-                  <Button
-                    className="w-full justify-start"
-                    key={currentIndex}
-                    variant={
-                      currentIndex === selectedIndex ? "secondary" : "ghost"
-                    }
-                    onClick={() => handleClickOnSidebarItem(currentIndex)}
-                  >
-                    {button.icon}
-                    {button.text}
-                  </Button>
+                  <Link href={sidebarPages[currentIndex]} key={currentIndex}>
+                    <Button
+                      className="w-full justify-start"
+                      key={currentIndex}
+                      variant={
+                        currentIndex === selectedIndex ? "secondary" : "ghost"
+                      }
+                      onClick={() => handleClickOnSidebarItem(currentIndex)}
+                    >
+                      {button.icon}
+                      {button.text}
+                    </Button>
+                  </Link>
                 );
               })}
             </div>
