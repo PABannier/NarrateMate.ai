@@ -9,10 +9,12 @@ export async function middleware(req: NextRequest) {
   const {
     data: { session },
   } = await supabase.auth.getSession();
+
   if (
     session &&
     !req.nextUrl.pathname.startsWith("/home") &&
-    !req.nextUrl.pathname.startsWith("/history")
+    !req.nextUrl.pathname.startsWith("/history") &&
+    !req.nextUrl.pathname.startsWith("/profile")
   ) {
     return Response.redirect(new URL("/home", req.url));
   }
