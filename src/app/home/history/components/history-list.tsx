@@ -34,6 +34,7 @@ const getSummaries = async () => {
     toast.error("Error getting summaries: " + error);
   }
 };
+
 async function HistoryList() {
   const historyData = await getSummaries();
   return (
