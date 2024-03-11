@@ -5,6 +5,7 @@ import { getYouTubeThumnailUrl, getYouTubeVideoTitle } from "@/lib/youtube";
 import { convertKeysToCamelCase } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { createSupabaseServerClient } from "@/lib/supabase";
+import { remove } from "../[id]/actions";
 
 export const revalidate = 60;
 
@@ -36,6 +37,14 @@ const getSummaries = async () => {
 };
 async function HistoryList() {
   const historyData = await getSummaries();
+  //Started implementing the handleClick but remember this will become a client component if we add interactivity
+  const handleClick = (id: string) => async () => {
+    const { error } = await remove(id);
+
+    if (error) {
+      toast.error((error as Error).message);
+    } else toast.success("Successfully deleted summary!");
+  };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -48,6 +57,7 @@ async function HistoryList() {
                 title={data.title}
                 createdAt={data.createdAt}
                 thumbnailUrl={getYouTubeThumnailUrl(data.youtubeVideoId)}
+                // onClick={handleClick(data.id)}
               />
             </Link>
           </div>
