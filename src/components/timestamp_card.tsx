@@ -102,7 +102,10 @@ export function TimeStampCard({
   onTimeStampClick,
 }: TimeStampCardProps) {
   const languages = multiLingualTimeStamps.map((item) => item.languageCode);
-  const [subtitleIndex, setSubtitleIndex] = useState(languages.indexOf("en"));
+  const initialSubtitleIndex = languages.includes("en")
+    ? languages.indexOf("en")
+    : 0;
+  const [subtitleIndex, setSubtitleIndex] = useState(initialSubtitleIndex);
 
   const subtitles = multiLingualTimeStamps[subtitleIndex].subtitles;
 

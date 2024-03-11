@@ -4,10 +4,7 @@ import { YoutubePlayer } from "@/components/youtube_player";
 import { TimeStampCard } from "@/components/timestamp_card";
 import { ResponseCard } from "@/components/response_card";
 import { useEffect, useRef, useState } from "react";
-import { MultiLingualTimeStamps } from "@/types";
 import { DeleteButton } from "./components/delete-button";
-import { convertKeysToCamelCase } from "@/lib/utils";
-import { getYouTubeVideoTitle } from "@/lib/youtube";
 import toast from "react-hot-toast";
 
 export default function DetailsPage({ params }: { params: { id: string } }) {
@@ -35,19 +32,29 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
         if (!summary) {
           throw new Error("No data found");
         }
+
         console.log("insert", summary);
+
         setVideoId(summary.youtubeVideoId);
         setSummary(summary.summary);
-        // setCorrectIdeas(summary.correctIdeas); //// This is not working bc the returned object from db is not a list but a string
-        // setMissingIdeas(summary.missingIdeas);
-        // setWrongIdeas(summary.wrongIdeas);
+
         setTitle(summary.title);
+        setSubtitles(summary.subtitles);
+
+        const correctIdeas = JSON.parse(summary.correctIdeas);
+        const missingIdeas = JSON.parse(summary.missingIdeas);
+        const wrongIdeas = JSON.parse(summary.wrongIdeas);
+
+        setCorrectIdeas(correctIdeas);
+        setMissingIdeas(missingIdeas);
+        setWrongIdeas(wrongIdeas);
       } catch (error) {
         toast.error("Error getting summaries: " + error);
       }
     };
     getSummary(params.id);
-  });
+  }, [params.id]);
+
   const handleTimeStampClick = (timestamp: number) => () => {
     const startTimeInSeconds = Math.floor(timestamp);
     setTime(startTimeInSeconds);
