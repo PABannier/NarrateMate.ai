@@ -1,50 +1,101 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+"use client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatTimestamp } from "@/lib/utils";
 import Image from "next/image";
-import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
+import { Trash2 } from "lucide-react";
+import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface VideoCardProps {
+  id: string;
   title: string;
   createdAt: string;
   thumbnailUrl: string;
-  // onClick: () => void;
 }
 
 export const VideoCard = ({
+  id,
   title,
   createdAt,
   thumbnailUrl,
-}: // onClick,
-VideoCardProps) => {
+}: VideoCardProps) => {
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`/api/history?id=${id}`, {
+        method: "DELETE",
+      });
+      console.log(res);
+    } catch (error) {
+      console.error("Error deleting summary: ", error);
+    }
+  };
+
   return (
-    <Card className="border-none p-2 shadow-none hover:cursor-pointer hover:bg-secondary rounded-none">
+    <Card className="border-none p-2 shadow-none rounded-none font-inter">
       <CardContent className="p-0 flex flex-col">
-        <Button
-          size="icon"
-          variant="ghost"
-          className="rounded-full self-end hover:border-solid hover:border"
-          // onClick={onClick}
-        >
-          <Cross2Icon />
-        </Button>
-        <Image
-          className=""
-          src={thumbnailUrl}
-          alt={title}
-          width={480}
-          height={360}
-        />
+        <Link href={`/home/history/${id}`}>
+          <Image
+            className="hover:cursor-pointer hover:bg-secondary"
+            src={thumbnailUrl}
+            alt={title}
+            width={480}
+            height={360}
+          />
+        </Link>
       </CardContent>
       <CardHeader className="px-0 py-0 mt-3">
         <CardTitle>{title}</CardTitle>
-        <CardDescription>{formatTimestamp(createdAt)}</CardDescription>
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-muted-foreground">
+            {formatTimestamp(createdAt)}
+          </p>
+          <AlertDialog>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="link">
+                      <Trash2 size={20} />
+                    </Button>
+                  </AlertDialogTrigger>
+                </TooltipTrigger>
+                <TooltipContent>Delete</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  this summary from our database.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDelete}>
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
       </CardHeader>
     </Card>
   );
