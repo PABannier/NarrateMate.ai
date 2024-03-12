@@ -4,6 +4,7 @@ import { formatTimestamp } from "@/lib/utils";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
 import Link from "next/link";
 import {
   Tooltip,
@@ -22,6 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { deleteSummary } from "@/lib/database/mutations";
 
 interface VideoCardProps {
   id: string;
@@ -38,17 +40,14 @@ export const VideoCard = ({
 }: VideoCardProps) => {
   const handleDelete = async () => {
     try {
-      const res = await fetch(`/api/history?id=${id}`, {
-        method: "DELETE",
-      });
-      console.log(res);
+      await deleteSummary(id);
     } catch (error) {
-      console.error("Error deleting summary: ", error);
+      toast.error("Error deleting summary: " + error);
     }
   };
 
   return (
-    <Card className="border-none p-2 shadow-none rounded-none font-inter">
+    <Card className="border-none p-2 shadow-none rounded-none">
       <CardContent className="p-0 flex flex-col">
         <Link href={`/learning/practice/list/${id}`}>
           <Image
