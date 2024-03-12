@@ -50,7 +50,7 @@ export const VideoCard = ({
   return (
     <Card className="border-none p-2 shadow-none rounded-none font-inter">
       <CardContent className="p-0 flex flex-col">
-        <Link href={`/home/history/${id}`}>
+        <Link href={`/learning/practice/list/${id}`}>
           <Image
             className="hover:cursor-pointer hover:bg-secondary"
             src={thumbnailUrl}

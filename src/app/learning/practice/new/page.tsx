@@ -12,7 +12,7 @@ import { FaRegClosedCaptioning } from "react-icons/fa";
 import { TimeStampCard } from "@/components/timestamp_card";
 import PageHeader from "@/components/page-header";
 
-export default function Home() {
+export default function PracticePage() {
   const [videoId, setVideoId] = useState("");
   const [youtubeURL, setYoutubeURL] = useState("");
   const [response, setResponse] = useState<null | any>(null);

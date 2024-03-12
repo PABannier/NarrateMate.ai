@@ -80,7 +80,14 @@ const data = {
   ],
 };
 
-const sidebarPages = ["/home", "/home/history", "/home/words"];
+const basePath1 = "/learning/practice";
+const basePath2 = "/learning/review";
+
+const sidebarPages = [
+  basePath1 + "/new",
+  basePath1 + "/list",
+  basePath2 + "/words",
+];
 
 export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   let pathname = usePathname();
@@ -88,8 +95,8 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
 
   useEffect(() => {
     let tmpPathname = pathname;
-    if (pathname.startsWith("/home/history")) {
-      tmpPathname = "/home/history";
+    if (pathname.startsWith("/learning/practice/list")) {
+      tmpPathname = "/learning/practice/list";
     }
     setSelectedIndex(sidebarPages.indexOf(tmpPathname));
   }, [pathname]);

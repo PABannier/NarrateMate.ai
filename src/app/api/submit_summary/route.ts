@@ -28,7 +28,7 @@ async function createSummary(summaryData: SummaryData) {
   const { error } = result;
   if (error) throw new Error(`Error adding to database: ${error.message}`); // throw new Error
 
-  revalidatePath("/home");
+  revalidatePath("/learning/practice/new");
   return JSON.stringify(result);
 }
 

@@ -11,10 +11,11 @@ export async function middleware(req: NextRequest) {
   } = await supabase.auth.getSession();
   if (
     session &&
-    !req.nextUrl.pathname.startsWith("/home") &&
-    !req.nextUrl.pathname.startsWith("/history")
+    !req.nextUrl.pathname.startsWith("/learning/practice/new") &&
+    !req.nextUrl.pathname.startsWith("/learning/practice/list") &&
+    !req.nextUrl.pathname.startsWith("/learning/review/words")
   ) {
-    return Response.redirect(new URL("/home", req.url));
+    return Response.redirect(new URL("/learning/practice/new", req.url));
   }
 
   if (!session && !req.nextUrl.pathname.startsWith("/authentication")) {

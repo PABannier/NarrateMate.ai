@@ -1,11 +1,8 @@
 "use server";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-export async function create() {
-  // ...
-}
 
-export async function update() {
+export async function create() {
   // ...
 }
 
