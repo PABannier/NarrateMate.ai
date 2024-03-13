@@ -10,9 +10,10 @@ import { Icons } from "@/components/icons";
 import { toast } from "react-hot-toast";
 import { FaRegClosedCaptioning } from "react-icons/fa";
 import { TimeStampCard } from "@/components/timestamp_card";
+import { createSummary } from "@/lib/database/mutations";
 import PageHeader from "@/components/page-header";
 
-export default function Home() {
+export default function PracticePage() {
   const [videoId, setVideoId] = useState("");
   const [youtubeURL, setYoutubeURL] = useState("");
   const [response, setResponse] = useState<null | any>(null);
@@ -39,22 +40,20 @@ export default function Home() {
 
   const handleSubmitSummary = async () => {
     setIsLoading(true);
-    try {
-      const res = await fetch("/api/submit_summary", {
-        method: "post",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ videoId, summary: textArea }),
-      });
-      const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.error);
-      }
+    try {
+      const data = await createSummary(videoId, textArea);
+
+      data.missingIdeas = JSON.parse(data.missingIdeas);
+      data.correctIdeas = JSON.parse(data.correctIdeas);
+      data.wrongIdeas = JSON.parse(data.wrongIdeas);
+
       setResponse(data);
     } catch (e) {
       toast.error((e as Error).message);
       setResponse(null);
     }
+
     setIsLoading(false);
   };
 

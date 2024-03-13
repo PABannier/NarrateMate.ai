@@ -10,27 +10,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
+import { deleteSummary } from "@/lib/database/mutations";
 
 export function DeleteButton({ id }: { id: string }) {
   const handleClick = async () => {
-    const supabase = createClientComponentClient();
+    const { error } = await deleteSummary(id); // delete item server-side, instead of using the supabase client component client which is not as secure
 
-    try {
-      const { data, error } = await supabase
-        .from("summary")
-        .delete()
-        .match({ id });
-
-      if (error) {
-        throw new Error(error.message);
-      } else {
-        toast.success("Summary deleted successfully");
-      }
-    } catch (error) {
+    if (error) {
       toast.error((error as Error).message);
-    }
+    } else toast.success("Successfully deleted summary!");
   };
   return (
     <AlertDialog>
