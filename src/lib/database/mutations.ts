@@ -5,9 +5,11 @@ import { cookies } from "next/headers";
 import { allIdeas } from "../gpt";
 
 import { fetchSubtitlesFromVideoID } from "@/lib/subtitles";
+import { revalidatePath } from "next/cache";
 
 async function insertSummaryToDB(summaryData: SummaryData) {
-  const supabase = createServerActionClient({ cookies });
+  const cookieStore = cookies();
+  const supabase = createServerActionClient({ cookies: () => cookieStore });
 
   const result = await supabase
     .from("summary")
@@ -21,6 +23,7 @@ async function insertSummaryToDB(summaryData: SummaryData) {
     .single();
 
   const { error } = result;
+  revalidatePath("/learning/practice/list");
   if (error) {
     throw new Error(`Error adding to database: ${error.message}`); // throw new Error
   }
@@ -29,7 +32,7 @@ async function insertSummaryToDB(summaryData: SummaryData) {
 export async function createSummary(videoId: string, summary: string) {
   try {
     const subtitleTimestamps = await fetchSubtitlesFromVideoID(videoId);
-
+    console.log(subtitleTimestamps);
     // uncomment to use OpenAI
     let openAISubtitles = null;
     const enSubtitles = subtitleTimestamps.filter(
@@ -66,7 +69,7 @@ export async function createSummary(videoId: string, summary: string) {
 
     await insertSummaryToDB(summaryData);
 
-    return summaryData;
+    return { ...summaryData, subtitleTimestamps };
   } catch (error) {
     throw new Error("Error creating summary: " + error);
   }
@@ -74,9 +77,11 @@ export async function createSummary(videoId: string, summary: string) {
 
 export async function deleteSummary(id: string) {
   try {
-    const supabase = createServerActionClient({ cookies });
+    const cookieStore = cookies();
+    const supabase = createServerActionClient({ cookies: () => cookieStore });
     const { error } = await supabase.from("summary").delete().match({ id });
     if (error) throw new Error(error.message);
+    revalidatePath("/learning/practice/list");
     return { data: { success: true } };
   } catch (error) {
     return {

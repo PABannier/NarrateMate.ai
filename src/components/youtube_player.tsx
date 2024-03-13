@@ -13,7 +13,7 @@ export const YoutubePlayer: React.FC<IProps> = (props) => {
   const { videoId, autoPlay, title, setCaptionHeight, time, playerKey } = props;
 
   const videoURL = `https://www.youtube.com/embed/${videoId}${
-    autoPlay ? "?autoplay=1" : ""
+    autoPlay || time ? "?autoplay=1" : "?autoplay=0"
   }&amp;controls=0${time ? `&amp;start=${time}` : ""}`;
 
   const iframeRef = useRef<HTMLIFrameElement>(null);

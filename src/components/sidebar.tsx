@@ -123,7 +123,11 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
                       0
                     ) + index;
                 return (
-                  <Link href={sidebarPages[currentIndex]} key={currentIndex}>
+                  <Link
+                    prefetch={true}
+                    href={sidebarPages[currentIndex]}
+                    key={currentIndex}
+                  >
                     <Button
                       className="w-full justify-start"
                       key={currentIndex}

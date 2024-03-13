@@ -87,7 +87,7 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
             <div className="object-contain">
               <YoutubePlayer
                 videoId={videoId}
-                autoPlay={true}
+                autoPlay={false}
                 title="My Video"
                 setCaptionHeight={setCaptionHeight}
                 time={time}
@@ -129,7 +129,7 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
             ChatGPT feedback
           </h2>
         </div>
-        <div className="lg:col-span-3 grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="lg:col-span-4 2xl:col-span-3 grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
           <ResponseCard
             title="Correct Ideas"
             description="Here are the ideas from the video that you got correct."
