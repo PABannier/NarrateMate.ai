@@ -13,7 +13,7 @@ export async function updateUser({
 }: {
   email?: string;
   password?: string;
-  data?: { display_name: string };
+  data?: { display_name?: string; full_name?: string };
 }) {
   try {
     // const supabase = createClientComponentClient({

@@ -8,40 +8,32 @@ import {
 } from "@/components/ui/accordion";
 
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { updateUser } from "@/lib/database/user";
-import { revalidatePath } from "next/cache";
-
-interface IProfileDialogProps {
-  originalName: string;
-  originalEmail: string;
-}
+import { useStore } from "@/app/zustand";
 
 export function ProfileDialog({
   originalName,
   originalEmail,
-}: IProfileDialogProps) {
+}: {
+  originalName: string;
+  originalEmail: string;
+}) {
   const [name, setName] = useState(originalName);
   const [email, setEmail] = useState(originalEmail);
+  // const [name, setName] = useState(useStore((state) => state.name));
+  // const [email, setEmail] = useState(useStore((state) => state.email));
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-
-  useEffect(() => {
-    setName(originalName);
-    setEmail(originalEmail);
-  }, [originalName, originalEmail]);
 
   const handleChangePassword = async () => {
     if (password !== passwordConfirmation) {
@@ -57,13 +49,34 @@ export function ProfileDialog({
   };
 
   const handleSaveChanges = async () => {
-    const { error } = await updateUser({ email, data: { display_name: name } });
-    if (error) {
-      toast.error((error as Error).message);
+    const mutateName = useStore((state) => state.updateName);
+    const mutateEmail = useStore((state) => state.updateEmail);
+    const isOauthAuthenticated = useStore((state) => state.oauth);
+
+    if (isOauthAuthenticated) {
+      const { error } = await updateUser({ email, data: { full_name: name } });
+      if (error) {
+        toast.error((error as Error).message);
+      } else {
+        mutateName(name);
+        mutateEmail(email);
+        toast.success("Profile updated");
+      }
     } else {
-      toast.success("Profile updated");
+      const { error } = await updateUser({
+        email,
+        data: { display_name: name },
+      });
+      if (error) {
+        toast.error((error as Error).message);
+      } else {
+        mutateName(name);
+        mutateEmail(email);
+        toast.success("Profile updated");
+      }
     }
   };
+
   return (
     <DialogContent className="font-inter sm:max-w-[425px]">
       <DialogHeader>

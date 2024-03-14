@@ -12,33 +12,27 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { ProfileDialog } from "@/components/profile-dialog";
+import { useStore } from "@/app/zustand";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
 
 export function UserNav() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-
   const router = useRouter();
+  const fetchUserData = useStore((state) => state.fetchUser);
+
+  const name = useStore((state) => state.name);
+  const email = useStore((state) => state.email);
+
   const supabase = createClientComponentClient({
     supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
     supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   });
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      setName(user?.user_metadata.display_name || "");
-      setEmail(user?.email || "");
-    };
-
-    fetchUser();
+    fetchUserData();
   }, []);
 
   const extractInitials = (name: string) => {
