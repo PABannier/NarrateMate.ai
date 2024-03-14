@@ -34,7 +34,7 @@ export function UserNav() {
         data: { user },
       } = await supabase.auth.getUser();
 
-      setName(user?.user_metadata.full_name || "");
+      setName(user?.user_metadata.display_name || "");
       setEmail(user?.email || "");
     };
 
