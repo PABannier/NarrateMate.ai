@@ -1,6 +1,9 @@
 "use server";
 import { SummaryData } from "@/types";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import {
+  createClientComponentClient,
+  createServerActionClient,
+} from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { allIdeas } from "../gpt";
 
