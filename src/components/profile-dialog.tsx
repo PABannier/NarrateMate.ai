@@ -16,24 +16,28 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { updateUser } from "@/lib/database/user";
 import { useStore } from "@/app/zustand";
 
-export function ProfileDialog({
-  originalName,
-  originalEmail,
-}: {
-  originalName: string;
-  originalEmail: string;
-}) {
-  const [name, setName] = useState(originalName);
-  const [email, setEmail] = useState(originalEmail);
-  // const [name, setName] = useState(useStore((state) => state.name));
-  // const [email, setEmail] = useState(useStore((state) => state.email));
+export function ProfileDialog() {
+  const storeName = useStore((state) => state.name);
+  const storeEmail = useStore((state) => state.email);
+  const mutateName = useStore((state) => state.updateName);
+  const mutateEmail = useStore((state) => state.updateEmail);
+  const isOauthAuthenticated = useStore((state) => state.oauth);
+
+  const [name, setName] = useState(storeName);
+  const [email, setEmail] = useState(storeEmail);
+
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+  useEffect(() => {
+    setName(storeName);
+    setEmail(storeEmail);
+  }, [storeName, storeEmail]);
 
   const handleChangePassword = async () => {
     if (password !== passwordConfirmation) {
@@ -49,10 +53,6 @@ export function ProfileDialog({
   };
 
   const handleSaveChanges = async () => {
-    const mutateName = useStore((state) => state.updateName);
-    const mutateEmail = useStore((state) => state.updateEmail);
-    const isOauthAuthenticated = useStore((state) => state.oauth);
-
     if (isOauthAuthenticated) {
       const { error } = await updateUser({ email, data: { full_name: name } });
       if (error) {

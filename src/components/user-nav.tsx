@@ -93,7 +93,7 @@ export function UserNav() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <ProfileDialog originalName={name} originalEmail={email} />
+      <ProfileDialog />
     </Dialog>
   );
 }
