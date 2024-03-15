@@ -8,12 +8,12 @@ export async function GET(req: NextRequest) {
     const word = req.nextUrl.searchParams.get("word");
     console.log(word);
 
-    // const payload = buildGptTranslationPayload(word!);
-    // const completion = await sendToGpt(payload);
-    // const { translation, definition } = JSON.parse(completion!);
+    const payload = buildGptTranslationPayload(word!);
+    const completion = await sendToGpt(payload);
+    const { translation, definition } = JSON.parse(completion!);
 
-    const translation = `translation of ${word}`;
-    const definition = `definition of ${word}`;
+    // const translation = `translation of ${word}`;
+    // const definition = `definition of ${word}`;
 
     return NextResponse.json({ translation, definition }, { status: 200 });
   }

@@ -11,6 +11,7 @@ import { addWord } from "@/lib/database/mutations";
 import { WordEntry } from "@/types";
 import toast from "react-hot-toast";
 import { Icons } from "./icons";
+import { set } from "zod";
 interface TranslationHoverCardProps {
   open: boolean;
   word: string;
@@ -23,6 +24,8 @@ export function TranslationHoverCard({
   const [translation, setTranslation] = useState("");
   const [definition, setDefinition] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingAdded, setIsLoadingAdded] = useState(false);
+
   useEffect(() => {
     setIsLoading(true);
     fetch(`/api/translate?word=${word}`, {
@@ -45,8 +48,10 @@ export function TranslationHoverCard({
     translation,
     definition,
   }: WordEntry) => {
+    setIsLoadingAdded(true);
     const response = await addWord({ word, translation, definition });
     const { error } = JSON.parse(response);
+    setIsLoadingAdded(false);
     if (error) {
       toast.error((error as Error).message);
       return;
@@ -66,13 +71,17 @@ export function TranslationHoverCard({
               <h4 className="text-sm font-semibold self-center">
                 {translation}
               </h4>
-              <Button variant="ghost" size="icon">
-                <PlusCircledIcon
-                  className="h-5 w-5"
-                  onClick={() =>
-                    handleAddWord({ word, translation, definition })
-                  }
-                />
+              <Button variant="ghost" size="icon" disabled={isLoadingAdded}>
+                {isLoadingAdded ? (
+                  <Icons.spinner className="h-4 w-4 animate-spin ml-2" />
+                ) : (
+                  <PlusCircledIcon
+                    className="h-5 w-5"
+                    onClick={() =>
+                      handleAddWord({ word, translation, definition })
+                    }
+                  />
+                )}
               </Button>
             </div>
             <p className="text-sm">{definition}</p>

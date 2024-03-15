@@ -21,6 +21,11 @@ export function DataTableToolbar<TData>({
 
   const handleDeleteWords = async () => {
     const selectedRows = table.getSelectedRowModel().rows;
+
+    if (selectedRows.length === 0) {
+      return;
+    }
+
     const idsToDelete = selectedRows.map((row) => row.original.id);
     const response = await deleteWords(idsToDelete);
     const { error } = JSON.parse(response);
@@ -44,6 +49,7 @@ export function DataTableToolbar<TData>({
           className="h-8 w-[150px] lg:w-[250px]"
         />
         <Button
+          disabled={table.getSelectedRowModel().rows.length === 0}
           variant="destructive"
           className="h-8 space-x-2"
           onClick={handleDeleteWords}

@@ -6,8 +6,10 @@ import { ResponseCard } from "@/components/response_card";
 import { useEffect, useRef, useState } from "react";
 import { DeleteButton } from "./components/delete-button";
 import toast from "react-hot-toast";
+import Loading from "./loading";
 
 export default function DetailsPage({ params }: { params: { id: string } }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [videoId, setVideoId] = useState("");
   const [subtitles, setSubtitles] = useState([]);
   const [summary, setSummary] = useState("");
@@ -21,6 +23,8 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     const getSummary = async (id: string) => {
+      setIsLoading(true);
+
       try {
         // make a call to our api to get data from db. the api is doing the snake case to camel case transformations and adding title to summary object
         const res = await fetch(`/api/history/${id}`, {
@@ -51,6 +55,8 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
       } catch (error) {
         toast.error("Error getting summaries: " + error);
       }
+
+      setIsLoading(false);
     };
     getSummary(params.id);
   }, [params.id]);
@@ -63,6 +69,18 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
   const executeScroll = () => {
     if (ref && ref.current) ref.current.scrollIntoView();
   };
+
+  if (isLoading) {
+    return (
+      <div className="h-screen px-4 py-6 lg:px-8 space-y-7">
+        <PageHeader
+          title="YouTube video"
+          description="The YouTube video you watched"
+        />
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className="h-full px-4 py-6 lg:px-8 space-y-7">
