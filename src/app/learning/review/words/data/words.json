@@ -16,5 +16,6 @@
     {"word":"hello", "translation":"привет", "definition":"приветствие"},
     {"word":"hello", "translation":"привет", "definition":"приветствие"}, 
     {"word":"hello", "translation":"привет", "definition":"приветствие"},
-    {"word":"hello", "translation":"привет", "definition":"приветствие"}
+    {"word":"hello", "translation":"привет", "definition":"приветствие"},
+    {"word":"goodbye", "translation":"пока", "definition":"прощание"}
 ]
