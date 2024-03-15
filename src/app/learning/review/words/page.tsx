@@ -6,8 +6,7 @@ import { z } from "zod";
 
 import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
-import { UserNav } from "./components/user-nav";
-import { taskSchema } from "./data/schema";
+import { taskSchema, wordSchema } from "./data/schema";
 import PageHeader from "@/components/page-header";
 
 export const metadata: Metadata = {
@@ -16,24 +15,24 @@ export const metadata: Metadata = {
 };
 
 // Simulate a database read for tasks.
-async function getTasks() {
+async function getWords() {
   const data = await fs.readFile(
-    path.join(process.cwd(), "./src/app/learning/review/words/data/tasks.json")
+    path.join(process.cwd(), "./src/app/learning/review/words/data/words.json")
   );
 
-  const tasks = JSON.parse(data.toString());
+  const words = JSON.parse(data.toString());
 
-  return z.array(taskSchema).parse(tasks);
+  return z.array(wordSchema).parse(words);
 }
 
 export default async function WordsPage() {
-  const tasks = await getTasks();
+  const words = await getWords();
 
   return (
     <>
       <div className="h-full px-4 py-6 lg:px-8 space-y-7">
         <PageHeader title="Words" description="Review your words" />
-        <DataTable data={tasks} columns={columns} />
+        <DataTable data={words} columns={columns} />
       </div>
     </>
   );

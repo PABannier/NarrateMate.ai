@@ -10,4 +10,10 @@ export const taskSchema = z.object({
   priority: z.string(),
 });
 
-export type Task = z.infer<typeof taskSchema>;
+export const wordSchema = z.object({
+  word: z.string(),
+  translation: z.string(),
+  definition: z.string(),
+});
+
+export type Word = z.infer<typeof wordSchema>;
