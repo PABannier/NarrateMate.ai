@@ -1,5 +1,5 @@
 "use server";
-import { SummaryData } from "@/types";
+import { SummaryData, WordEntry } from "@/types";
 import {
   createClientComponentClient,
   createServerActionClient,
@@ -90,5 +90,27 @@ export async function deleteSummary(id: string) {
     return {
       error,
     };
+  }
+}
+
+export async function addWord({ word, translation, definition }: WordEntry) {
+  try {
+    const cookieStore = cookies();
+    const supabase = createServerActionClient({ cookies: () => cookieStore });
+
+    const { error } = await supabase
+      .from("word")
+      .insert({ word: word, translation: translation, definition: definition })
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    revalidatePath("/learning/review/words");
+    return JSON.stringify({ data: { success: true } });
+  } catch (error) {
+    console.log((error as Error).message);
+    return JSON.stringify({
+      error,
+    });
   }
 }

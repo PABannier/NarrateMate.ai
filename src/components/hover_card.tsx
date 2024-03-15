@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import {
@@ -6,7 +7,9 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
-
+import { addWord } from "@/lib/database/mutations";
+import { WordEntry } from "@/types";
+import toast from "react-hot-toast";
 interface TranslationHoverCardProps {
   open: boolean;
   word: string;
@@ -34,6 +37,20 @@ export function TranslationHoverCard({
       });
   }, [word]);
 
+  const handleAddWord = async ({
+    word,
+    translation,
+    definition,
+  }: WordEntry) => {
+    const response = await addWord({ word, translation, definition });
+    const { error } = JSON.parse(response);
+    if (error) {
+      toast.error((error as Error).message);
+      return;
+    }
+    toast.success("Word added successfully");
+    return;
+  };
   return (
     <HoverCard open={open}>
       <HoverCardTrigger />
@@ -42,7 +59,10 @@ export function TranslationHoverCard({
           <div className="flex justify-between">
             <h4 className="text-sm font-semibold self-center">{translation}</h4>
             <Button variant="ghost" size="icon">
-              <PlusCircledIcon className="h-5 w-5" />
+              <PlusCircledIcon
+                className="h-5 w-5"
+                onClick={() => handleAddWord({ word, translation, definition })}
+              />
             </Button>
           </div>
           <p className="text-sm">{definition}</p>

@@ -38,3 +38,9 @@ export interface MultiLingualTimeStamps {
   languageCode: string;
   subtitles: FormattedTimeStamp[];
 }
+
+export interface WordEntry {
+  word: string;
+  translation: string;
+  definition: string;
+}

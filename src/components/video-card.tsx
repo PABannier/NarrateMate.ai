@@ -60,7 +60,9 @@ export const VideoCard = ({
         </Link>
       </CardContent>
       <CardHeader className="px-0 py-0 mt-3">
-        <CardTitle>{title}</CardTitle>
+        <Link href={`/learning/practice/list/${id}`}>
+          <CardTitle>{title}</CardTitle>
+        </Link>
         <div className="flex items-center justify-between">
           <p className="text-sm text-muted-foreground">
             {formatTimestamp(createdAt)}

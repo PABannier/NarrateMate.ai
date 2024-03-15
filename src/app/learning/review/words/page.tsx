@@ -8,6 +8,7 @@ import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
 import { taskSchema, wordSchema } from "./data/schema";
 import PageHeader from "@/components/page-header";
+import { getAllWords } from "@/lib/database/queries";
 
 export const metadata: Metadata = {
   title: "Tasks",
@@ -26,7 +27,8 @@ async function getWords() {
 }
 
 export default async function WordsPage() {
-  const words = await getWords();
+  const words = await getAllWords();
+  console.log(words);
 
   return (
     <>

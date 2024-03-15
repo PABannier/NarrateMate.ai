@@ -7,6 +7,7 @@ import { getYouTubeVideoTitle } from "../youtube";
 import { convertKeysToCamelCase } from "../utils";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
+
 const getAllFromDB = unstable_cache(
   async (supabase: SupabaseClient) => {
     const { data } = await supabase.from("summary").select("*");
@@ -29,12 +30,29 @@ const getAllFromDB = unstable_cache(
     });
     return sortedData;
   },
-  [],
-  { revalidate: 2 }
+  []
+  // { revalidate: 2 }
 );
 
 export const getAllSummaries = async () => {
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
   return await getAllFromDB(supabase);
+};
+
+const getAllWordsFromDb = unstable_cache(async (supabase: SupabaseClient) => {
+  const { data, error } = await supabase.from("word").select("*");
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  if (!data) {
+    throw new Error("No data found");
+  }
+  return data;
+});
+export const getAllWords = async () => {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  return await getAllWordsFromDb(supabase);
 };
