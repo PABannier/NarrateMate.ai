@@ -10,6 +10,7 @@ import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { addWord } from "@/lib/database/mutations";
 import { WordEntry } from "@/types";
 import toast from "react-hot-toast";
+import { Icons } from "./icons";
 interface TranslationHoverCardProps {
   open: boolean;
   word: string;
@@ -21,14 +22,16 @@ export function TranslationHoverCard({
 }: TranslationHoverCardProps) {
   const [translation, setTranslation] = useState("");
   const [definition, setDefinition] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     fetch(`/api/translate?word=${word}`, {
       method: "GET",
       cache: "force-cache",
     })
       .then((res) => res.json())
       .then((data) => {
+        setIsLoading(false);
         setTranslation(data.translation);
         setDefinition(data.definition);
       })
@@ -54,20 +57,28 @@ export function TranslationHoverCard({
   return (
     <HoverCard open={open}>
       <HoverCardTrigger />
-      <HoverCardContent className="w-80">
-        <div className="space-y-1">
-          <div className="flex justify-between">
-            <h4 className="text-sm font-semibold self-center">{translation}</h4>
-            <Button variant="ghost" size="icon">
-              <PlusCircledIcon
-                className="h-5 w-5"
-                onClick={() => handleAddWord({ word, translation, definition })}
-              />
-            </Button>
+      <HoverCardContent className="w-80 flex justify-center">
+        {isLoading ? (
+          <Icons.spinner className="h-4 w-4 animate-spin ml-2" />
+        ) : (
+          <div className="space-y-1">
+            <div className="flex justify-between">
+              <h4 className="text-sm font-semibold self-center">
+                {translation}
+              </h4>
+              <Button variant="ghost" size="icon">
+                <PlusCircledIcon
+                  className="h-5 w-5"
+                  onClick={() =>
+                    handleAddWord({ word, translation, definition })
+                  }
+                />
+              </Button>
+            </div>
+            <p className="text-sm">{definition}</p>
+            <div className="flex items-center pt-2"></div>
           </div>
-          <p className="text-sm">{definition}</p>
-          <div className="flex items-center pt-2"></div>
-        </div>
+        )}
       </HoverCardContent>
     </HoverCard>
   );

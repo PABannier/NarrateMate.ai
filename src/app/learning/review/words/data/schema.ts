@@ -11,6 +11,7 @@ export const taskSchema = z.object({
 });
 
 export const wordSchema = z.object({
+  id: z.string(),
   word: z.string(),
   translation: z.string(),
   definition: z.string(),

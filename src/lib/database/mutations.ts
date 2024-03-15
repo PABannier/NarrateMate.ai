@@ -114,3 +114,19 @@ export async function addWord({ word, translation, definition }: WordEntry) {
     });
   }
 }
+
+export async function deleteWords(ids: string[]) {
+  try {
+    const cookieStore = cookies();
+    const supabase = createServerActionClient({ cookies: () => cookieStore });
+    const { error } = await supabase.from("word").delete().in("id", ids);
+    if (error) throw new Error(error.message);
+    revalidatePath("/learning/review/words");
+    return JSON.stringify({ data: { success: true } });
+  } catch (error) {
+    console.log((error as Error).message);
+    return JSON.stringify({
+      error,
+    });
+  }
+}
