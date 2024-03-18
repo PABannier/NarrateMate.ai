@@ -77,6 +77,6 @@
 
 @layer base {
   html {
-    font-family: "var(--font-inter)";
+    font-family: var(--font-inter);
   }
 }

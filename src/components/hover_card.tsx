@@ -12,6 +12,7 @@ import { WordEntry } from "@/types";
 import toast from "react-hot-toast";
 import { Icons } from "./icons";
 import { useStore } from "@/app/zustand";
+
 interface TranslationHoverCardProps {
   open: boolean;
   word: string;
