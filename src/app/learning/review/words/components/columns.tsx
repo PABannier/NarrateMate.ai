@@ -39,7 +39,7 @@ export const columns: ColumnDef<Word>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Word" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("word")}</div>,
+    cell: ({ row }) => <div className="w-[100px]">{row.getValue("word")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -49,7 +49,7 @@ export const columns: ColumnDef<Word>[] = [
       <DataTableColumnHeader column={column} title="Translation" />
     ),
     cell: ({ row }) => (
-      <div className="w-[80px]">{row.getValue("translation")}</div>
+      <div className="w-[100px]">{row.getValue("translation")}</div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -60,7 +60,7 @@ export const columns: ColumnDef<Word>[] = [
       <DataTableColumnHeader column={column} title="Definition" />
     ),
     cell: ({ row }) => (
-      <div className="w-[80px]">{row.getValue("definition")}</div>
+      <div className="w-full">{row.getValue("definition")}</div>
     ),
     enableSorting: false,
     enableHiding: false,

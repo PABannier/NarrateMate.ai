@@ -17,7 +17,6 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
-  console.log(table.getSelectedRowModel().rows);
 
   const handleDeleteWords = async () => {
     const selectedRows = table.getSelectedRowModel().rows;
