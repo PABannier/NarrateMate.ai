@@ -11,7 +11,7 @@ import { addWord } from "@/lib/database/mutations";
 import { WordEntry } from "@/types";
 import toast from "react-hot-toast";
 import { Icons } from "./icons";
-import { set } from "zod";
+import { useStore } from "@/app/zustand";
 interface TranslationHoverCardProps {
   open: boolean;
   word: string;
@@ -25,6 +25,8 @@ export function TranslationHoverCard({
   const [definition, setDefinition] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingAdded, setIsLoadingAdded] = useState(false);
+
+  const summaryId = useStore((state) => state.currentSummaryId);
 
   useEffect(() => {
     setIsLoading(true);
@@ -47,9 +49,15 @@ export function TranslationHoverCard({
     word,
     translation,
     definition,
+    summaryId,
   }: WordEntry) => {
     setIsLoadingAdded(true);
-    const response = await addWord({ word, translation, definition });
+    const response = await addWord({
+      word,
+      translation,
+      definition,
+      summaryId,
+    });
     const { error } = JSON.parse(response);
     setIsLoadingAdded(false);
     if (error) {
@@ -78,7 +86,12 @@ export function TranslationHoverCard({
                   <PlusCircledIcon
                     className="h-5 w-5"
                     onClick={() =>
-                      handleAddWord({ word, translation, definition })
+                      handleAddWord({
+                        word,
+                        translation,
+                        definition,
+                        summaryId,
+                      })
                     }
                   />
                 )}

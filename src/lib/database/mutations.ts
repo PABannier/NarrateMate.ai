@@ -93,14 +93,24 @@ export async function deleteSummary(id: string) {
   }
 }
 
-export async function addWord({ word, translation, definition }: WordEntry) {
+export async function addWord({
+  word,
+  translation,
+  definition,
+  summaryId,
+}: WordEntry) {
   try {
     const cookieStore = cookies();
     const supabase = createServerActionClient({ cookies: () => cookieStore });
 
     const { error } = await supabase
       .from("word")
-      .insert({ word: word, translation: translation, definition: definition })
+      .insert({
+        word: word,
+        translation: translation,
+        definition: definition,
+        summary_id: summaryId,
+      })
       .single();
 
     if (error) throw new Error(error.message);

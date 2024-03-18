@@ -5,7 +5,6 @@ import {
 } from "@supabase/auth-helpers-nextjs";
 import { getYouTubeVideoTitle } from "../youtube";
 import { convertKeysToCamelCase } from "../utils";
-import { cache } from "react";
 import { unstable_cache } from "next/cache";
 
 const getAllFromDB = unstable_cache(

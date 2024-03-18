@@ -5,17 +5,22 @@ interface State {
   name: string;
   email: string;
   oauth: boolean;
+  currentSummaryId: string;
   updateName: (name: string) => void;
   updateEmail: (email: string) => void;
+  updateCurrentSummaryId: (id: string) => void;
   fetchUser: () => Promise<void>;
 }
 
 export const useStore = create<State>((set) => ({
   name: "",
   email: "",
+  currentSummaryId: "",
   oauth: false,
   updateName: (name: string) => set(() => ({ name })),
   updateEmail: (email: string) => set(() => ({ email })),
+  updateCurrentSummaryId: (currentSummaryId: string) =>
+    set(() => ({ currentSummaryId })),
   fetchUser: async () => {
     const supabase = createClientComponentClient({
       supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,

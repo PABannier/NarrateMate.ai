@@ -43,4 +43,5 @@ export interface WordEntry {
   word: string;
   translation: string;
   definition: string;
+  summaryId: string;
 }
