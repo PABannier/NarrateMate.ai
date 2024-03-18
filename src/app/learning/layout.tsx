@@ -3,7 +3,7 @@ import { UserNav } from "@/components/user-nav";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="block font-inter">
+    <div className="block">
       <div className="grid lg:grid-cols-5">
         <Sidebar className="hidden lg:block" />
         <div className="lg:col-span-4 lg:border-l">

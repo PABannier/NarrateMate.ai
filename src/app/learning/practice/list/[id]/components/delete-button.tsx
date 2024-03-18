@@ -19,14 +19,16 @@ export function DeleteButton({ id }: { id: string }) {
 
     if (error) {
       toast.error((error as Error).message);
-    } else toast.success("Successfully deleted summary!");
+    } else {
+      toast.success("Successfully deleted summary!");
+    }
   };
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="outline">Delete Summary</Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="font-inter">
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>

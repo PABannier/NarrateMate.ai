@@ -37,8 +37,6 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
           throw new Error("No data found");
         }
 
-        console.log("insert", summary);
-
         setVideoId(summary.youtubeVideoId);
         setSummary(summary.summary);
 

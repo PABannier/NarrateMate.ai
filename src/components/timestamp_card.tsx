@@ -80,7 +80,7 @@ export function SelectLanguage({
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a language" />
       </SelectTrigger>
-      <SelectContent className="font-inter">
+      <SelectContent>
         <SelectGroup>
           <SelectLabel>Languages</SelectLabel>
           {languages.map((language, index) => {

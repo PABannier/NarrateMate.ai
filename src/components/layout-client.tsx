@@ -9,10 +9,7 @@ const ClientLayout = ({ children }: ClientLayoutProps) => {
   return (
     <>
       {children}
-      <Toaster
-        toastOptions={{ duration: 3000 }}
-        containerClassName="font-inter"
-      />
+      <Toaster toastOptions={{ duration: 3000 }} />
     </>
   );
 };
