@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { DeleteButton } from "./components/delete-button";
 import toast from "react-hot-toast";
 import Loading from "./loading";
+import { useStore } from "zustand";
 
 export default function DetailsPage({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(false);

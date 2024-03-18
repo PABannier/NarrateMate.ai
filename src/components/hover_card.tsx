@@ -6,7 +6,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { PlusCircledIcon, CheckCircledIcon } from "@radix-ui/react-icons";
 import { addWord } from "@/lib/database/mutations";
 import { WordEntry } from "@/types";
 import toast from "react-hot-toast";
@@ -26,11 +26,13 @@ export function TranslationHoverCard({
   const [definition, setDefinition] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingAdded, setIsLoadingAdded] = useState(false);
+  const selectedWords = useStore((state) => state.selectedWords);
+  const addSelectedWord = useStore((state) => state.addSelectedWord);
 
   const summaryId = useStore((state) => state.currentSummaryId);
-
   useEffect(() => {
     setIsLoading(true);
+
     fetch(`/api/translate?word=${word}`, {
       method: "GET",
       cache: "force-cache",
@@ -52,6 +54,7 @@ export function TranslationHoverCard({
     definition,
     summaryId,
   }: WordEntry) => {
+    console.log(summaryId);
     setIsLoadingAdded(true);
     const response = await addWord({
       word,
@@ -65,6 +68,7 @@ export function TranslationHoverCard({
       toast.error((error as Error).message);
       return;
     }
+    addSelectedWord(word);
     toast.success("Word added successfully");
     return;
   };
@@ -80,10 +84,15 @@ export function TranslationHoverCard({
               <h4 className="text-sm font-semibold self-center">
                 {translation}
               </h4>
-              <Button variant="ghost" size="icon" disabled={isLoadingAdded}>
-                {isLoadingAdded ? (
-                  <Icons.spinner className="h-4 w-4 animate-spin ml-2" />
-                ) : (
+
+              {isLoadingAdded ? (
+                <Button variant="ghost" size="icon" disabled={isLoadingAdded}>
+                  <Icons.spinner className="h-4 w-4 animate-spin ml-2" />{" "}
+                </Button>
+              ) : selectedWords.has(word) ? (
+                <CheckCircledIcon className="h-5 w-5" color="green" />
+              ) : (
+                <Button variant="ghost" size="icon" disabled={isLoadingAdded}>
                   <PlusCircledIcon
                     className="h-5 w-5"
                     onClick={() =>
@@ -95,8 +104,8 @@ export function TranslationHoverCard({
                       })
                     }
                   />
-                )}
-              </Button>
+                </Button>
+              )}
             </div>
             <p className="text-sm">{definition}</p>
             <div className="flex items-center pt-2"></div>

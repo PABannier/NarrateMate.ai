@@ -6,10 +6,13 @@ interface State {
   email: string;
   oauth: boolean;
   currentSummaryId: string;
+  selectedWords: Set<string>;
   updateName: (name: string) => void;
   updateEmail: (email: string) => void;
   updateCurrentSummaryId: (id: string) => void;
   fetchUser: () => Promise<void>;
+  addSelectedWord: (word: string) => void;
+  fetchSelectedWords: () => Promise<void>;
 }
 
 export const useStore = create<State>((set) => ({
@@ -17,6 +20,7 @@ export const useStore = create<State>((set) => ({
   email: "",
   currentSummaryId: "",
   oauth: false,
+  selectedWords: new Set<string>([]),
   updateName: (name: string) => set(() => ({ name })),
   updateEmail: (email: string) => set(() => ({ email })),
   updateCurrentSummaryId: (currentSummaryId: string) =>
@@ -46,5 +50,26 @@ export const useStore = create<State>((set) => ({
       email: user?.email || "",
       oauth: oauth || false,
     });
+  },
+  addSelectedWord: (word: string) =>
+    set((state) => ({
+      selectedWords: state.selectedWords.add(word),
+    })),
+
+  fetchSelectedWords: async () => {
+    const supabase = createClientComponentClient({
+      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+      supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    });
+
+    const { data, error } = await supabase.from("word").select("*");
+    console.log(data);
+    if (error) {
+      throw new Error(error.message);
+    }
+    if (!data) {
+      throw new Error("No data found");
+    }
+    set({ selectedWords: new Set(data.map((row: any) => row.word)) });
   },
 }));

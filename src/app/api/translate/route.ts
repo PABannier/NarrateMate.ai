@@ -6,12 +6,11 @@ export async function GET(req: NextRequest) {
   // get the word from the request
   if (req.nextUrl.searchParams.get("word")) {
     const word = req.nextUrl.searchParams.get("word");
-    console.log(word);
 
     const payload = buildGptTranslationPayload(word!);
     const completion = await sendToGpt(payload);
     const { translation, definition } = JSON.parse(completion!);
-
+    console.log(translation);
     // const translation = `translation of ${word}`;
     // const definition = `definition of ${word}`;
 

@@ -22,6 +22,7 @@ import toast from "react-hot-toast";
 export function UserNav() {
   const router = useRouter();
   const fetchUserData = useStore((state) => state.fetchUser);
+  const fetchSelectedWords = useStore((state) => state.fetchSelectedWords);
 
   const name = useStore((state) => state.name);
   const email = useStore((state) => state.email);
@@ -33,6 +34,7 @@ export function UserNav() {
 
   useEffect(() => {
     fetchUserData();
+    fetchSelectedWords();
   }, []);
 
   const extractInitials = (name: string) => {
