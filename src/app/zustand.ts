@@ -6,12 +6,17 @@ interface State {
   email: string;
   oauth: boolean;
   currentSummaryId: string;
-  selectedWords: Set<string>;
+  selectedWords: Map<string, [string, string]>; // word as key, (translation, definition) as value
   updateName: (name: string) => void;
   updateEmail: (email: string) => void;
   updateCurrentSummaryId: (id: string) => void;
   fetchUser: () => Promise<void>;
-  addSelectedWord: (word: string) => void;
+  addSelectedWord: (
+    word: string,
+    translation: string,
+    definition: string
+  ) => void;
+  deleteWord: (word: string) => void;
   fetchSelectedWords: () => Promise<void>;
 }
 
@@ -20,7 +25,7 @@ export const useStore = create<State>((set) => ({
   email: "",
   currentSummaryId: "",
   oauth: false,
-  selectedWords: new Set<string>([]),
+  selectedWords: new Map<string, [string, string]>(),
   updateName: (name: string) => set(() => ({ name })),
   updateEmail: (email: string) => set(() => ({ email })),
   updateCurrentSummaryId: (currentSummaryId: string) =>
@@ -51,11 +56,23 @@ export const useStore = create<State>((set) => ({
       oauth: oauth || false,
     });
   },
-  addSelectedWord: (word: string) =>
+  addSelectedWord: (word: string, translation: string, definition: string) =>
     set((state) => ({
-      selectedWords: state.selectedWords.add(word),
+      selectedWords: state.selectedWords.set(word, [translation, definition]),
     })),
-
+  deleteWord: (word: string) => {
+    set((state) => {
+      const selectedWords = new Map<string, [string, string]>();
+      for (const [key, value] of state.selectedWords as any) {
+        if (key !== word) {
+          selectedWords.set(key, value);
+        }
+      }
+      return {
+        selectedWords,
+      };
+    });
+  },
   fetchSelectedWords: async () => {
     const supabase = createClientComponentClient({
       supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -70,6 +87,10 @@ export const useStore = create<State>((set) => ({
     if (!data) {
       throw new Error("No data found");
     }
-    set({ selectedWords: new Set(data.map((row: any) => row.word)) });
+    set({
+      selectedWords: new Map(
+        data.map((row: any) => [row.word, [row.translation, row.definition]])
+      ),
+    });
   },
 }));

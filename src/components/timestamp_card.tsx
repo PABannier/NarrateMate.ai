@@ -4,6 +4,7 @@ import { MultiLingualTimeStamps } from "@/types";
 import { TranslationHoverCard } from "./hover_card";
 import { useState } from "react";
 import { languageCodes } from "@/lib/youtube";
+import { useStore } from "@/app/zustand";
 
 import {
   Select,
@@ -29,7 +30,17 @@ interface TimeStampCardProps {
   ) => React.MouseEventHandler<HTMLButtonElement>;
 }
 
-function TokenCard({ index, token }: { index: number; token: string }) {
+function TokenCard({
+  index,
+  token,
+  translation,
+  selected,
+}: {
+  index: number;
+  token: string;
+  translation: string;
+  selected: boolean;
+}) {
   const [cardVisible, setCardVisible] = useState(false);
 
   const onClick = () => {
@@ -41,31 +52,73 @@ function TokenCard({ index, token }: { index: number; token: string }) {
   };
 
   return (
-    <span key={index} onMouseLeave={onMouseLeave}>
-      <Button
-        variant="link"
-        className="p-0 h-auto font-normal"
-        onClick={onClick}
-      >
-        {token}
-      </Button>{" "}
+    <div className="inline" key={index} onMouseLeave={onMouseLeave}>
+      {selected ? (
+        <>
+          <Button
+            variant="ghost"
+            className="inline p-0 h-auto"
+            onClick={onClick}
+          >
+            <SelectedTokenCard token={token} translation={translation} />
+          </Button>{" "}
+        </>
+      ) : (
+        <>
+          <Button
+            variant="link"
+            className="p-0 h-auto font-normal"
+            onClick={onClick}
+          >
+            {token}
+          </Button>{" "}
+        </>
+      )}
       {cardVisible && (
         <TranslationHoverCard
           word={removePunctuation(token)}
           open={cardVisible}
         />
       )}
-    </span>
+    </div>
+  );
+}
+
+function SelectedTokenCard({
+  token,
+  translation,
+}: {
+  token: string;
+  translation: string;
+}) {
+  return (
+    <div className="inline bg-[#FFE398] p-1 rounded-[3px]">
+      <span className="text-sm font-normal">{token} </span>
+      <span className="text-sm font-normal text-muted-foreground">
+        {translation}
+      </span>
+    </div>
   );
 }
 
 function TokenSpan({ text }: { text: string }) {
   const tokens = text.split(" ");
 
+  const { selectedWords } = useStore();
+
   return (
-    <div>
+    <div className="py-1">
       {tokens.map((token, index) => {
-        return <TokenCard key={index} index={index} token={token} />;
+        const translation = selectedWords.get(token)?.[0] ?? "";
+        return (
+          <TokenCard
+            key={index}
+            index={index}
+            token={token}
+            selected={selectedWords.has(token)}
+            translation={translation}
+          />
+        );
       })}
     </div>
   );
@@ -124,7 +177,7 @@ export function TimeStampCard({
         <div className="p-4">
           {subtitles.map((subtitle, index) => {
             return (
-              <div key={index} className="text-sm flex gap-2 mb-1">
+              <div key={index} className="text-sm flex gap-2 mb-1 items-center">
                 <Button
                   variant="link"
                   className="items-start p-0 h-auto text-muted-foreground text-blue-500 font-robotoMono"

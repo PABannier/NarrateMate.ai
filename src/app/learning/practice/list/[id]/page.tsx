@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { DeleteButton } from "./components/delete-button";
 import toast from "react-hot-toast";
 import Loading from "./loading";
-import { useStore } from "zustand";
+import { useStore } from "@/app/zustand";
 
 export default function DetailsPage({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +21,8 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
   const [captionHeight, setCaptionHeight] = useState(0);
   const [time, setTime] = useState(0);
   const ref = useRef<HTMLDivElement | null>(null);
+
+  const { updateCurrentSummaryId } = useStore();
 
   useEffect(() => {
     const getSummary = async (id: string) => {
@@ -51,6 +53,8 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
         setCorrectIdeas(correctIdeas);
         setMissingIdeas(missingIdeas);
         setWrongIdeas(wrongIdeas);
+
+        updateCurrentSummaryId(id);
       } catch (error) {
         toast.error("Error getting summaries: " + error);
       }

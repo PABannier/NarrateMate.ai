@@ -30,6 +30,7 @@ export function TranslationHoverCard({
   const addSelectedWord = useStore((state) => state.addSelectedWord);
 
   const summaryId = useStore((state) => state.currentSummaryId);
+
   useEffect(() => {
     setIsLoading(true);
 
@@ -54,7 +55,6 @@ export function TranslationHoverCard({
     definition,
     summaryId,
   }: WordEntry) => {
-    console.log(summaryId);
     setIsLoadingAdded(true);
     const response = await addWord({
       word,
@@ -68,7 +68,7 @@ export function TranslationHoverCard({
       toast.error((error as Error).message);
       return;
     }
-    addSelectedWord(word);
+    addSelectedWord(word, translation, definition);
     toast.success("Word added successfully");
     return;
   };
