@@ -20,7 +20,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${roboto_mono.variable}`}
+      data-theme="cmyk"
+    >
       <body>
         <ClientLayout>{children}</ClientLayout>
       </body>

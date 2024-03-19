@@ -1,7 +1,22 @@
+import Header from "@/components/header";
+import { Suspense } from "react";
+import { FeaturesAccordion } from "@/components/features";
+import Footer from "@/components/footer";
+import Hero from "@/components/hero";
+import { Problem } from "@/components/problem";
+
 export default function LandingPage() {
   return (
-    <div>
-      <h1>Welcome to the landing page!</h1>
-    </div>
+    <>
+      <Suspense>
+        <Header />
+      </Suspense>
+      <main className="bg-red">
+        <Hero />
+        <Problem />
+        <FeaturesAccordion />
+      </main>
+      <Footer />
+    </>
   );
 }

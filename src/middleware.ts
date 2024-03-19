@@ -10,6 +10,10 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
+  if (req.nextUrl.pathname === "/") {
+    return res;
+  }
+
   if (
     session &&
     !req.nextUrl.pathname.startsWith("/learning/practice/new") &&
