@@ -35,7 +35,7 @@ export function UserNav() {
   useEffect(() => {
     fetchUserData();
     fetchSelectedWords();
-  }, []);
+  }, [fetchUserData, fetchSelectedWords]);
 
   const extractInitials = (name: string) => {
     return name

@@ -62,7 +62,7 @@ export default function DetailsPage({ params }: { params: { id: string } }) {
       setIsLoading(false);
     };
     getSummary(params.id);
-  }, [params.id]);
+  }, [params.id, updateCurrentSummaryId]);
 
   const handleTimeStampClick = (timestamp: number) => () => {
     const startTimeInSeconds = Math.floor(timestamp);
