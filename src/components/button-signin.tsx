@@ -12,15 +12,9 @@ const ButtonSignin = ({
   text?: string;
   extraStyle?: string;
 }) => {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push("/authentication");
-  };
-
   return (
     <Link href="/authentication">
-      <button className={cn("btn", extraStyle)} onClick={handleClick}>
+      <button className={cn("btn btn-primary text-white", extraStyle)}>
         {text}
       </button>
     </Link>

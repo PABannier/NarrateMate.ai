@@ -157,7 +157,7 @@ function AnimatedCarousel({ className }: { className?: string }) {
     () => Math.random() - 0.5
   );
   return (
-    <div className={cn("flex flex-col w-full opacity-10", className)}>
+    <div className={cn("flex flex-col w-full", className)}>
       {Array.from({ length: 4 }).map((_, i) => {
         return (
           <>
