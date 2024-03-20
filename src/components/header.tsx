@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-// import ButtonSignin from "./ButtonSignin";
-import logo from "@/app/icon.png";
+import logo from "@/app/icon.svg";
 import description from "../../description";
 import ButtonSignin from "@/components/button-signin";
 
@@ -27,7 +26,7 @@ const links: {
   },
 ];
 
-const cta = <ButtonSignin extraStyle="btn-primary" />;
+const cta = <ButtonSignin extraStyle="btn-secondary text-white" />;
 
 // A header with a logo on the left, links in the center (like Pricing, etc...), and a CTA (like Get Started or Login) on the right.
 // The header is responsive, and on mobile, the links are hidden behind a burger button.
@@ -41,7 +40,7 @@ const Header = () => {
   }, [searchParams]);
 
   return (
-    <header className="bg-[#FFEED6]">
+    <header className="bg-base-200">
       <nav
         className="container flex items-center justify-between px-8 py-4 mx-auto"
         aria-label="Global"
@@ -57,11 +56,11 @@ const Header = () => {
               src={logo}
               alt={`${description.appName} logo`}
               className="w-16 rounded-xl"
-              placeholder="blur"
               priority={true}
               width={64}
               height={64}
             />
+            <h2>NarrateMate</h2>
           </Link>
         </div>
         {/* Burger button to open menu on mobile */}
@@ -123,7 +122,6 @@ const Header = () => {
                 src={logo}
                 alt={`${description.appName} logo`}
                 className="w-16 rounded-xl"
-                placeholder="blur"
                 priority={true}
                 width={64}
                 height={64}

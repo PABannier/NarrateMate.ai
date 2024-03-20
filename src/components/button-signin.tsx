@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const ButtonSignin = ({
-  text = "Get Yakky",
+  text = "Start practicing",
   extraStyle,
 }: {
   text?: string;
