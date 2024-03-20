@@ -1,7 +1,5 @@
-import Image from "next/image";
 import AnimatedCarousel from "./animated-carousel";
 import ButtonSignin from "@/components/button-signin";
-import { Button } from "./ui/button";
 
 const Hero = () => {
   return (

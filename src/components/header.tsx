@@ -45,9 +45,9 @@ const Header = () => {
   }, [searchParams]);
 
   return (
-    <header className="bg-base-200">
+    <header className="bg-base-200 h-[58px]">
       <nav
-        className="container flex items-center justify-between px-8 py-4 mx-auto"
+        className="container flex items-center justify-between px-8 mx-auto h-full"
         aria-label="Global"
       >
         {/* Your logo/name on large screens */}
@@ -60,10 +60,10 @@ const Header = () => {
             <Image
               src={logo}
               alt={`${description.appName} logo`}
-              className="w-16 rounded-xl"
+              className="w-12 rounded-xl"
               priority={true}
-              width={64}
-              height={64}
+              width={50}
+              height={50}
             />
             <h2>NarrateMate</h2>
           </Link>
@@ -131,8 +131,8 @@ const Header = () => {
                 alt={`${description.appName} logo`}
                 className="w-16 rounded-xl"
                 priority={true}
-                width={64}
-                height={64}
+                width={50}
+                height={50}
               />
             </Link>
             <button
