@@ -73,7 +73,7 @@ export default function PracticePage() {
   };
 
   return (
-    <div className="h-full px-4 py-6 lg:px-8 space-y-7">
+    <div className="h-full px-4 py-6 lg:px-8 space-y-7 ">
       <PageHeader
         title="New video"
         description="Watch and summarize a YouTube video"

@@ -29,7 +29,7 @@ const links: {
 const cta = <ButtonSignin />;
 const login = (
   <Link href="/authentication/login">
-    <button className="btn btn-secondary text-white">Login</button>
+    <button className="btn btn-secondary">Login</button>
   </Link>
 );
 
@@ -45,7 +45,7 @@ const Header = () => {
   }, [searchParams]);
 
   return (
-    <header className="bg-base-200 h-[58px]">
+    <header className="bg-base-100 h-[75px]">
       <nav
         className="container flex items-center justify-between px-8 mx-auto h-full"
         aria-label="Global"

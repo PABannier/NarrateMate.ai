@@ -85,7 +85,7 @@ const config = {
   },
   plugins: [require("tailwindcss-animate"), require("daisyui")],
   daisyui: {
-    themes: ["cupcake", "cmyk"],
+    themes: ["cupcake", "cmyk", "dim", "emerald"],
   },
 } satisfies Config;
 

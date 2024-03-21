@@ -14,9 +14,7 @@ const ButtonSignin = ({
 }) => {
   return (
     <Link href="/authentication">
-      <button className={cn("btn btn-primary text-white", extraStyle)}>
-        {text}
-      </button>
+      <button className={cn("btn btn-primary ", extraStyle)}>{text}</button>
     </Link>
   );
 };

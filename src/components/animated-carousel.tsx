@@ -161,7 +161,7 @@ function AnimatedCarousel({ className }: { className?: string }) {
       {Array.from({ length: 4 }).map((_, i) => {
         return (
           <>
-            <div className="w-full inline-flex flex-nowrap">
+            <div className="w-full inline-flex flex-nowrap overflow-hidden">
               <ul className="flex items-center justify-center md:justify-start [&_img]:max-w-none animate-infinite-scroll">
                 {Array.from({ length: 8 }).map((_, j) => {
                   const currentIdx = j + i * 8;
@@ -169,12 +169,14 @@ function AnimatedCarousel({ className }: { className?: string }) {
                   const currentTitle =
                     shuffleYouTubeThumbnails[currentIdx].title;
                   return (
-                    <li>
+                    <li
+                      key={currentIdx}
+                      className="relative overlow-hidden w-[200px] md:w-[275px] aspect-video"
+                    >
                       <Image
                         src={getYouTubeThumbnailFromId(currentId)}
                         alt={currentTitle}
-                        width={200}
-                        height={120}
+                        fill
                       />
                     </li>
                   );
@@ -191,12 +193,14 @@ function AnimatedCarousel({ className }: { className?: string }) {
                   const currentTitle =
                     shuffleYouTubeThumbnails[currentIdx].title;
                   return (
-                    <li>
+                    <li
+                      key={currentIdx}
+                      className="relative overlow-hidden w-[200px] md:w-[275px] aspect-video"
+                    >
                       <Image
                         src={getYouTubeThumbnailFromId(currentId)}
                         alt={currentTitle}
-                        width={200}
-                        height={120}
+                        fill
                       />
                     </li>
                   );
