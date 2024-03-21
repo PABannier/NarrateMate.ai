@@ -12,6 +12,7 @@ import { FaRegClosedCaptioning } from "react-icons/fa";
 import { TimeStampCard } from "@/components/timestamp_card";
 import { createSummary } from "@/lib/database/mutations";
 import PageHeader from "@/components/page-header";
+import { useStore } from "@/app/zustand";
 
 export default function PracticePage() {
   const [videoId, setVideoId] = useState("");
@@ -24,7 +25,9 @@ export default function PracticePage() {
   const [time, setTime] = useState(0);
   // trick to re-render the youtube player on play
   const [playerKey, setPlayerKey] = useState(0);
-
+  const updateCurrentSummaryId = useStore(
+    (state) => state.updateCurrentSummaryId
+  );
   const ref = useRef<HTMLDivElement | null>(null);
 
   const handlePlay = () => {
@@ -48,6 +51,7 @@ export default function PracticePage() {
       data.correctIdeas = JSON.parse(data.correctIdeas);
       data.wrongIdeas = JSON.parse(data.wrongIdeas);
 
+      updateCurrentSummaryId(data.id);
       setResponse(data);
     } catch (e) {
       toast.error((e as Error).message);
