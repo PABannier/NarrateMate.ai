@@ -14,7 +14,7 @@ const ButtonSignin = ({
 }) => {
   return (
     <Link href="/authentication">
-      <button className={cn("btn btn-primary ", extraStyle)}>{text}</button>
+      <button className={cn("btn btn-secondary ", extraStyle)}>{text}</button>
     </Link>
   );
 };

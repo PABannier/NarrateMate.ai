@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/app/icon.svg";
+// import logo from "@/app/icon.svg";
+
+import logo from "@/app/component.png";
 import description from "../../description";
 import ButtonSignin from "@/components/button-signin";
 
@@ -29,7 +31,7 @@ const links: {
 const cta = <ButtonSignin />;
 const login = (
   <Link href="/authentication/login">
-    <button className="btn btn-secondary">Login</button>
+    <button className="btn ">Login</button>
   </Link>
 );
 

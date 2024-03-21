@@ -6,7 +6,7 @@ const Hero = () => {
     <section className="relative">
       <div className="absolute mt-8 sm:mt-20 md:mt-32 z-20 w-full">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 px-8 py-8 lg:py-20 h-full">
-          <div className="flex flex-col gap-10 lg:gap-14 items-center justify-center text-center text-white lg:text-left lg:items-start">
+          <div className="flex flex-col gap-10 lg:gap-14 items-center justify-center text-center text-accent-content lg:text-left lg:items-start">
             <h1 className="font-extrabold text-4xl lg:text-6xl tracking-tight md:-mb-4">
               Understand million new voices watching your YouTube favorites
             </h1>
@@ -18,7 +18,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="absolute bg-primary opacity-90 z-10 w-full h-full"></div>
+      <div className="absolute bg-accent opacity-90 z-10 w-full h-full"></div>
       <AnimatedCarousel className="z-0" />
     </section>
   );
