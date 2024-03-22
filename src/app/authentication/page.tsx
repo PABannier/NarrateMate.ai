@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import logo from "@/app/icon.svg";
+import logo from "@/app/component.png";
+// import logo from "@/app/icon.svg";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
