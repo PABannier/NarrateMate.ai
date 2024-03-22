@@ -67,7 +67,9 @@ const Header = () => {
               width={50}
               height={50}
             />
-            <h2>NarrateMate</h2>
+            <h2 className="font-bold tracking-tight text-base md:text-lg">
+              NarrateMate.ai
+            </h2>
           </Link>
         </div>
         {/* Burger button to open menu on mobile */}
