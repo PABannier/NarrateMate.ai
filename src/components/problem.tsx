@@ -1,3 +1,6 @@
+import Image from "next/image";
+import workflow from "@/app/workflow.png";
+
 const Arrow = ({ extraStyle }: { extraStyle: string }) => {
   return (
     <svg
@@ -33,6 +36,11 @@ const Step = ({ emoji, text }: { emoji: string; text: string }) => {
 export const Problem = () => {
   return (
     <section className="bg-neutral text-neutral-content">
+      <div className="isolate mx-auto max-w-5xl rounded-lg border-2 border-primary bg-white px-6 py-5 shadow-lg sm:px-8 top-[-45px] relative z-20">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end">
+          <Image src={workflow} alt="Workflow" />
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto px-8 py-16 md:py-32 text-center">
         <h2 className="max-w-3xl mx-auto font-extrabold text-4xl md:text-5xl tracking-tight mb-6 md:mb-8">
           People give up on learning languages due to minimal progress

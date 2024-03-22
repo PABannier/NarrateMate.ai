@@ -1,9 +1,6 @@
 import React from "react";
 import { VideoCard } from "@/components/video-card";
-import Link from "next/link";
-import { getYouTubeThumnailUrl, getYouTubeVideoTitle } from "@/lib/youtube";
-import { convertKeysToCamelCase } from "@/lib/utils";
-import toast from "react-hot-toast";
+import { getYouTubeThumnailUrl } from "@/lib/youtube";
 import { getAllSummaries } from "@/lib/database/queries";
 
 async function HistoryList() {
