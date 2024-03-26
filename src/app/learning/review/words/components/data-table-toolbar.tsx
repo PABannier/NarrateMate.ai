@@ -9,6 +9,9 @@ import { Word } from "../data/schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ReviewDialog from "./review-dialog";
+import { useState } from "react";
+import { Icons } from "@/components/icons";
+
 interface DataTableToolbarProps<TData> {
   table: Table<Word>;
 }
@@ -17,7 +20,10 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const [isLoading, setLoading] = useState(false);
+
   const handleDeleteWords = async () => {
+    setLoading(true);
     const selectedRows = table.getSelectedRowModel().rows;
 
     if (selectedRows.length === 0) {
@@ -32,9 +38,11 @@ export function DataTableToolbar<TData>({
       return;
     }
     table.toggleAllRowsSelected(false);
+
+    setLoading(false);
     toast.success("Words deleted");
-    return;
   };
+
   return (
     <div className="flex  items-center gap-2">
       <Input
@@ -47,12 +55,20 @@ export function DataTableToolbar<TData>({
       />
       <div className="flex flex-1 justify-between ">
         <Button
-          disabled={table.getSelectedRowModel().rows.length === 0}
+          disabled={table.getSelectedRowModel().rows.length === 0 || isLoading}
           variant="destructive"
           className="h-8 space-x-2"
           onClick={handleDeleteWords}
         >
-          <span>Delete</span> <Trash2 size={20} />
+          {isLoading ? (
+            <>
+              <Icons.spinner className="animate-spin w-6 h-6" />
+            </>
+          ) : (
+            <>
+              <span>Delete</span> <Trash2 size={20} />
+            </>
+          )}
         </Button>
 
         <ReviewDialog table={table} />
