@@ -1,6 +1,6 @@
 import he from "he";
 import striptags from "striptags";
-import { TimeStamp, FormattedTimeStamp } from "@/types";
+import { TimeStamp, FormattedTimeStamp } from "@/types/types";
 
 interface Subtitle {
   start: string;

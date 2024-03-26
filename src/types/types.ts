@@ -16,23 +16,19 @@ export interface FormattedTimeStamp {
   dur: string;
 }
 
-export interface SummaryData {
+export interface RawSummaryData {
+  title?: string;
   youtubeVideoId: string;
   summary: string;
-  missingIdeas: string;
-  correctIdeas: string;
-  wrongIdeas: string;
+  missingIdeas: Idea[];
+  correctIdeas: Idea[];
+  wrongIdeas: Idea[];
 }
-export interface FetchedSummaryData {
-  youtubeVideoId: string;
-  summary: string;
-  missingIdeas: string[];
-  correctIdeas: string[];
-  wrongIdeas: string[];
+
+export interface DbSummaryData extends RawSummaryData {
   id: string;
   userId: string;
-  createdAt: string;
-  title?: string;
+  createdAt: Date;
 }
 
 export interface MultiLingualTimeStamps {

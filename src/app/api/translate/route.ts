@@ -10,7 +10,6 @@ export async function GET(req: NextRequest) {
     const payload = buildGptTranslationPayload(word!);
     const completion = await sendToGpt(payload);
     const { translation, definition } = JSON.parse(completion!);
-    console.log(translation);
     // const translation = `translation of ${word}`;
     // const definition = `definition of ${word}`;
 

@@ -13,11 +13,20 @@ import { TimeStampCard } from "@/components/timestamp_card";
 import { createSummary } from "@/lib/database/mutations";
 import PageHeader from "@/components/page-header";
 import { useStore } from "@/app/zustand";
+import { DbSummaryData, FormattedTimeStamp } from "@/types/types";
+
+interface ISubtitleTimestamps {
+  languageCode: any;
+  subtitles: FormattedTimeStamp[];
+}
 
 export default function PracticePage() {
   const [videoId, setVideoId] = useState("");
   const [youtubeURL, setYoutubeURL] = useState("");
-  const [response, setResponse] = useState<null | any>(null);
+  const [subtitleTimestamps, setSubtitleTimestamps] = useState<
+    ISubtitleTimestamps[]
+  >([]);
+  const [summary, setSummary] = useState<DbSummaryData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showSubtitles, setShowSubtitles] = useState(false);
   const [textArea, setTextArea] = useState("");
@@ -28,6 +37,7 @@ export default function PracticePage() {
   const updateCurrentSummaryId = useStore(
     (state) => state.updateCurrentSummaryId
   );
+  const { summariesList, insertSummary } = useStore();
   const ref = useRef<HTMLDivElement | null>(null);
 
   const handlePlay = () => {
@@ -45,24 +55,27 @@ export default function PracticePage() {
     setIsLoading(true);
 
     try {
-      const data = await createSummary(videoId, textArea);
+      const { insertedSummary, subtitleTimestamps } = await createSummary(
+        videoId,
+        textArea
+      );
 
-      data.missingIdeas = JSON.parse(data.missingIdeas);
-      data.correctIdeas = JSON.parse(data.correctIdeas);
-      data.wrongIdeas = JSON.parse(data.wrongIdeas);
+      insertSummary(insertedSummary);
 
-      updateCurrentSummaryId(data.id);
-      setResponse(data);
+      updateCurrentSummaryId(insertedSummary.id);
+      setSummary(insertedSummary);
+      setSubtitleTimestamps(subtitleTimestamps);
     } catch (e) {
       toast.error((e as Error).message);
-      setResponse(null);
+      setSubtitleTimestamps([]);
+      setSummary(null);
     }
 
     setIsLoading(false);
   };
 
   const handleClickOnSubtitles = () => {
-    if (response) {
+    if (subtitleTimestamps.length > 0) {
       setShowSubtitles(!showSubtitles);
     }
   };
@@ -116,7 +129,7 @@ export default function PracticePage() {
                 variant="outline"
                 type="button"
                 onClick={handleClickOnSubtitles}
-                disabled={response === null || isLoading}
+                disabled={subtitleTimestamps === null || isLoading}
               >
                 <FaRegClosedCaptioning className="mr-2 h-4 w-4" />
                 {showSubtitles ? "Hide subtitles" : "Show subtitles"}
@@ -135,9 +148,9 @@ export default function PracticePage() {
           </div>
         </div>
         <div className="lg:col-span-2 lg:ml-5 self-end">
-          {response && response.subtitleTimestamps && showSubtitles && (
+          {subtitleTimestamps && showSubtitles && (
             <TimeStampCard
-              multiLingualTimeStamps={response.subtitleTimestamps}
+              multiLingualTimeStamps={subtitleTimestamps}
               height={captionHeight}
               onTimeStampClick={handleTimeStampClick}
             />
@@ -175,7 +188,7 @@ export default function PracticePage() {
         </div>
       </div>
 
-      {response && !isLoading && (
+      {summary && !isLoading && (
         <div className="grid lg:grid-cols-4 space-y-5">
           <div className="lg:col-span-4">
             <h2 className="text-2xl font-semibold tracking-tight">Step 4</h2>
@@ -187,7 +200,7 @@ export default function PracticePage() {
             <ResponseCard
               title="Correct Ideas"
               description="Here are the ideas from the video that you got correct."
-              ideas={response.correctIdeas}
+              ideas={summary.correctIdeas}
               className="bg-green-500"
               onTimeStampClick={handleTimeStampClick}
               scrollFunction={executeScroll}
@@ -195,7 +208,7 @@ export default function PracticePage() {
             <ResponseCard
               title="Missing Ideas"
               description="Here are the ideas from the video that you missed."
-              ideas={response.missingIdeas}
+              ideas={summary.missingIdeas}
               className="bg-orange-500"
               onTimeStampClick={handleTimeStampClick}
               scrollFunction={executeScroll}
@@ -203,7 +216,7 @@ export default function PracticePage() {
             <ResponseCard
               title="Wrong Ideas"
               description="Here are the ideas from the video that you got wrong."
-              ideas={response.wrongIdeas}
+              ideas={summary.wrongIdeas}
               className="bg-red-500"
               onTimeStampClick={handleTimeStampClick}
               scrollFunction={executeScroll}

@@ -1,6 +1,3 @@
-import React from "react";
-import { VideoCard } from "@/components/video-card";
-import { getYouTubeThumnailUrl } from "@/lib/youtube";
 import { getAllSummaries } from "@/lib/database/queries";
 import Videos from "@/components/videos";
 

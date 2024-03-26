@@ -1,43 +1,58 @@
 "use server";
-import { SummaryData, WordEntry } from "@/types";
-import {
-  createClientComponentClient,
-  createServerActionClient,
-} from "@supabase/auth-helpers-nextjs";
+import { WordEntry, RawSummaryData, DbSummaryData } from "@/types/types";
+import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { allIdeas } from "../gpt";
 
 import { fetchSubtitlesFromVideoID } from "@/lib/subtitles";
 import { revalidatePath } from "next/cache";
+import { Database } from "@/types/supabase";
 
-async function insertSummaryToDB(summaryData: SummaryData) {
+async function insertSummaryToDB(
+  summaryData: RawSummaryData
+): Promise<DbSummaryData> {
   const cookieStore = cookies();
-  const supabase = createServerActionClient({ cookies: () => cookieStore });
+  const supabase = createServerActionClient<Database>({
+    cookies: () => cookieStore,
+  });
 
   const result = await supabase
     .from("summary")
     .insert({
       youtube_video_id: summaryData.youtubeVideoId,
       summary: summaryData.summary,
-      missing_ideas: summaryData.missingIdeas,
-      correct_ideas: summaryData.correctIdeas,
-      wrong_ideas: summaryData.wrongIdeas,
+      missing_ideas: JSON.stringify(summaryData.missingIdeas),
+      correct_ideas: JSON.stringify(summaryData.correctIdeas),
+      wrong_ideas: JSON.stringify(summaryData.wrongIdeas),
     })
     .select();
 
   const { data, error } = result;
-  console.log("result", result);
-  revalidatePath("/learning/practice/list");
+
   if (error) {
     throw new Error(`Error adding to database: ${error.message}`); // throw new Error
   }
-  return data;
+
+  const insertedSummary: DbSummaryData = {
+    youtubeVideoId: data![0].youtube_video_id!,
+    summary: data![0].summary!,
+    missingIdeas: JSON.parse(data![0].missing_ideas!),
+    correctIdeas: JSON.parse(data![0].correct_ideas!),
+    wrongIdeas: JSON.parse(data![0].wrong_ideas!),
+    id: data![0].id!,
+    userId: data![0].user_id!,
+    createdAt: new Date(Date.parse(data![0].created_at!)), // Convert parsed timestamp to Date object
+  };
+
+  return insertedSummary;
 }
 
-export async function createSummary(videoId: string, summary: string) {
+export async function createSummary(
+  videoId: string,
+  summary: string
+): Promise<{ insertedSummary: DbSummaryData; subtitleTimestamps: any }> {
   try {
     const subtitleTimestamps = await fetchSubtitlesFromVideoID(videoId);
-    console.log(subtitleTimestamps);
     // uncomment to use OpenAI
     let openAISubtitles = null;
     const enSubtitles = subtitleTimestamps.filter(
@@ -64,18 +79,16 @@ export async function createSummary(videoId: string, summary: string) {
     // uncomment for mock data
     const { missingIdeas, wrongIdeas, correctIdeas } = allIdeas;
 
-    const summaryData: SummaryData = {
+    const summaryData: RawSummaryData = {
       youtubeVideoId: videoId,
       summary,
-      missingIdeas: JSON.stringify(missingIdeas),
-      correctIdeas: JSON.stringify(correctIdeas),
-      wrongIdeas: JSON.stringify(wrongIdeas),
+      missingIdeas,
+      correctIdeas,
+      wrongIdeas,
     };
 
-    const data = await insertSummaryToDB(summaryData);
-    console.log(data[0].id);
-    const id = data[0].id;
-    return { ...summaryData, subtitleTimestamps, id };
+    const insertedSummary = await insertSummaryToDB(summaryData);
+    return { insertedSummary, subtitleTimestamps };
   } catch (error) {
     throw new Error("Error creating summary: " + error);
   }
@@ -87,7 +100,6 @@ export async function deleteSummary(id: string) {
     const supabase = createServerActionClient({ cookies: () => cookieStore });
     const { error } = await supabase.from("summary").delete().match({ id });
     if (error) throw new Error(error.message);
-    // revalidatePath("/learning/practice/list");
     return { data: { success: true } };
   } catch (error) {
     return {

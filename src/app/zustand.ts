@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { FetchedSummaryData } from "@/types";
+import { DbSummaryData } from "@/types/types";
 
 interface State {
   name: string;
@@ -8,9 +8,10 @@ interface State {
   oauth: boolean;
   currentSummaryId: string;
   selectedWords: Map<string, [string, string]>; // word as key, (translation, definition) as value
-  summariesList: FetchedSummaryData[];
+  summariesList: DbSummaryData[];
+  insertSummary: (newSummary: DbSummaryData) => void;
   removeSummary: (id: string) => void;
-  updateSummariesList: (summaries: FetchedSummaryData[]) => void;
+  updateSummariesList: (summaries: DbSummaryData[]) => void;
   updateName: (name: string) => void;
   updateEmail: (email: string) => void;
   updateCurrentSummaryId: (id: string) => void;
@@ -36,7 +37,8 @@ export const useStore = create<State>((set) => ({
     set((state) => ({
       summariesList: state.summariesList.filter((summary) => summary.id !== id),
     })),
-
+  insertSummary: (newSummary: DbSummaryData) =>
+    set((state) => ({ summariesList: [...state.summariesList, newSummary] })),
   updateName: (name: string) => set(() => ({ name })),
   updateEmail: (email: string) => set(() => ({ email })),
   updateCurrentSummaryId: (currentSummaryId: string) =>
@@ -91,7 +93,6 @@ export const useStore = create<State>((set) => ({
     });
 
     const { data, error } = await supabase.from("word").select("*");
-    console.log(data);
     if (error) {
       throw new Error(error.message);
     }

@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "./ui/button";
-import { MultiLingualTimeStamps } from "@/types";
+import { MultiLingualTimeStamps } from "@/types/types";
 import { TranslationHoverCard } from "./hover_card";
 import { useState } from "react";
 import { languageCodes } from "@/lib/youtube";

@@ -45,13 +45,11 @@ export const VideoCard = ({
   const { summariesList, removeSummary } = useStore();
   const handleDelete = async () => {
     setLoading(true);
-    console.log(summariesList);
 
     try {
       await deleteSummary(id);
 
       removeSummary(id);
-      console.log(summariesList);
     } catch (error) {
       toast.error("Error deleting summary: " + error);
     }

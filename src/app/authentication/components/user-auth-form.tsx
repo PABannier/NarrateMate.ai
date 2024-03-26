@@ -36,8 +36,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     }
 
     setIsLoading(true);
-    console.log(location.origin);
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {

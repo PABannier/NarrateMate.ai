@@ -1,5 +1,5 @@
 "use client";
-import { FetchedSummaryData } from "@/types";
+import { DbSummaryData } from "@/types/types";
 import React, { useEffect } from "react";
 import { VideoCard } from "./video-card";
 import { getYouTubeThumnailUrl } from "@/lib/youtube";
@@ -7,7 +7,7 @@ import { useStore } from "@/app/zustand";
 export default function Videos({
   historyData,
 }: {
-  historyData: FetchedSummaryData[];
+  historyData: DbSummaryData[];
 }) {
   const { summariesList, updateSummariesList } = useStore();
   useEffect(() => {

@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { parseFormattedTimeStampToSeconds } from "@/lib/subtitles";
-import { Idea } from "@/types";
+import { Idea } from "@/types/types";
 
 interface ResponseCardProps {
   title: string;

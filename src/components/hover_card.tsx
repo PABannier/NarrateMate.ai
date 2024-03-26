@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/hover-card";
 import { PlusCircledIcon, CheckCircledIcon } from "@radix-ui/react-icons";
 import { addWord } from "@/lib/database/mutations";
-import { WordEntry } from "@/types";
+import { WordEntry } from "@/types/types";
 import toast from "react-hot-toast";
 import { Icons } from "./icons";
 import { useStore } from "@/app/zustand";

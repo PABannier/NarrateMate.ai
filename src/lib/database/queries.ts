@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { Database } from "@/types/supabase";
 import {
   SupabaseClient,
   createServerComponentClient,
@@ -6,28 +7,40 @@ import {
 import { getYouTubeVideoTitle } from "../youtube";
 import { convertKeysToCamelCase } from "../utils";
 import { unstable_cache } from "next/cache";
+import { DbSummaryData } from "@/types/types";
 
 const getAllFromDB = unstable_cache(
-  async (supabase: SupabaseClient) => {
+  async (supabase: SupabaseClient<Database>) => {
     const { data } = await supabase.from("summary").select("*");
 
     if (!data) {
       throw new Error("No data found");
     }
 
+    // Building clean objects (DbSummaryData) from raw data
+    const retrievedSummaries: DbSummaryData[] = [];
+
     for (const summary of data) {
       const youtubeVideoId = summary.youtube_video_id;
-      const title = await getYouTubeVideoTitle(youtubeVideoId);
-      summary.title = title;
+      const title = await getYouTubeVideoTitle(youtubeVideoId!);
+      retrievedSummaries.push({
+        youtubeVideoId: summary.youtube_video_id!,
+        summary: summary.summary!,
+        missingIdeas: JSON.parse(summary.missing_ideas!),
+        correctIdeas: JSON.parse(summary.correct_ideas!),
+        wrongIdeas: JSON.parse(summary.wrong_ideas!),
+        id: summary.id!,
+        userId: summary.user_id!,
+        createdAt: new Date(Date.parse(summary.created_at!)), // Convert parsed timestamp to Date object
+        title,
+      });
     }
 
-    const camelCaseData = convertKeysToCamelCase(data);
-    const sortedData = camelCaseData.sort((a: any, b: any) => {
-      const aDate = new Date(a.createdAt);
-      const bDate = new Date(b.createdAt);
-      return aDate > bDate ? -1 : 1;
+    retrievedSummaries.sort((a: DbSummaryData, b: DbSummaryData) => {
+      return a.createdAt > b.createdAt ? -1 : 1;
     });
-    return sortedData;
+
+    return retrievedSummaries;
   },
   []
   // { revalidate: 2 }
@@ -35,7 +48,9 @@ const getAllFromDB = unstable_cache(
 
 export const getAllSummaries = async () => {
   const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createServerComponentClient<Database>({
+    cookies: () => cookieStore,
+  });
   return await getAllFromDB(supabase);
 };
 
