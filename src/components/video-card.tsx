@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { deleteSummary } from "@/lib/database/mutations";
 import { Disabled } from "@/components/disabled";
+import { useStore } from "@/app/zustand";
 
 interface VideoCardProps {
   id: string;
@@ -41,11 +42,16 @@ export const VideoCard = ({
   thumbnailUrl,
 }: VideoCardProps) => {
   const [isLoading, setLoading] = useState(false);
-
+  const { summariesList, removeSummary } = useStore();
   const handleDelete = async () => {
     setLoading(true);
+    console.log(summariesList);
+
     try {
       await deleteSummary(id);
+
+      removeSummary(id);
+      console.log(summariesList);
     } catch (error) {
       toast.error("Error deleting summary: " + error);
     }

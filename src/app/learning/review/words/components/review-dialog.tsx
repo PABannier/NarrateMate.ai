@@ -21,13 +21,14 @@ export default function ReviewDialog({ table }: { table: Table<Word> }) {
   const [selectedRows, setSelectedRows] = React.useState<any[]>([]);
   const [reviewService, setReviewService] = React.useState<ReviewService>();
   const freq = 2;
+
   const handleReviewClick = () => {
     setProgress(0);
     const rows = table.getSelectedRowModel().rows;
     setSelectedRows(
       rows.map((row) => [row.original.word, row.original.translation])
     );
-    const rs = new ReviewService(selectedRows.length, freq);
+    const rs = new ReviewService(rows.length, freq);
     setReviewService(rs);
 
     const index = rs.getNextWordToReview();
@@ -40,6 +41,7 @@ export default function ReviewDialog({ table }: { table: Table<Word> }) {
     const index = reviewService!.getNextWordToReview();
     if (index !== null) {
       setCurrentIndex(index);
+
       setProgress(
         (reviewService!.numberOfWordsReviewed() /
           (selectedRows.length * freq)) *

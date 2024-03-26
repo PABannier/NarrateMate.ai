@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { FetchedSummaryData } from "@/types";
 
 interface State {
   name: string;
@@ -7,6 +8,9 @@ interface State {
   oauth: boolean;
   currentSummaryId: string;
   selectedWords: Map<string, [string, string]>; // word as key, (translation, definition) as value
+  summariesList: FetchedSummaryData[];
+  removeSummary: (id: string) => void;
+  updateSummariesList: (summaries: FetchedSummaryData[]) => void;
   updateName: (name: string) => void;
   updateEmail: (email: string) => void;
   updateCurrentSummaryId: (id: string) => void;
@@ -26,6 +30,13 @@ export const useStore = create<State>((set) => ({
   currentSummaryId: "",
   oauth: false,
   selectedWords: new Map<string, [string, string]>(),
+  summariesList: [],
+  updateSummariesList: (summaries) => set(() => ({ summariesList: summaries })),
+  removeSummary: (id: string) =>
+    set((state) => ({
+      summariesList: state.summariesList.filter((summary) => summary.id !== id),
+    })),
+
   updateName: (name: string) => set(() => ({ name })),
   updateEmail: (email: string) => set(() => ({ email })),
   updateCurrentSummaryId: (currentSummaryId: string) =>

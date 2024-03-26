@@ -32,6 +32,7 @@ export interface FetchedSummaryData {
   id: string;
   userId: string;
   createdAt: string;
+  title?: string;
 }
 
 export interface MultiLingualTimeStamps {

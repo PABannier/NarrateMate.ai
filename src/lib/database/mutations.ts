@@ -87,7 +87,7 @@ export async function deleteSummary(id: string) {
     const supabase = createServerActionClient({ cookies: () => cookieStore });
     const { error } = await supabase.from("summary").delete().match({ id });
     if (error) throw new Error(error.message);
-    revalidatePath("/learning/practice/list");
+    // revalidatePath("/learning/practice/list");
     return { data: { success: true } };
   } catch (error) {
     return {
