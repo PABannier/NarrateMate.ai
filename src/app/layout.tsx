@@ -28,14 +28,14 @@ export default function RootLayout({
       data-theme="emerald"
     >
       <body>
-        <ThemeProvider
+        {/* <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-        >
-          <ClientLayout>{children}</ClientLayout>
-        </ThemeProvider>
+        > */}
+        <ClientLayout>{children}</ClientLayout>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+import React from "react";
 import { getAllSummaries } from "@/lib/database/queries";
 import Videos from "@/components/videos";
 
