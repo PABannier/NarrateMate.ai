@@ -37,7 +37,7 @@ export default function PracticePage() {
   const updateCurrentSummaryId = useStore(
     (state) => state.updateCurrentSummaryId
   );
-  const { summariesList, insertSummary } = useStore();
+  const { insertSummary } = useStore();
   const ref = useRef<HTMLDivElement | null>(null);
 
   const handlePlay = () => {
@@ -61,7 +61,6 @@ export default function PracticePage() {
       );
 
       insertSummary(insertedSummary);
-
       updateCurrentSummaryId(insertedSummary.id);
       setSummary(insertedSummary);
       setSubtitleTimestamps(subtitleTimestamps);

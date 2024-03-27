@@ -12,10 +12,12 @@ import {
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import { deleteSummary } from "@/lib/database/mutations";
-
+import { useStore } from "@/app/zustand";
 export function DeleteButton({ id }: { id: string }) {
+  const { removeSummary } = useStore();
   const handleClick = async () => {
     const { error } = await deleteSummary(id); // delete item server-side, instead of using the supabase client component client which is not as secure
+    removeSummary(id);
 
     if (error) {
       toast.error((error as Error).message);

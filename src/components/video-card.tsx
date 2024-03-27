@@ -42,7 +42,7 @@ export const VideoCard = ({
   thumbnailUrl,
 }: VideoCardProps) => {
   const [isLoading, setLoading] = useState(false);
-  const { summariesList, removeSummary } = useStore();
+  const { removeSummary } = useStore();
   const handleDelete = async () => {
     setLoading(true);
 
