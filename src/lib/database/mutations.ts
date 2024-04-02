@@ -7,6 +7,7 @@ import { allIdeas } from "../gpt";
 import { fetchSubtitlesFromVideoID } from "@/lib/subtitles";
 import { revalidatePath } from "next/cache";
 import { Database } from "@/types/supabase";
+import { getYouTubeVideoTitle } from "../youtube";
 
 async function insertSummaryToDB(
   summaryData: RawSummaryData
@@ -24,6 +25,7 @@ async function insertSummaryToDB(
       missing_ideas: JSON.stringify(summaryData.missingIdeas),
       correct_ideas: JSON.stringify(summaryData.correctIdeas),
       wrong_ideas: JSON.stringify(summaryData.wrongIdeas),
+      title: summaryData.title,
     })
     .select();
 
@@ -42,6 +44,7 @@ async function insertSummaryToDB(
     id: data![0].id!,
     userId: data![0].user_id!,
     createdAt: new Date(Date.parse(data![0].created_at!)), // Convert parsed timestamp to Date object
+    title: data![0].title!,
   };
 
   return insertedSummary;
@@ -52,6 +55,7 @@ export async function createSummary(
   summary: string
 ): Promise<{ insertedSummary: DbSummaryData; subtitleTimestamps: any }> {
   try {
+    const title = await getYouTubeVideoTitle(videoId);
     const subtitleTimestamps = await fetchSubtitlesFromVideoID(videoId);
     // uncomment to use OpenAI
     let openAISubtitles = null;
@@ -85,8 +89,8 @@ export async function createSummary(
       missingIdeas,
       correctIdeas,
       wrongIdeas,
+      title,
     };
-
     const insertedSummary = await insertSummaryToDB(summaryData);
     return { insertedSummary, subtitleTimestamps };
   } catch (error) {

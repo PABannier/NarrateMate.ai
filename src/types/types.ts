@@ -17,7 +17,7 @@ export interface FormattedTimeStamp {
 }
 
 export interface RawSummaryData {
-  title?: string;
+  title: string;
   youtubeVideoId: string;
   summary: string;
   missingIdeas: Idea[];
