@@ -62,7 +62,7 @@ The application should now be running on http://localhost:3000. Open your web br
 - Review words: Navigate to the "Words" page and review saved words.
 
 ## Credits
-This project was born out of a coffee chat at the Recurse Center and flourished through the collaborative efforts of @PABannier and @justcho5.
+This project was born out of a coffee chat at the Recurse Center and flourished through the collaborative efforts of [Pierre-Antoine Bannier](https://github.com/PABannier) and [Justina Cho](https://github.com/justcho5).
 
 ## Contributing
 We welcome contributions from the community! If you have suggestions for improvements or new features, please feel free to fork the repository, make your changes, and submit a pull request.
