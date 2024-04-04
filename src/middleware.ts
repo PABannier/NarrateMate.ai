@@ -16,11 +16,12 @@ export async function middleware(req: NextRequest) {
 
   if (
     session &&
-    !req.nextUrl.pathname.startsWith("/learning/practice/new") &&
+    !req.nextUrl.pathname.startsWith("/learning/practice/watch") &&
+    !req.nextUrl.pathname.startsWith("/learning/practice/listen") &&
     !req.nextUrl.pathname.startsWith("/learning/practice/list") &&
     !req.nextUrl.pathname.startsWith("/learning/review/words")
   ) {
-    return Response.redirect(new URL("/learning/practice/new", req.url));
+    return Response.redirect(new URL("/learning/practice/watch", req.url));
   }
 
   if (!session && !req.nextUrl.pathname.startsWith("/authentication")) {

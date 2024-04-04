@@ -46,7 +46,7 @@ export function LoginCard() {
     if (error) {
       toast.error(error.message);
     } else {
-      router.push("/learning/practice/new");
+      router.push("/learning/practice/watch");
     }
   };
 

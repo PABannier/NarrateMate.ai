@@ -53,7 +53,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(false);
   }
 
-  async function handleSignInWithOAuth() {
+  async function handleSignInWithOAuthGoogle() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -62,6 +62,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     });
   }
 
+  async function handleSignInWithOAuthSpotify() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "spotify",
+      options: {
+        redirectTo: `${location.origin}/`,
+      },
+    });
+  }
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <div className="grid gap-2">
@@ -128,19 +136,34 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <Button
-        variant="outline"
-        type="button"
-        disabled={isLoading}
-        onClick={handleSignInWithOAuth}
-      >
-        {isLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.google className="mr-2 h-4 w-4" />
-        )}{" "}
-        Google
-      </Button>
+      <div className="flex flex-col gap-2">
+        <Button
+          variant="outline"
+          type="button"
+          disabled={isLoading}
+          onClick={handleSignInWithOAuthGoogle}
+        >
+          {isLoading ? (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Icons.google className="mr-2 h-4 w-4" />
+          )}{" "}
+          Google
+        </Button>
+        <Button
+          variant="outline"
+          type="button"
+          disabled={isLoading}
+          onClick={handleSignInWithOAuthSpotify}
+        >
+          {isLoading ? (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Icons.spotify className="mr-2 h-4 w-4" />
+          )}{" "}
+          Spotify
+        </Button>
+      </div>
     </div>
   );
 }
