@@ -1,4 +1,6 @@
 # NarrateMate.ai
+Live App: https://narratemate.vercel.app/
+
 NarrateMate.ai is a language learning web application designed to help users practice and improve their foreign language listening comprehension skills. Unlike other apps that focus on grammar, vocab, or speaking, NarrateMate.ai offers a unique approach to language learning by focusing on language listening comprehension. Users can watch YouTube videos in their target language directly within the app, provide summaries in their native language, and receive immediate, personalized feedback on  from ChatGPT. 
 
 ## Features
