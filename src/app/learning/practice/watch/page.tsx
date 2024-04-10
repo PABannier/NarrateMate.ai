@@ -14,6 +14,7 @@ import { createSummary } from "@/lib/database/mutations";
 import PageHeader from "@/components/page-header";
 import { useStore } from "@/app/zustand";
 import { DbSummaryData, FormattedTimeStamp } from "@/types/types";
+import { Disabled } from "@/components/disabled";
 
 interface ISubtitleTimestamps {
   languageCode: any;
@@ -34,6 +35,7 @@ export default function PracticePage() {
   const [time, setTime] = useState(0);
   // trick to re-render the youtube player on play
   const [playerKey, setPlayerKey] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(true);
   const updateCurrentSummaryId = useStore(
     (state) => state.updateCurrentSummaryId
   );
@@ -46,6 +48,7 @@ export default function PracticePage() {
     if (extractedId) {
       setVideoId(extractedId);
       setPlayerKey(playerKey + 1);
+      setIsDisabled(false);
     }
 
     // get video length to limit only to videos that are short
@@ -112,79 +115,91 @@ export default function PracticePage() {
       </div>
 
       {/* Step 2 */}
-      <div className="grid lg:grid-cols-4">
-        <div className="lg:col-span-2">
-          <div className="block space-y-5">
-            <div className="flex justify-between items-end">
-              <div className="flex flex-col " ref={ref}>
-                <h2 className="text-2xl font-semibold tracking-tight">
-                  Step 2
-                </h2>
-                <p className="text-sm text-muted-foreground">
-                  Watch the YouTube Video
-                </p>
+      <div className={`${!isDisabled && "grid lg:grid-cols-4"}`}>
+        <Disabled
+          disabled={isDisabled}
+          spinner={false}
+          className="grid lg:grid-cols-4"
+        >
+          <div className="lg:col-span-2">
+            <div className="block space-y-5">
+              <div className="flex justify-between items-end">
+                <div className="flex flex-col " ref={ref}>
+                  <h2 className="text-2xl font-semibold tracking-tight">
+                    Step 2
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Watch the YouTube Video
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={handleClickOnSubtitles}
+                  disabled={subtitleTimestamps === null || isLoading}
+                >
+                  <FaRegClosedCaptioning className="mr-2 h-4 w-4" />
+                  {showSubtitles ? "Hide subtitles" : "Show subtitles"}
+                </Button>
               </div>
+              <div className="object-contain">
+                <YoutubePlayer
+                  videoId={videoId}
+                  autoPlay={true}
+                  title="My Video"
+                  setCaptionHeight={setCaptionHeight}
+                  time={time}
+                  playerKey={playerKey}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-2 lg:ml-5 self-end">
+            {subtitleTimestamps && showSubtitles && (
+              <TimeStampCard
+                multiLingualTimeStamps={subtitleTimestamps}
+                height={captionHeight}
+                onTimeStampClick={handleTimeStampClick}
+              />
+            )}
+          </div>
+        </Disabled>
+      </div>
+      {/* Step 3 */}
+      <div className={`${!isDisabled && "grid lg:grid-cols-4"}`}>
+        <Disabled
+          disabled={isDisabled}
+          spinner={false}
+          className="grid lg:grid-cols-4 space-y-5"
+        >
+          <div className="lg:col-span-4">
+            <h2 className="text-2xl font-semibold tracking-tight">Step 3</h2>
+            <p className="text-sm text-muted-foreground">
+              Write a summary of the video
+            </p>
+          </div>
+          <div className="lg:col-span-2 space-y-2">
+            <Textarea
+              name="summary"
+              className="min-h-[200px]"
+              value={textArea}
+              onChange={(e) => setTextArea(e.target.value)}
+            />
+            <div className="flex justify-end">
               <Button
                 variant="outline"
                 type="button"
-                onClick={handleClickOnSubtitles}
-                disabled={subtitleTimestamps === null || isLoading}
+                onClick={handleSubmitSummary}
               >
-                <FaRegClosedCaptioning className="mr-2 h-4 w-4" />
-                {showSubtitles ? "Hide subtitles" : "Show subtitles"}
+                Submit
+                {isLoading && (
+                  <Icons.spinner className="h-4 w-4 animate-spin ml-2" />
+                )}
               </Button>
             </div>
-            <div className="object-contain">
-              <YoutubePlayer
-                videoId={videoId}
-                autoPlay={true}
-                title="My Video"
-                setCaptionHeight={setCaptionHeight}
-                time={time}
-                playerKey={playerKey}
-              />
-            </div>
           </div>
-        </div>
-        <div className="lg:col-span-2 lg:ml-5 self-end">
-          {subtitleTimestamps && showSubtitles && (
-            <TimeStampCard
-              multiLingualTimeStamps={subtitleTimestamps}
-              height={captionHeight}
-              onTimeStampClick={handleTimeStampClick}
-            />
-          )}
-        </div>
-      </div>
-
-      {/* Step 3 */}
-      <div className="grid lg:grid-cols-4 space-y-5">
-        <div className="lg:col-span-4">
-          <h2 className="text-2xl font-semibold tracking-tight">Step 3</h2>
-          <p className="text-sm text-muted-foreground">
-            Write a summary of the video
-          </p>
-        </div>
-        <div className="lg:col-span-2 space-y-2">
-          <Textarea
-            name="summary"
-            className="min-h-[200px]"
-            value={textArea}
-            onChange={(e) => setTextArea(e.target.value)}
-          />
-          <div className="flex justify-end">
-            <Button
-              variant="outline"
-              type="button"
-              onClick={handleSubmitSummary}
-            >
-              Submit
-              {isLoading && (
-                <Icons.spinner className="h-4 w-4 animate-spin ml-2" />
-              )}
-            </Button>
-          </div>
-        </div>
+        </Disabled>
       </div>
 
       {summary && !isLoading && (

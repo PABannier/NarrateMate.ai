@@ -57,10 +57,14 @@ export function LoginCard() {
         <CardDescription>Enter your email below to login</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="grid items-center">
+        <div className="grid items-center gap-2">
           <Button variant="outline">
             <Icons.google className="mr-2 h-4 w-4" />
             Login with Google
+          </Button>
+          <Button variant="outline">
+            <Icons.spotify className="mr-2 h-4 w-4" />
+            Login with Spotify
           </Button>
         </div>
         <div className="relative">
