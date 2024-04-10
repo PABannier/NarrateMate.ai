@@ -27,8 +27,8 @@ const features = [
     description:
       "Write a concise summary of a YouTube video and receive immediate feedback on your comprehension, highlighting concepts you missed, accurately grasped, or misunderstood.",
     type: "video",
-    path: "https://d3m8mk7e1mf7xn.cloudfront.net/app/newsletter.webm",
-    format: "video/webm",
+    path: "/demo/watch_demo.mp4",
+    format: "mp4",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -49,9 +49,9 @@ const features = [
     title: "Vocabulary builder",
     description:
       "Select unfamiliar words directly from the video transcript to have them immediately incorporated into your personalized vocabulary list.",
-    type: "image",
-    path: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
-    alt: "A computer",
+    type: "video",
+    path: "/demo/vocab_demo.mp4",
+    format: "mp4",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -73,6 +73,9 @@ const features = [
     title: "Review system",
     description:
       "Review your vocabulary words efficiently through spaced repetition, ensuring that you retain the words you learn.",
+    type: "video",
+    path: "/demo/review_demo.mp4",
+    format: "mp4",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -146,41 +149,25 @@ const Item = ({
 // A component to display the media (video or image) of the feature. If the type is not specified, it will display an empty div.
 // Video are set to autoplay for best UX.
 const Media = ({ feature }: { feature: Feature }) => {
-  const { type, path, format, alt } = feature;
+  const { path } = feature;
   const style = "rounded-2xl aspect-square w-full sm:w-[26rem]";
   const size = {
     width: 500,
     height: 500,
   };
 
-  if (type === "video") {
-    return (
-      <video
-        className={style}
-        autoPlay
-        muted
-        loop
-        playsInline
-        controls
-        width={size.width}
-        height={size.height}
-      >
-        <source src={path} type={format} />
-      </video>
-    );
-  } else if (type === "image") {
-    return (
-      <Image
-        src={path}
-        alt={alt}
-        className={`${style} object-cover object-center`}
-        width={size.width}
-        height={size.height}
-      />
-    );
-  } else {
-    return <div className={`${style} !border-none`}></div>;
-  }
+  return (
+    <video
+      src={path}
+      className={style}
+      autoPlay
+      muted
+      loop
+      playsInline
+      width={size.width}
+      height={size.height}
+    ></video>
+  );
 };
 
 // A component to display 2 to 5 features in an accordion.
