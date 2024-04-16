@@ -1,9 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-
-function getYouTubeThumbnailFromId(id: string) {
-  return `https://i3.ytimg.com/vi/${id}/maxresdefault.jpg`;
-}
+import { getYouTubeThumbnailFromId } from "@/lib/youtube";
 
 const youtubeThumbnails = [
   {

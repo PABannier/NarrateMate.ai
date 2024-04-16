@@ -15,6 +15,10 @@ export function getYouTubeThumnailUrl(videoId: string) {
   return "https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
 }
 
+export function getYouTubeThumbnailFromId(id: string) {
+  return `https://i3.ytimg.com/vi/${id}/maxresdefault.jpg`;
+}
+
 export async function getYouTubeVideoTitle(videoId: string) {
   const response = await fetch(`https://youtube.com/watch?v=${videoId}`);
   const data = await response.text();
@@ -27,8 +31,10 @@ export async function getYouTubeVideoTitle(videoId: string) {
   }
   return match[1];
 }
-
-export const languageCodes = {
+type LanguageCodes = {
+  [key: string]: string;
+};
+export const languageCodes: LanguageCodes = {
   am: "Amharic",
   ar: "Arabic",
   eu: "Basque",

@@ -14,13 +14,7 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  if (
-    session &&
-    !req.nextUrl.pathname.startsWith("/learning/practice/watch") &&
-    !req.nextUrl.pathname.startsWith("/learning/practice/listen") &&
-    !req.nextUrl.pathname.startsWith("/learning/practice/list") &&
-    !req.nextUrl.pathname.startsWith("/learning/review/words")
-  ) {
+  if (session && !req.nextUrl.pathname.startsWith("/learning")) {
     return Response.redirect(new URL("/learning/practice/watch", req.url));
   }
 

@@ -3,7 +3,7 @@ import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 interface IDisabledProps {
   disabled: boolean;
-  spinner: boolean;
+  spinner?: boolean;
   children: React.ReactNode;
   className?: string;
 }
