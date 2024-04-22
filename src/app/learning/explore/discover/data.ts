@@ -97,7 +97,7 @@ export const discoverVideos: DiscoverVideos = {
     ],
   },
 
-  "zh-cn": {
+  "zh-CN": {
     educational: [
       {
         id: "V-zIW9s4DFQ",

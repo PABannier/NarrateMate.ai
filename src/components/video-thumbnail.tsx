@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "./ui/skeleton";
 import { DiscoverVideo } from "@/app/learning/explore/discover/data";
 import React from "react";
-
+import { useRouter } from "next/navigation";
 interface VideoThumbnailProps extends React.HTMLAttributes<HTMLDivElement> {
   discoverVideo: DiscoverVideo;
   aspectRatio?: "portrait" | "video";
@@ -21,8 +21,19 @@ export function VideoThumbnail({
   className,
   ...props
 }: VideoThumbnailProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    const videoId = discoverVideo.id;
+    router.push(`/learning/practice/watch?videoId=${videoId}`);
+  };
+
   return (
-    <div className={cn("space-y-3", className)} {...props}>
+    <div
+      className={cn("space-y-3 cursor-pointer", className)}
+      onClick={handleClick}
+      {...props}
+    >
       <div className="overflow-hidden rounded-md">
         <Image
           src={getYouTubeThumbnailFromId(discoverVideo.id)}

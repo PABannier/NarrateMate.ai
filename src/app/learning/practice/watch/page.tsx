@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { YoutubePlayer } from "@/components/youtube_player";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { extractYouTubeVideoId } from "@/lib/youtube";
 import { ResponseCard } from "@/components/response_card";
 import { Icons } from "@/components/icons";
@@ -15,6 +15,7 @@ import PageHeader from "@/components/page-header";
 import { useStore } from "@/app/zustand";
 import { DbSummaryData, FormattedTimeStamp } from "@/types/types";
 import { Disabled } from "@/components/disabled";
+import { useSearchParams } from "next/navigation";
 
 interface ISubtitleTimestamps {
   languageCode: any;
@@ -41,6 +42,19 @@ export default function PracticePage() {
   );
   const { insertSummary } = useStore();
   const ref = useRef<HTMLDivElement | null>(null);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const id = searchParams.get("videoId");
+    console.log(id);
+    if (id) {
+      setYoutubeURL(`https://www.youtube.com/watch?v=${id}`);
+      setVideoId(id);
+      setPlayerKey(playerKey + 1);
+      setIsDisabled(false);
+    }
+  }, [searchParams]);
 
   const handlePlay = () => {
     const url = youtubeURL;
@@ -106,6 +120,7 @@ export default function PracticePage() {
         <div className="lg:col-span-2 flex gap-2">
           <Input
             name="youtube-url"
+            value={youtubeURL}
             onChange={(e) => setYoutubeURL(e.target.value)}
           />
           <Button variant="outline" type="submit" onClick={handlePlay}>
