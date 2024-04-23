@@ -62,10 +62,6 @@ export function LoginCard() {
             <Icons.google className="mr-2 h-4 w-4" />
             Login with Google
           </Button>
-          <Button variant="outline">
-            <Icons.spotify className="mr-2 h-4 w-4" />
-            Login with Spotify
-          </Button>
         </div>
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
