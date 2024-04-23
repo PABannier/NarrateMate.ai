@@ -51,6 +51,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       toast.error(error.message);
     }
     setIsLoading(false);
+
+    router.push("/authentication/verification");
   }
 
   async function handleSignInWithOAuthGoogle() {
