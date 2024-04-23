@@ -1,5 +1,6 @@
 import { Sidebar } from "@/components/sidebar";
 import { UserNav } from "@/components/user-nav";
+import { Suspense } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </div>
           </div>
-          {children}
+          <Suspense>{children}</Suspense>
         </div>
       </div>
     </div>
