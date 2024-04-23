@@ -5,7 +5,7 @@ import logo from "@/app/component.png";
 
 export default function LogoHeader() {
   return (
-    <header className="h-[75px]">
+    <header className="h-fit">
       <div className="flex lg:flex-1">
         <Link
           className="flex items-center gap-2 shrink-0 "
