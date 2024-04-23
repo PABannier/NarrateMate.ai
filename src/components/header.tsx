@@ -18,14 +18,6 @@ const links: {
     href: "/#features",
     label: "Features",
   },
-  {
-    href: "/#pricing",
-    label: "Pricing",
-  },
-  {
-    href: "/#faq",
-    label: "FAQ",
-  },
 ];
 
 const cta = <ButtonSignin />;
