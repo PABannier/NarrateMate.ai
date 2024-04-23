@@ -36,9 +36,11 @@ const Step = ({ emoji, text }: { emoji: string; text: string }) => {
 export const Problem = () => {
   return (
     <section className="bg-neutral text-neutral-content">
-      <div className="isolate mx-auto max-w-5xl rounded-lg border-2 border-primary bg-white px-6 py-5 shadow-lg sm:px-8 top-[-45px] relative z-20">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end">
-          <Image src={workflow} alt="Workflow" />
+      <div className="flex justify-center">
+        <div className="hidden md:block mx-6 isolate max-w-5xl rounded-lg border-2 border-primary bg-white px-6 py-5 shadow-lg sm:px-8 top-[-45px] relative z-20">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end">
+            <Image src={workflow} alt="Workflow" />
+          </div>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-8 py-16 md:py-32 text-center">
