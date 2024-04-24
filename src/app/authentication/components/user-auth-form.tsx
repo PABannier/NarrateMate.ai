@@ -10,6 +10,21 @@ import { Label } from "@/components/ui/label";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
+const getURL = () => {
+  let url =
+    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "production"
+      ? "http://localhost:3000"
+      : process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
+        process?.env?.NEXT_PUBLIC_VERCEL_URL ??
+        "http://localhost:3000";
+  // Make sure to include `https://` when not localhost.
+  url = url.includes("http") ? url : `https://${url}`;
+  // Make sure to include a trailing `/`.
+  url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
+  return url;
+};
+console.log(getURL());
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
@@ -40,26 +55,26 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       email,
       password,
       options: {
-        emailRedirectTo: `${location.origin}/api/auth/callback`,
+        emailRedirectTo: `${getURL()}api/auth/callback`,
       },
     });
 
     router.refresh();
     if (!error) {
       toast.success("Sign up successful. Check your email for verification.");
+
+      router.push("/authentication/verification");
     } else {
       toast.error(error.message);
     }
     setIsLoading(false);
-
-    router.push("/authentication/verification");
   }
 
   async function handleSignInWithOAuthGoogle() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${location.origin}/`,
+        redirectTo: `${getURL()}api/auth/callback`,
       },
     });
   }

@@ -10,12 +10,6 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const searchParams = new URLSearchParams(req.nextUrl.search);
-  const code = searchParams.get("code");
-  if (code) {
-    return Response.redirect(new URL("/authentication/verification", req.url));
-  }
-
   if (req.nextUrl.pathname === "/") {
     return res;
   }
