@@ -47,7 +47,6 @@ export default function PracticePage() {
 
   useEffect(() => {
     const id = searchParams.get("videoId");
-    console.log(id);
     if (id) {
       setYoutubeURL(`https://www.youtube.com/watch?v=${id}`);
       setVideoId(id);

@@ -13,7 +13,6 @@ export default function Videos({
   useEffect(() => {
     if (summariesList.length === 0) {
       updateSummariesList(historyData);
-      console.log("history data");
     }
   }, [updateSummariesList, historyData]);
 
