@@ -2,7 +2,7 @@
 import { WordEntry, RawSummaryData, DbSummaryData } from "@/types/types";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { allIdeas } from "../gpt";
+import { allIdeas, buildGptPayload, sendToGpt } from "../gpt";
 
 import { fetchSubtitlesFromVideoID } from "@/lib/subtitles";
 import { revalidatePath } from "next/cache";
@@ -69,19 +69,19 @@ export async function createSummary(
       openAISubtitles = subtitleTimestamps[0];
     }
 
-    // const subtitles = openAISubtitles.subtitles
-    //   .map((line) => `${line.formattedStart} : ${line.text}`)
-    //   .join("\n");
-    // const payload = buildGptPayload(subtitles, body.summary);
-    // const completion = await sendToGpt(payload);
+    const subtitles = openAISubtitles.subtitles
+      .map((line) => `${line.formattedStart} : ${line.text}`)
+      .join("\n");
+    const payload = buildGptPayload(subtitles, summary);
+    const completion = await sendToGpt(payload);
 
-    // const { missingIdeas, wrongIdeas, correctIdeas } = JSON.parse(completion!);
+    const { missingIdeas, wrongIdeas, correctIdeas } = JSON.parse(completion!);
     // console.log("missing ideas: ", missingIdeas);
     // console.log("wrong ideas: ", wrongIdeas);
     // up to here for using OpenAI
 
     // uncomment for mock data
-    const { missingIdeas, wrongIdeas, correctIdeas } = allIdeas;
+    // const { missingIdeas, wrongIdeas, correctIdeas } = allIdeas;
 
     const summaryData: RawSummaryData = {
       youtubeVideoId: videoId,
