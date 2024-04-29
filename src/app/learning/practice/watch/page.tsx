@@ -52,6 +52,7 @@ export default function PracticePage() {
       setVideoId(id);
       setPlayerKey(playerKey + 1);
       setIsDisabled(false);
+      console.log(subtitleTimestamps, isLoading);
     }
   }, [searchParams]);
 
@@ -145,12 +146,16 @@ export default function PracticePage() {
                   <p className="text-sm text-muted-foreground">
                     Watch the YouTube Video
                   </p>
+                  <p className="text-sm text-muted-foreground">
+                    (Subtitles will be available to view after submitting a
+                    summary)
+                  </p>
                 </div>
                 <Button
                   variant="outline"
                   type="button"
                   onClick={handleClickOnSubtitles}
-                  disabled={subtitleTimestamps === null || isLoading}
+                  disabled={subtitleTimestamps.length === 0 || isLoading}
                 >
                   <FaRegClosedCaptioning className="mr-2 h-4 w-4" />
                   {showSubtitles ? "Hide subtitles" : "Show subtitles"}
