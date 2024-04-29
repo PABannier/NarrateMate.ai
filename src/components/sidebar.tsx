@@ -181,7 +181,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
           showWhenVisible
         )}
       >
-        <div className="flex">
+        <div className="flex lg:block">
           <div className="space-y-4 py-4">
             {data.sections.map((section, sectionIndex) => (
               <div key={sectionIndex} className="px-3 py-2">
