@@ -83,10 +83,10 @@ export function UserNav() {
               </DropdownMenuItem>
             </DialogTrigger>
 
-            <DropdownMenuItem>
+            {/* <DropdownMenuItem>
               Settings
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogOut}>
