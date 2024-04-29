@@ -5,7 +5,7 @@ import { Suspense } from "react";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="block h-screen ">
-      <div className="grid lg:grid-cols-5">
+      <div className="grid grid-cols-1 lg:grid-cols-5">
         <Sidebar className="hidden lg:block" />
         <div className="lg:col-span-4 lg:border-l">
           <div className="border-b">

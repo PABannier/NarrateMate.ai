@@ -97,48 +97,48 @@ export const discoverVideos: DiscoverVideos = {
     ],
   },
 
-  "zh-CN": {
-    educational: [
-      {
-        id: "V-zIW9s4DFQ",
-        title:
-          "100 Daily Chinese Conversations (Part 1) - Learn Mandarin Chinese Listening & Speaking",
-      },
-      {
-        id: "2ZA6M9EsSlM",
-        title:
-          "Basic Chinese Greetings - Beginner Conversational Mandarin - Yoyo Chinese",
-      },
-      {
-        id: "eNv8saOz1Qk",
-        title: "15 Chinese Phrases that Natives use ALL THE TIME",
-      },
-      {
-        id: "64V9KIbykLQ",
-        title:
-          "Seeing a friend on the street - Mandarin Chinese Dialogue (Pinyin and English in description field)",
-      },
-    ],
-    vlogs: [
-      {
-        id: "MGTSs_GmkfE",
-        title: "【VLOG in Chinese】A Day with Me | Grace Mandarin Chinese",
-      },
-      {
-        id: "MnYyAdatuSM",
-        title: "成都一日游｜中国 vlog 🇨🇳",
-      },
-      {
-        id: "xlMBzIwAOlI",
-        title:
-          "【HSK2/HSK3 Friendly to beginners】Walk around in Chengdu｜Eng Sub & pinyin｜Learn Chinese through Vlogs",
-      },
-      {
-        id: "JsWaczZOLMg",
-        title: "24 HOURS SPEAKING CHINESE ONLY | Miki & Kev",
-      },
-    ],
-  },
+  // "zh-CN": {
+  //   educational: [
+  //     {
+  //       id: "V-zIW9s4DFQ",
+  //       title:
+  //         "100 Daily Chinese Conversations (Part 1) - Learn Mandarin Chinese Listening & Speaking",
+  //     },
+  //     {
+  //       id: "2ZA6M9EsSlM",
+  //       title:
+  //         "Basic Chinese Greetings - Beginner Conversational Mandarin - Yoyo Chinese",
+  //     },
+  //     {
+  //       id: "eNv8saOz1Qk",
+  //       title: "15 Chinese Phrases that Natives use ALL THE TIME",
+  //     },
+  //     {
+  //       id: "64V9KIbykLQ",
+  //       title:
+  //         "Seeing a friend on the street - Mandarin Chinese Dialogue (Pinyin and English in description field)",
+  //     },
+  //   ],
+  //   vlogs: [
+  //     {
+  //       id: "MGTSs_GmkfE",
+  //       title: "【VLOG in Chinese】A Day with Me | Grace Mandarin Chinese",
+  //     },
+  //     {
+  //       id: "MnYyAdatuSM",
+  //       title: "成都一日游｜中国 vlog 🇨🇳",
+  //     },
+  //     {
+  //       id: "xlMBzIwAOlI",
+  //       title:
+  //         "【HSK2/HSK3 Friendly to beginners】Walk around in Chengdu｜Eng Sub & pinyin｜Learn Chinese through Vlogs",
+  //     },
+  //     {
+  //       id: "JsWaczZOLMg",
+  //       title: "24 HOURS SPEAKING CHINESE ONLY | Miki & Kev",
+  //     },
+  //   ],
+  // },
   ja: {
     educational: [
       {
@@ -200,91 +200,91 @@ export const discoverVideos: DiscoverVideos = {
       },
     ],
   },
-  hi: {
-    educational: [
-      {
-        id: "YCkY_yo_wgU",
-        title: "How To Learn Hindi Faster Than I Did! #RocksLearnHindi",
-      },
-      {
-        id: "noFNLGRUUCQ",
-        title: "30 Minutes of Hindi Listening Comprehension for Beginner",
-      },
-      {
-        id: "Ps0OiTpCZD8",
-        title:
-          "2 Hours of Daily Hindi Conversations - Hindi Practice for ALL Learners",
-      },
-      {
-        id: "NLlEKIMM7yQ",
-        title: "Daily Conversations #1 - Learn Hindi through English",
-      },
-    ],
-    vlogs: [
-      {
-        id: "IbiykRE8PLw",
-        title:
-          "Every Indian should visit this city | Antalya Vlog Hindi | | Hidden Gem in Turkey ! |",
-      },
-      {
-        id: "ZAehIXCijnw",
-        title:
-          "I Spent A Day In A Farm In America | American Farm Life | Amish Village Pennsylvania | Hindi Vlog",
-      },
-      {
-        id: "LCv1_IiwjtM",
-        title: "Weekend Trip to Hiils | Solan Vacation Vlog | Perkymegs Hindi",
-      },
-      {
-        id: "NLlEKIMM7yQ",
-        title: "Daily Conversations #1 - Learn Hindi through English",
-      },
-    ],
-  },
-  es: {
-    educational: [
-      {
-        id: "AXQZu10h29U",
-        title:
-          "Spanish Conversation Listening Comprehension Practice | Learn Spanish",
-      },
-      {
-        id: "Hbu8HvhYj98",
-        title:
-          "Basic Conversation Practice in Spanish for Beginners | HOLA SPANISH | BRENDA & ROMINA ROMANIELLO",
-      },
-      {
-        id: "3nb_hjv5Y24",
-        title: "LEARN SPANISH with This VLOG 🇪🇸 (w/ subtitles!)",
-      },
-      {
-        id: "hyCMWklv5gA",
-        title:
-          "speaking only Spanish for 24 hours 🤎 Barcelona vlog (w subtitles)",
-      },
-      {
-        id: "4JC4_8JRISs",
-        title:
-          "PRACTICE SPANISH with this VLOG | 🇪🇸 I did a school project (w/ subtitles)",
-      },
-    ],
-    vlogs: [
-      {
-        id: "3nb_hjv5Y24",
-        title: "LEARN SPANISH with This VLOG 🇪🇸 (w/ subtitles!)",
-      },
-      {
-        id: "hyCMWklv5gA",
-        title:
-          "speaking only Spanish for 24 hours 🤎 Barcelona vlog (w subtitles)",
-      },
-      {
-        id: "4JC4_8JRISs",
-        title:
-          "PRACTICE SPANISH with this VLOG | 🇪🇸 I did a school project (w/ subtitles)",
-      },
-    ],
-  },
+  // hi: {
+  //   educational: [
+  //     {
+  //       id: "YCkY_yo_wgU",
+  //       title: "How To Learn Hindi Faster Than I Did! #RocksLearnHindi",
+  //     },
+  //     {
+  //       id: "noFNLGRUUCQ",
+  //       title: "30 Minutes of Hindi Listening Comprehension for Beginner",
+  //     },
+  //     {
+  //       id: "Ps0OiTpCZD8",
+  //       title:
+  //         "2 Hours of Daily Hindi Conversations - Hindi Practice for ALL Learners",
+  //     },
+  //     {
+  //       id: "NLlEKIMM7yQ",
+  //       title: "Daily Conversations #1 - Learn Hindi through English",
+  //     },
+  //   ],
+  //   vlogs: [
+  //     {
+  //       id: "IbiykRE8PLw",
+  //       title:
+  //         "Every Indian should visit this city | Antalya Vlog Hindi | | Hidden Gem in Turkey ! |",
+  //     },
+  //     {
+  //       id: "ZAehIXCijnw",
+  //       title:
+  //         "I Spent A Day In A Farm In America | American Farm Life | Amish Village Pennsylvania | Hindi Vlog",
+  //     },
+  //     {
+  //       id: "LCv1_IiwjtM",
+  //       title: "Weekend Trip to Hiils | Solan Vacation Vlog | Perkymegs Hindi",
+  //     },
+  //     {
+  //       id: "NLlEKIMM7yQ",
+  //       title: "Daily Conversations #1 - Learn Hindi through English",
+  //     },
+  //   ],
+  // },
+  // es: {
+  //   educational: [
+  //     {
+  //       id: "AXQZu10h29U",
+  //       title:
+  //         "Spanish Conversation Listening Comprehension Practice | Learn Spanish",
+  //     },
+  //     {
+  //       id: "Hbu8HvhYj98",
+  //       title:
+  //         "Basic Conversation Practice in Spanish for Beginners | HOLA SPANISH | BRENDA & ROMINA ROMANIELLO",
+  //     },
+  //     {
+  //       id: "3nb_hjv5Y24",
+  //       title: "LEARN SPANISH with This VLOG 🇪🇸 (w/ subtitles!)",
+  //     },
+  //     {
+  //       id: "hyCMWklv5gA",
+  //       title:
+  //         "speaking only Spanish for 24 hours 🤎 Barcelona vlog (w subtitles)",
+  //     },
+  //     {
+  //       id: "4JC4_8JRISs",
+  //       title:
+  //         "PRACTICE SPANISH with this VLOG | 🇪🇸 I did a school project (w/ subtitles)",
+  //     },
+  //   ],
+  //   vlogs: [
+  //     {
+  //       id: "3nb_hjv5Y24",
+  //       title: "LEARN SPANISH with This VLOG 🇪🇸 (w/ subtitles!)",
+  //     },
+  //     {
+  //       id: "hyCMWklv5gA",
+  //       title:
+  //         "speaking only Spanish for 24 hours 🤎 Barcelona vlog (w subtitles)",
+  //     },
+  //     {
+  //       id: "4JC4_8JRISs",
+  //       title:
+  //         "PRACTICE SPANISH with this VLOG | 🇪🇸 I did a school project (w/ subtitles)",
+  //     },
+  //   ],
+  // },
   it: {
     educational: [
       {

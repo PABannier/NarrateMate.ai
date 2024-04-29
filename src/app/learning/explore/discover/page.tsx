@@ -19,23 +19,7 @@ export const metadata: Metadata = {
 export default function MusicPage() {
   return (
     <>
-      <div className="md:hidden">
-        <Image
-          src="/examples/music-light.png"
-          width={1280}
-          height={1114}
-          alt="Music"
-          className="block dark:hidden"
-        />
-        <Image
-          src="/examples/music-dark.png"
-          width={1280}
-          height={1114}
-          alt="Music"
-          className="hidden dark:block"
-        />
-      </div>
-      <div className="hidden md:block">
+      <div className="">
         {/* <Menu /> */}
         <div className="border-t">
           <div className="bg-background">
@@ -45,19 +29,15 @@ export default function MusicPage() {
                   defaultValue={Object.keys(discoverVideos)[0]}
                   className="h-full space-y-6"
                 >
-                  <div className="space-between flex items-center">
-                    <TabsList>
-                      {Object.keys(discoverVideos).map((key, index) => (
-                        <TabsTrigger
-                          key={index}
-                          value={key}
-                          className="relative"
-                        >
-                          {languageCodes[key]}
-                        </TabsTrigger>
-                      ))}
-                    </TabsList>
-                  </div>
+                  {/* <div className="flex flex-wrap"> */}
+                  <TabsList>
+                    {Object.keys(discoverVideos).map((key, index) => (
+                      <TabsTrigger key={index} value={key} className="relative">
+                        {languageCodes[key]}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                  {/* </div> */}
                   {Object.entries(discoverVideos).map(
                     ([languageCode, videoCategories], index) => (
                       <TabsContent
@@ -104,32 +84,6 @@ export default function MusicPage() {
                             )
                           )}
                         </div>
-                        {/* <div className="mt-6 space-y-1">
-                            <h2 className="text-2xl font-semibold tracking-tight">
-                              Vlogs
-                            </h2>
-                            <p className="text-sm text-muted-foreground">
-                              Your personal playlists. Updated daily.
-                            </p>
-                          </div>
-                          <Separator className="my-4" />
-                          <div className="relative">
-                            <ScrollArea>
-                          <div className="flex space-x-4 pb-4">
-                            {madeForYouAlbums.map((album) => (
-                              <AlbumArtwork
-                                key={album.name}
-                                album={album}
-                                className="w-[150px]"
-                                aspectRatio="square"
-                                width={150}
-                                height={150}
-                              />
-                            ))}
-                          </div>
-                          <ScrollBar orientation="horizontal" />
-                        </ScrollArea>
-                          </div> */}
                       </TabsContent>
                     )
                   )}
