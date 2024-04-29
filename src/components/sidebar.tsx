@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect } from "react";
 import Link from "next/link";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { HiOutlineX } from "react-icons/hi";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -144,6 +146,10 @@ const sidebarPages = [
 export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   let pathname = usePathname();
   let [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [visible, setVisible] = React.useState(false);
+
+  const hideWhenVisible = visible ? "hidden" : "";
+  const showWhenVisible = visible ? "" : "hidden";
 
   useEffect(() => {
     let tmpPathname = pathname;
@@ -156,47 +162,74 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   const handleClickOnSidebarItem = (index: number) => {
     setSelectedIndex(index);
   };
-
+  const toggleVisibility = () => {
+    setVisible(!visible);
+  };
+  //  border-r-2 bg-white
   return (
-    <div className={cn("pb-12", className)}>
-      <div className="space-y-4 py-4">
-        {data.sections.map((section, sectionIndex) => (
-          <div key={sectionIndex} className="px-3 py-2">
-            <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-              {section.title}
-            </h2>
-            <div className="space-y-1">
-              {section.buttonData.map((button, index) => {
-                const currentIndex =
-                  data.sections
-                    .slice(0, sectionIndex)
-                    .reduce(
-                      (sum, section) => sum + section.buttonData.length,
-                      0
-                    ) + index;
-                return (
-                  <Link
-                    prefetch={true}
-                    href={sidebarPages[currentIndex]}
-                    key={currentIndex}
-                  >
-                    <Button
-                      className="w-full justify-start"
-                      key={currentIndex}
-                      variant={
-                        currentIndex === selectedIndex ? "secondary" : "ghost"
-                      }
-                      onClick={() => handleClickOnSidebarItem(currentIndex)}
-                    >
-                      {button.icon}
-                      {button.text}
-                    </Button>
-                  </Link>
-                );
-              })}
-            </div>
+    <div className="h-full">
+      <div
+        className={`h-16 pl-4 pt-6 cursor-pointer ${hideWhenVisible} lg:hidden`}
+        onClick={toggleVisibility}
+      >
+        <GiHamburgerMenu />
+      </div>
+      <div
+        className={cn(
+          "h-full bg-white pb-12 lg:block",
+          className,
+          showWhenVisible
+        )}
+      >
+        <div className="flex">
+          <div className="space-y-4 py-4">
+            {data.sections.map((section, sectionIndex) => (
+              <div key={sectionIndex} className="px-3 py-2">
+                <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+                  {section.title}
+                </h2>
+                <div className="space-y-1">
+                  {section.buttonData.map((button, index) => {
+                    const currentIndex =
+                      data.sections
+                        .slice(0, sectionIndex)
+                        .reduce(
+                          (sum, section) => sum + section.buttonData.length,
+                          0
+                        ) + index;
+                    return (
+                      <Link
+                        prefetch={true}
+                        href={sidebarPages[currentIndex]}
+                        key={currentIndex}
+                      >
+                        <Button
+                          className="w-full justify-start"
+                          key={currentIndex}
+                          variant={
+                            currentIndex === selectedIndex
+                              ? "secondary"
+                              : "ghost"
+                          }
+                          onClick={() => handleClickOnSidebarItem(currentIndex)}
+                        >
+                          {button.icon}
+                          {button.text}
+                        </Button>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+          <div
+            className="p-4 cursor-pointer lg:hidden"
+            onClick={toggleVisibility}
+          >
+            <HiOutlineX />
+          </div>
+        </div>
       </div>
     </div>
   );
