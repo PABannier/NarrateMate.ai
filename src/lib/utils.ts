@@ -41,3 +41,14 @@ export function convertKeysToCamelCase(obj: any): any {
   }
   return obj;
 }
+export const getURL = () => {
+  let url =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://narratemate.vercel.app/";
+  // Make sure to include `https://` when not localhost.
+  url = url.includes("http") ? url : `https://${url}`;
+  // Make sure to include a trailing `/`.
+  url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
+  return url;
+};

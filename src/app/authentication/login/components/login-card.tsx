@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { getURL } from "@/lib/utils";
 
 export function LoginCard() {
   const router = useRouter();
@@ -49,7 +50,14 @@ export function LoginCard() {
       router.push("/learning/practice/watch");
     }
   };
-
+  async function handleSignInWithOAuthGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${getURL()}api/auth/callback`,
+      },
+    });
+  }
   return (
     <Card className="w-[350px]">
       <CardHeader className="space-y-1">
@@ -58,8 +66,17 @@ export function LoginCard() {
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid items-center gap-2">
-          <Button variant="outline">
-            <Icons.google className="mr-2 h-4 w-4" />
+          <Button
+            variant="outline"
+            type="button"
+            disabled={isLoading}
+            onClick={handleSignInWithOAuthGoogle}
+          >
+            {isLoading ? (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Icons.google className="mr-2 h-4 w-4" />
+            )}{" "}
             Login with Google
           </Button>
         </div>

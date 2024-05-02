@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cn } from "@/lib/utils";
+import { cn, getURL } from "@/lib/utils";
+
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,17 +11,6 @@ import { Label } from "@/components/ui/label";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-const getURL = () => {
-  let url =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://narratemate.vercel.app/";
-  // Make sure to include `https://` when not localhost.
-  url = url.includes("http") ? url : `https://${url}`;
-  // Make sure to include a trailing `/`.
-  url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
-  return url;
-};
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
